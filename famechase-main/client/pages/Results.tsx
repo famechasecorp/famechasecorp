@@ -152,7 +152,7 @@ const languages = {
     subtitle: "आपकी क्रिएटर यात्रा के लिए संपूर्ण व्यक्तिगत अंतर्दृष्टि",
     profileSynopsis: "प्रोफाइल सारांश",
     creatorProfile: "क्रिएटर प्र���फाइल",
-    currentStatus: "वर्तमान स्थिति",
+    currentStatus: "वर्तमा�� स्थिति",
     swotAnalysis: "SWOT विश्लेषण",
     strengths: "मजबूती",
     weaknesses: "कमजोरी",
@@ -187,7 +187,7 @@ const languages = {
     nextSixMonths: "अगले 6 महीने का प्रक्षेपण",
     monthlyTarget: "मासिक प्राप��त करने योग्य लक्ष्य",
     primaryPlatform: "प्राथमिक ���्लेटफॉर्म:",
-    contentNiche: "कंटेंट निच:",
+    contentNiche: "कं��ेंट निच:",
     contentType: "कंटेंट प्रकार:",
     postingFrequency: "पोस्टिंग आवृत्ति:",
     followers: "फॉलोअर्स:",
@@ -382,28 +382,24 @@ export default function Results() {
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const paymentStatus = urlParams.get("payment_status");
+    const rawStatus = (urlParams.get("payment_status") || urlParams.get("status") || "").toLowerCase();
+    const urlProductId = urlParams.get("product_id") || urlParams.get("data_product_id");
     const pendingPurchase = localStorage.getItem("pendingProductPurchase");
 
-    if (
-      pendingPurchase &&
-      (paymentStatus === "Credit" || paymentStatus === "success") &&
-      (pendingPurchase === "complete-growth-kit" || pendingPurchase === "complete-bundle")
-    ) {
-      const alreadyRecorded = purchases.some(
-        (purchase) => purchase.id === pendingPurchase,
-      );
+    const success = rawStatus === "credit" || rawStatus === "success" || rawStatus === "completed" || rawStatus === "paid" || !!urlParams.get("payment_id");
+    const resolvedProductId = urlProductId || pendingPurchase;
 
+    if (resolvedProductId && success && (resolvedProductId === "complete-growth-kit" || resolvedProductId === "complete-bundle")) {
+      const alreadyRecorded = purchases.some((p) => p.id === resolvedProductId);
       if (!alreadyRecorded) {
         const purchase: StoredPurchase = {
-          id: pendingPurchase,
+          id: resolvedProductId,
           purchaseDate: new Date().toISOString(),
           customerInfo: parsedQuizData ?? {},
         };
         purchases = [...purchases, purchase];
         localStorage.setItem("purchasedProducts", JSON.stringify(purchases));
       }
-
       localStorage.removeItem("pendingProductPurchase");
       setPaymentSuccess(true);
       setShowPaymentForm(false);
@@ -445,7 +441,7 @@ export default function Results() {
         name: personalInfo.name || quizData?.name || "",
         email: personalInfo.email || quizData?.email || "",
         phone: personalInfo.phone || quizData?.phone || "",
-        redirectUrl: `${window.location.origin}/results?payment_status=Credit`,
+        redirectUrl: `${window.location.origin}/results?payment_status=credit&product_id=complete-growth-kit`,
         notes: {
           product_id: "complete-growth-kit",
           product_name: toolkitProduct?.name ?? "Complete Creator Toolkit",
@@ -581,7 +577,7 @@ ${analysis.swotAnalysis.strengths.map((s: string, i: number) => `${i + 1}. ${s}\
 
 
 🔧 ${language === "hindi" ? "सुधार के क्षेत्र:" : "AREAS FOR IMPROVEMENT:"}
-────────────────────────────���──────────────────
+──────────────��─────────────���──────────────────
 
 ${analysis.swotAnalysis.weaknesses.map((w: string, i: number) => `${i + 1}. ${w}\n`).join("\n")}
 
@@ -660,7 +656,7 @@ ${language === "hindi" ? "सुझावित दरें (भारतय �
 ${language === "hindi" ? "Instagram पोस्:" : "Instagram Post:"} ₹${quizData.followerCount.includes("Less than 1K") ? "200-500" : quizData.followerCount.includes("1K - 5K") ? "500-1,000" : "1,000-3,000"}
 ${language === "hindi" ? "Instagram रील:" : "Instagram Reel:"} ₹${quizData.followerCount.includes("Less than 1K") ? "500-1,000" : quizData.followerCount.includes("1K - 5K") ? "1,000-2,000" : "2,000-5,000"}
 ${language === "hindi" ? "Instagram ��्टोरी:" : "Instagram Story:"} ₹${quizData.followerCount.includes("Less than 1K") ? "100-300" : quizData.followerCount.includes("1K - 5K") ? "300-500" : "500-1,500"}
-${language === "hindi" ? "YouTube शॉर्ट:" : "YouTube Short:"} ₹${quizData.followerCount.includes("Less than 1K") ? "500-1,000" : quizData.followerCount.includes("1K - 5K") ? "1,000-2,000" : "2,000-5,000"}
+${language === "hindi" ? "YouTube शॉर्ट:" : "YouTube Short:"} ��${quizData.followerCount.includes("Less than 1K") ? "500-1,000" : quizData.followerCount.includes("1K - 5K") ? "1,000-2,000" : "2,000-5,000"}
 ${language === "hindi" ? "YouTube वीडियो मेंशन:" : "YouTube Video Mention:"} ₹${quizData.followerCount.includes("Less than 1K") ? "1,000-2,000" : quizData.followerCount.includes("1K - 5K") ? "2,000-3,000" : "3,000-8,000"}
 
 ${language === "hindi" ? "📊 डायनामिक रेट कार्ड:" : "📊 DYNAMIC RATE CARD:"}
@@ -867,7 +863,7 @@ ${language === "hindi" ? "🔥 प्रो टिप्स:" : "🔥 PRO TIPS:"
 3. ${language === "hindi" ? "लॉन्ग-टर्म कैंपेन्स के लिए 25% डिस्काउंट ऑफर करें" : "Offer 25% package discount for 3+ month campaigns"}
 
 ${language === "hindi" ? "🎯 आपका कस्���म रेट कार्ड (तुरंत इस्तेमाल रें):" : " YOUR CUSTOM RATE CARD (Use Immediately):"}
-══════════════════════════════════════════��════
+═══════════════════════════════���══════════��════
 ${language === "hindi" ? "बिक पैकेज:" : "Basic Package:"} ₹${Math.round(followerNum * 0.012 * niche.multiplier).toLocaleString()}
 ${language === "hindi" ? "स्टैंडर्ड पैेज:" : "Standard Package:"} ₹${Math.round(followerNum * 0.025 * niche.multiplier).toLocaleString()}
 ${language === "hindi" ? "प्रीमियम पैकेज:" : "Premium Package:"} ₹${Math.round(followerNum * 0.045 * niche.multiplier).toLocaleString()}
@@ -933,7 +929,7 @@ ${language === "hindi" ? "⚡ एडवांस्ड एंगेजमें�
 • ${language === "hindi" ? "एंगेजमेंट रेट" : "Engagement Rate"} = (Likes + Comments + Shares + Saves) ÷ Reach × 100
 • ${language === "hindi" ? "टारगेट:" : "Target:"} ${targetEngagementRate}% (आपके niche के लिए optimal)
 • ${language === "hindi" ? "सेव रेट" : "Save Rate"} = Saves ÷ Reach × 100 (टारग��ट: 2-4%)
-• ${language === "hindi" ? "कमेट रेट" : "Comment Rate"} = Comments ÷ Reach × 100 (टारगेट: 0.5-1.5%)
+• ${language === "hindi" ? "कमेट रेट" : "Comment Rate"} = Comments ÷ Reach × 100 (��ारगेट: 0.5-1.5%)
 
 ${language === "hindi" ? "💰 मोनेाइज़ेन ट्रैकर (रियल वल्यू):" : "💰 MONETIZATION TRACKER (Real Value):"}
 ┌───────────────────────────────────────────┐
@@ -1052,7 +1048,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                   className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <Home className="w-4 h-4" />
-                  Back to Home
+                  {language === "hindi" ? "होम पर लौटें" : "Back to Home"}
                 </Link>
                 <select
                   value={language}
@@ -1215,7 +1211,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               </h2>
               <p className="text-gray-600 mb-6">
                 {language === "hindi"
-                  ? "साबित किए गए टूल्स जो टॉप क्रिएटर्स अप��ी आय 5X ढ़ाने के ए इस्तेमाल करते हैं।  सब कुछ बिल्कुल फ्री है!"
+                  ? "साब��त किए गए टूल्स जो टॉप क्रिएटर्स अप��ी आय 5X ढ़ाने के ए इस्तेमाल करते हैं।  सब कुछ बिल्कुल फ्री है!"
                   : "Proven tools that top creators use to 5X their income. Get everything absolutely free after completing your quiz!"}
               </p>
 
@@ -1253,7 +1249,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                   </h3>
                   <p className="text-gray-600 text-sm mb-4">
                     {language === "hindi"
-                      ? "व��ी ट्रैकिंग सिस्टम जो मिलियन-फॉलोअर क्रिएटर्स इस्ेमा��� करे हैं। अपन��� ROI को 300% तक बढ़ाए।"
+                      ? "व��ी ट्रैकि���ग सिस्टम जो मिलियन-फॉलोअर क्रिएटर्स इस्ेमा��� करे हैं। अपन��� ROI को 300% तक बढ़ाए।"
                       : "The same tracking system used by million-follower creators. Boost your ROI by up to 300%."}
                   </p>
                   <button
@@ -1274,7 +1270,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4">
                 <p className="text-amber-800 font-medium text-center">
                   {language === "hindi"
-                    ? "🎯 इन टूल्स ी कीमत बाजार मं ₹5,000+ है - लेकिन आपको ये बिल्कुल फरी मिल रहे है!"
+                    ? "�� इन टूल्स ी कीमत बाजार मं ₹5,000+ है - लेकिन आपको ये बिल्कुल फरी मिल रहे है!"
                     : "🎯 This content is exclusively for premium users - FREE users don't get this!"}
                 </p>
               </div>
@@ -1982,7 +1978,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
           <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-100 rounded-2xl p-8 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
               <Lightbulb className="w-6 h-6 text-purple-600" />
-              {language === "hindi" ? "मुख्य सुझाव" : "Key Suggestions"}
+              {language === "hindi" ? "मुख्य सुझ���व" : "Key Suggestions"}
             </h2>
             <div className="grid gap-4 max-h-96 overflow-y-auto pr-2">
               {analysis.suggestions.map((suggestion: string, index: number) => (
