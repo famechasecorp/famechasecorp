@@ -81,20 +81,21 @@ function ShopNew() {
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const paymentStatus = urlParams.get("payment_status");
+    const rawStatus = (urlParams.get("payment_status") || urlParams.get("status") || "").toLowerCase();
+    const urlProductId = urlParams.get("product_id");
     const pendingPurchase = localStorage.getItem("pendingProductPurchase");
+    const success = rawStatus === "credit" || rawStatus === "success" || rawStatus === "completed";
 
-    if (
-      pendingPurchase &&
-      (paymentStatus === "Credit" || paymentStatus === "success")
-    ) {
+    const resolvedProductId = urlProductId || pendingPurchase || null;
+
+    if (resolvedProductId && success) {
       const alreadyPurchased = existingPurchases.some(
-        (purchase) => purchase.id === pendingPurchase,
+        (purchase) => purchase.id === resolvedProductId,
       );
 
       if (!alreadyPurchased) {
         const purchase: PurchasedProduct = {
-          id: pendingPurchase,
+          id: resolvedProductId,
           purchaseDate: new Date().toISOString(),
           customerInfo: parsedQuizData ?? {},
         };
@@ -107,7 +108,7 @@ function ShopNew() {
       }
 
       localStorage.removeItem("pendingProductPurchase");
-      setShowSuccessPage(pendingPurchase);
+      setShowSuccessPage(resolvedProductId);
       window.history.replaceState({}, "", "/shop");
     }
   }, []);
@@ -208,7 +209,7 @@ function ShopNew() {
         name: quizInfo.name || "",
         email: quizInfo.email || "",
         phone: quizInfo.phone || "",
-        redirectUrl: `${window.location.origin}/shop?payment_status=Credit`,
+        redirectUrl: `${window.location.origin}/shop?payment_status=credit&product_id=${encodeURIComponent(productId)}`,
         notes: {
           product_id: productId,
           product_name: product.name,
@@ -284,7 +285,7 @@ function ShopNew() {
       securePayment: "सुरक्षित भुगतान",
       instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभी खरीदें",
-      downloadFree: "फ्री डाउनलोड करें",
+      downloadFree: "फ्री ��ाउनलोड करें",
       bundleOffer: "सीमित समय बंडल ऑफर 🔥",
       save: "बचत करें",
       getBundle: "कम्प्लीट बंडल प्राप्त करें",
@@ -575,56 +576,7 @@ function ShopNew() {
           </div>
         )}
 
-        <div className="flex justify-end mb-6">
-          <button
-            type="button"
-            onClick={() => setShowAdminPanel((prev) => !prev)}
-            className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors"
-          >
-            {showAdminPanel ? currentLang.adminToggleHide : currentLang.adminToggleShow}
-          </button>
-        </div>
-
-        {showAdminPanel && (
-          <section className="mb-12 border border-gray-200 rounded-2xl p-6 bg-gray-50">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              {currentLang.adminPanel}
-            </h2>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {productConfigs.map((product) => (
-                <div key={product.id} className="bg-white border border-gray-200 rounded-xl p-4">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {product.name}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        ₹{product.price} • {product.category}
-                      </p>
-                    </div>
-                    <span
-                      className={`text-xs font-bold px-2 py-1 rounded-full ${
-                        product.isEnabled
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-200 text-gray-600"
-                      }`}
-                    >
-                      {product.isEnabled
-                        ? currentLang.enabled
-                        : currentLang.disabled}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => toggleProduct(product.id)}
-                    className="w-full bg-gray-900 text-white py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors"
-                  >
-                    {currentLang.toggleProduct}
-                  </button>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Admin panel removed for production */}
 
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
