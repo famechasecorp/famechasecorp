@@ -85,7 +85,7 @@ export const productConfigs: ProductConfig[] = [
   {
     id: "complete-growth-kit",
     name: "Complete Creator Growth Kit",
-    price: 99,
+    price: 1,
     originalPrice: 199,
     description:
       "Everything you need to grow from 0 to 10K followers and start monetizing",
@@ -180,7 +180,7 @@ export const productConfigs: ProductConfig[] = [
   {
     id: "reels-mastery",
     name: "Instagram Reels Mastery Course",
-    price: 197,
+    price: 1,
     originalPrice: 397,
     description:
       "Learn the viral formula that gets millions of views consistently",
@@ -241,7 +241,7 @@ export const productConfigs: ProductConfig[] = [
   {
     id: "brand-masterclass",
     name: "Brand Collaboration Masterclass",
-    price: 149,
+    price: 1,
     originalPrice: 299,
     description: "Get paid partnerships with top brands - step by step system",
     isEnabled: true,
@@ -290,7 +290,7 @@ export const productConfigs: ProductConfig[] = [
   {
     id: "youtube-mastery",
     name: "YouTube Mastery Course",
-    price: 297,
+    price: 1,
     originalPrice: 597,
     description:
       "Complete YouTube growth and monetization blueprint for creators",
@@ -342,7 +342,7 @@ export const productConfigs: ProductConfig[] = [
   {
     id: "facebook-posting-mastery",
     name: "Facebook Posting Mastery Course",
-    price: 197,
+    price: 1,
     originalPrice: 397,
     description:
       "Master Facebook organic reach and engagement for maximum impact",
@@ -394,7 +394,7 @@ export const productConfigs: ProductConfig[] = [
   {
     id: "complete-bundle",
     name: "Complete Creator Bundle",
-    price: 497,
+    price: 1,
     originalPrice: 997,
     description:
       "Get ALL premium products for 70% OFF - Save ₹700+ and become a creator success story",
@@ -495,7 +495,7 @@ function generateMediaKitContent(
 • ब्रांड कलर्��� का उपयोग
 • हाई-क्वालिटी इमेज और ग्राफिकस
 • रीडेबल फॉन्ट्स और क्लियर हेडिंग्स
-• कॉन्सिस्टेंट ब्रांडिंग एलिमेंट्स`;
+• कॉन्सिस्टेंट ब्रांडिंग एल��मेंट्स`;
   }
 
   return `📱 PROFESSIONAL MEDIA KIT TEMPLATE
@@ -677,7 +677,7 @@ ${userName}
 
 Hi [Contact Name],
 
-आपके proposal के लिए thank you! मैं definitely interested हूं।
+आपके proposal के ��िए thank you! मैं definitely interested हूं।
 
 Considering my engagement rates और audience quality, क्या हम rate को slightly adjust कर सकते हैं? मैं ₹[your counter] suggest क��ूंगा because:
 
@@ -1602,7 +1602,7 @@ ${userNiche} क्रिएटर्स के लिए विस्तृत 
 ✅ ब्रांड और मार्केि��ग आउटरीच
 ✅ ��म्युनिटी एगेजमेंट र रेस्पॉन्स
 
-📉 मेट्रिक्स ट्रैकिंग:
+📉 मेट्रिक्स ट्रैकिं��:
 • फॉलोअर ग्रोथ रेट: ____%
 • एंगेमेंट रेट: ____%
 • मासक रीच: ____
@@ -1630,7 +1630,7 @@ Comprehensive Growth Guide for ${userNiche} Creators
 🎯 YOUR CURRENT METRICS:
 • Platform: ${userPlatform}
 • Followers: ${userFollowers}
-• Niche: ${userNiche}
+��� Niche: ${userNiche}
 • Goals: ${userGoals}
 
 📅 30-60-90 DAY PLAN:
@@ -1705,7 +1705,7 @@ ${userNiche} क्रिएटर्स े लि�� ${userPlatform} है
 
 🔍 हैशटैग की बुनियादी बातें:
 • हैशटै व्यूज को बढ़ात हैं (30x तक बढ़ कते हैं)
-• वे आपके कंटेंट को टार्गेट ऑडियंस तक पहुंचाते हैं
+• वे आपके कंटेंट को टार्गेट ऑडियंस तक पहुंचा���े हैं
 • वे कम्ुनिट बिल्डिंग में मदद करते हैं
 • इनसे आपकी ब्रांड विजिबिलिटी बढ़ती है
 
@@ -1735,7 +1735,7 @@ ${userNiche} क्रिएटर्स े लि�� ${userPlatform} है
 • #yourname #yourbrand #yourcampaign
 • कम competition, बेहतर tracking
 
-🎨 ${userNiche} के लिए टॉप हैशटैग:
+🎨 ${userNiche} के लिए टॉप हैशटै��:
 
 🔥 मेइ निच हैटैग:
 • #{userNiche.toLowerCase().replace(' ', '').replace('&', 'and')}
@@ -1762,7 +1762,7 @@ ${userNiche} क्रिएटर्स े लि�� ${userPlatform} है
 • 10 मिड-लेवल हैशटैग (moderate competition)
 • 10 निच हैशटैग (low competition)
 • 3 माइक्रो हैशटैग (very targeted)
-• 2 बरांडेड हशटैग (your brand)
+• 2 बरांडेड हश��ैग (your brand)
 
 📝 हैशटैग स्ट्रैटेजी:
 
@@ -2049,7 +2049,7 @@ ${userPlatform} | ${userFollowers} Followers
 🚨 कैंसिलेशन पॉलिसी:
 • 24 hours में कैंसिलेशन: 100% रिफंड
 • 48 hours में: 50% रिफंड
-• कंटेंट स्टार्ट के बाद: नो रिफंड
+• क��टेंट स्टार्ट के बाद: नो रिफंड
 
 📞 संपर्क जानकारी:
 • Email: [your-email@domain.com]
@@ -2197,10 +2197,10 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 6. "24 घंटे में मैंने क्या सीखा [निच] के बारे में"
 7. "[निच] के बारे में मिथ्स जो गलत हैं"
 8. "मैं क��से [निच] में एक्सपर्ट बना"
-9. "[निच] करते समय ये गलतियां मत करना"
+9. "[निच] करते ��मय ये गलतियां मत करना"
 10. "एक दिन मेरे साथ [निच] क दुनिया में"
 
-📱 HOOK फॉर्मूला (पहले 3 सेकंड):
+📱 HOOK फॉर्मूला (पहले 3 ��ेकंड):
 ✅ "यह वीडियो देखना ज��रूरी है अगर आप..."
 ✅ "म���ं शर्त लगाता हूं कि आप नहीं जानत��..."
 ✅ "इससे पहले कि मैं [result] पाता, मै..."
@@ -2264,7 +2264,7 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 • Fast-paced beats
 • Emotional background music
 
-⚡ वायरल होने के लिए फॉर्मूला:
+⚡ वायर��� होने के लिए फॉर्मूला:
 Hook (0-3s) + Value/Entertainment (3-20s) + Call to Action (20-30s)
 
 🎬 प्रोडक्शन टिप्स:
@@ -2420,7 +2420,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
 ✨ हैंड ट्��ांजिशन:
 • हैंड कवर करें - कपड़े/लुक बदलें
 • उंगली स्नैप - टेक्स्ट/ग्राफिक add करें
-• हैंड swipe - सीन चंज करें
+• हैंड swipe - सीन चं��� करें
 • Palm push - नई लोकेशन में
 
 📸 ��ब्जेक्ट ट्रांजिशन:
@@ -2600,7 +2600,7 @@ Viral Editing Techniques for ${userNiche} Creators
 
 ⚡ Speed Transitions:
 • Fast zoom in/out
-• Quick spin (360°)
+�� Quick spin (360°)
 • Speed up + slow down
 • Jump cut sequences
 
@@ -2863,7 +2863,7 @@ ${userNiche} क्रिएटर्स के लिए वायरल ऑड
 • Achievement celebration
 • Thoughtful ambient music
 
-🎨 म्यूजिक सेलेक्शन टिप्स:
+🎨 म्���ूजिक सेलेक्शन टिप्स:
 
 ⏱️ टाइमिंग म��टर्स:
 • 15-30 सेकंड रील्स के लिए upbeat music
@@ -3098,7 +3098,7 @@ Viral Audio Strategy for ${userNiche} Creators
 • Achievement celebration
 • Thoughtful ambient music
 
-🎨 MUSIC SELECTION TIPS:
+���� MUSIC SELECTION TIPS:
 
 ⏱️ Timing Matters:
 • 15-30 second reels need upbeat music
@@ -3236,7 +3236,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 1. रिलेशनशिप (Interest): आपके अऔर user के बीच connection
 2. रीसेंी (Recency): कंटेंट कितना नया है
 3. एंगेजमेंट (Engagement): लाइक्स, कमेंट्स, शेयर्स
-4. यूजर एक्टिविटी: कितनी बार ऐप खोलते हैं
+4. यूजर एक्ट��विटी: कितनी बार ऐप खोलते हैं
 5. कंटेंट क्वालिटी: वीडियो quality और completion rate
 
 🚀 वायरल होने के लिए शीर्ष रणनीतियां:
@@ -3259,7 +3259,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 • जम म्यूजिक से timing match करें
 • ओरिजिनल sounds बनाएं (वयरल potential ज्यादा)
 
-4️⃣ कैप्श और हैशटैग ऑप्टिमाइजेशन:
+4️⃣ कैप्��� और हैशटैग ऑप्टिमाइजेशन:
 • पहली लान मे�� hook रखें
 • ऐक्शन वरड्स का उपयोग करें
  इमोजी और सम्बोल्स strategically use ��रें
@@ -3305,7 +3305,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 🔄 कंटेंट रिपरपाजिंग और adaptation:
 • टिकट��क viral content को adapt करें
 • YouTube Shorts trends को follow करें
-• इंटर्नेशनल trends को Indian context में adapt करें
+• इंटर्नेशनल trends को Indian context म��ं adapt करें
 • पुराने viral content को नए twist के साथ recreate क���ें
 
 ⚠️ आम लतियां जिनसे बचें:
@@ -3488,7 +3488,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 🎆 क्या किया ठीक:
 • Gaming content में हिंदी commentary
 • Controversial topics पर roasting videos
-• High energy और aggressive presentation style
+��� High energy और aggressive presentation style
 • Trending topics पर quick response
 
 ⚡ रीप्लि���ेट करने योगय तकनीकें:
@@ -3526,7 +3526,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 📈 सफलता के आंकडे:
 • 7.8M+ यूट्यूब सब्सक्राइबर्स
 • 3.2M+ इंस्टाग्राम फॉलोअर्स
-• Multiple fitness businesses
+��� Multiple fitness businesses
 • अनुमानित आय: ₹3-5 करोड+ सालाना
 
 🎆 क्य��� किया ठीक:
@@ -3885,7 +3885,7 @@ function generateBrandOutreachScriptsContent(
   if (language === "hindi") {
     return `📧 प्रोफेशनल ब्रांड आउटरीच ईमेल स्क्रिप्ट्स
 
-${userName} - ${userNiche} के लिए 25+ प्रोवन ईमेल टेम्प्लेट्स
+${userName} - ${userNiche} ���े लिए 25+ प्रोवन ईमेल टेम्प्लेट्स
 
 🎯 स्क्रि्ट #1: र्स्ट क��न्टैक्ट (कोल्ड आउटरीच)
 विषय: ${userNiche} Creator ${userName} - Collaboration Opportunity
@@ -4120,14 +4120,14 @@ Dear [Brand Team],
 
 आपके upcoming [product/event name] launch के बारे में सुना है। Congratulations!
 
-मैं इस exciting launch का part बनना चाहूंगा और अपनी engaged audience के साथ share करना चाहूंगा।
+मैं इस exciting launch का part बनना चाहूंगा और अपनी engaged audience के साथ share ���रना चाहूंगा।
 
 🎬 EVENT COLLABORATION PROPOSAL:
 
 📱 PRE-LAUNCH BUZZ (Week 1-2):
 • Teaser content ���र anticipation building
 • Behind-the-scenes content creation
-• Audience excitement generation
+�� Audience excitement generation
 • Early access content
 
 🎉 LAUNCH DAY COVERAGE:
@@ -4414,7 +4414,7 @@ ${userNiche} क्रिएटर्स के लए वायरल हैक
 
 🖼️ THUMBNAIL ऑप्टिमाइजेशन:
 • High contrast colors (orange, red, blue)
-• बड़े और साफ fonts (Arial, Impact)
+• बड़े और स���फ fonts (Arial, Impact)
 • Face expressions clear दिखें
 • 1280x720 resolution, under 2MB size
 • A/B test करें different thumbnails
@@ -4577,7 +4577,7 @@ Long-tail tags (2-5):
 • Promise value in introduction
 • Start main point within 2-3 minutes
 • Visual variety every 3-5 seconds
-• Naturally integrate subscribe reminder
+��� Naturally integrate subscribe reminder
 • Hook to next video at the end
 
 📊 ANALYTICS TRACKING:
@@ -4810,7 +4810,7 @@ Example rates:
 
 🎓 COURSE SELLING:
 
-📚 COURSE CREATION STRATEGY:
+���� COURSE CREATION STRATEGY:
 • Convert your expertise into courses
 • Use problem-solving approach
 • Step-by-step learning modules
@@ -4903,7 +4903,7 @@ function generateThumbnailTemplatesContent(
   if (language === "hindi") {
     return `🎨 वायरल थंबनेल टेम्प्लेट्स & साइकोलॉजी गाइड
 
-${userNiche} क्रिएटर्स के लिए 50+ प्रोवन थंबनेल डिज़ाइन
+${userNiche} क्रिएटर्स के लिए 50+ प्���ोवन थंबनेल डिज़ाइन
 
 🧠 THUMBNAIL PSYCHOLOGY:
 
@@ -5496,7 +5496,7 @@ ${userNiche} क्रिएटर्स के लिए ग्रोथ ट्
 📆 MONTHLY DEEP DIVE:
 • Comprehensive performance review
 • Content strategy adjustments
-• Audience demographic shifts
+��� Audience demographic shifts
 • Seasonal trend analysis
 • Goal setting for next month
 
@@ -5706,7 +5706,7 @@ Growth Tracking and Optimization for ${userNiche} Creators
 • Subscriber growth rate
 • Top performing content
 • Audience retention trends
-��� Revenue and RPM changes
+����� Revenue and RPM changes
 
 📆 MONTHLY DEEP DIVE:
 • Comprehensive performance review
@@ -6133,7 +6133,7 @@ Organic Reach and Engagement Mastery for ${userNiche} Creators
 • Myth-busting content
 
 🎊 Entertainment Posts:
-• Funny observations
+�� Funny observations
 • Memes (original creation)
 • Polls and quizzes
 • Challenges and contests
@@ -7092,7 +7092,7 @@ Examples:
 • "[City] [Niche] Community"
 
 🖼️ GROUP BRANDING:
-• Professional cover photo (1640x856 pixels)
+�� Professional cover photo (1640x856 pixels)
 • Clear group description
 • Pinned post with rules and guidelines
 • Featured posts section setup
@@ -7989,7 +7989,7 @@ ${userNiche} Creator | ${userPlatform} | ${userFollowers} Followers
 ═══════════════════════════════════════
 
 🎨 DESIGN TEMPLATE #2: BOLD & COLORFUL
-═════════════════════════════════════
+═══════════════════════════════════��═
 
 🌟 ${userName.toUpperCase()} 🌟
 ${userNiche} Expert & Content Creator
@@ -8397,7 +8397,7 @@ Track which media kit design gets the best response rate from brands and optimiz
 Stylish Media Kit Collection for ${userName} - ${userNiche}
 
 🎨 DESIGN TEMPLATE #1: MINIMALIST ELEGANCE
-═══════════════════════════════════════
+════════════════���══════════════════════
 
 ${userName.toUpperCase()}
 ${userNiche} Creator | ${userPlatform} | ${userFollowers} Followers
@@ -8483,7 +8483,7 @@ Email: [Email]
 Phone: [Phone]
 Manager: [If applicable]
 
-══════════════════════════════════════
+═════════════════════════════════��════
 
 🎨 DESIGN TEMPLATE #4: CREATIVE ARTISTIC
 ═══════════════════��══════════���════════
@@ -8730,7 +8730,7 @@ Standard Package (₹8K):
 • 2 story slides
 • Analytics report
 
-Premium Package (₹12K):
+Premium Package (���12K):
 • 1 Instagram post
 • Professional editing
 • 4 story slides
@@ -8776,7 +8776,7 @@ Premium Package (₹12K):
 ══════════════════════════════════════
 ${userNiche} CREATOR RATE CARD
 Follower Count: ${userFollowers}
-══════════════���═══════════════════════
+══════════════���═══════════���═══════════
 
 📸 CONTENT CREATION RATES:
 
@@ -9108,7 +9108,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 
 📱 सोशल मीडिया मैनेजमेंट:
 • Buffer (FREE/Pro $15/month) - पोस्ट स्केड्यूलिंग
-• Later (FREE/Pro $18/month) - विजुअल कं���ेंट प्लानिंग
+• Later (FREE/Pro $18/month) - विजुअ��� कं���ेंट प्लानिंग
 • Hootsuite (FREE/Pro $49/month) - मल्टी-पलेटफॉर्म मैनेजमेंट
 • Creator Studio (FREE) - Facebook/Instagram नेट��व टूल
 
@@ -9130,7 +9130,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 • Teachable ($39/month) - ऑनलाइन कोर्स
 
 🔍 एफिलिएट ार्केटिंग:
-• Amazon Associates (FREE) - आमक आमजन एफिल��एट
+• Amazon Associates (FREE) - आमक आम��न एफिल��एट
 • Commission Junction (FREE) - मल्टी-ब्रांड नेवर्क
 • ShareASale (FREE) - ब्रांड पार्टनरशिप
 

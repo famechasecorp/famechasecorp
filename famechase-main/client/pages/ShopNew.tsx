@@ -32,10 +32,7 @@ interface PurchasedProduct {
 }
 
 function ShopNew() {
-  const [language, setLanguage] = useState<"english" | "hindi">(() => {
-    const savedLanguage = localStorage.getItem("famechase-language");
-    return (savedLanguage as "english" | "hindi") || "english";
-  });
+  const [language, setLanguage] = useState<"english" | "hindi">("english");
   const [products, setProducts] = useState<ProductConfig[]>([]);
   const [showQuizRequiredPopup, setShowQuizRequiredPopup] = useState(false);
   const [timeLeft, setTimeLeft] = useState(86400);
@@ -72,29 +69,33 @@ function ShopNew() {
       try {
         parsedQuizData = JSON.parse(storedQuizData);
         setQuizData(parsedQuizData);
-        if (parsedQuizData.language) {
-          setLanguage(parsedQuizData.language);
-        }
+        /* keep default language (English) */
       } catch (error) {
         console.warn("Unable to parse quiz data", error);
       }
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const paymentStatus = urlParams.get("payment_status");
+    const rawStatus = (urlParams.get("payment_status") || urlParams.get("status") || "").toLowerCase();
+    const urlProductId = urlParams.get("product_id") || urlParams.get("data_product_id");
     const pendingPurchase = localStorage.getItem("pendingProductPurchase");
+    const success =
+      rawStatus === "credit" ||
+      rawStatus === "success" ||
+      rawStatus === "completed" ||
+      rawStatus === "paid" ||
+      !!urlParams.get("payment_id");
 
-    if (
-      pendingPurchase &&
-      (paymentStatus === "Credit" || paymentStatus === "success")
-    ) {
+    const resolvedProductId = urlProductId || pendingPurchase || null;
+
+    if (resolvedProductId && success) {
       const alreadyPurchased = existingPurchases.some(
-        (purchase) => purchase.id === pendingPurchase,
+        (purchase) => purchase.id === resolvedProductId,
       );
 
       if (!alreadyPurchased) {
         const purchase: PurchasedProduct = {
-          id: pendingPurchase,
+          id: resolvedProductId,
           purchaseDate: new Date().toISOString(),
           customerInfo: parsedQuizData ?? {},
         };
@@ -107,7 +108,7 @@ function ShopNew() {
       }
 
       localStorage.removeItem("pendingProductPurchase");
-      setShowSuccessPage(pendingPurchase);
+      setShowSuccessPage(resolvedProductId);
       window.history.replaceState({}, "", "/shop");
     }
   }, []);
@@ -208,7 +209,7 @@ function ShopNew() {
         name: quizInfo.name || "",
         email: quizInfo.email || "",
         phone: quizInfo.phone || "",
-        redirectUrl: `${window.location.origin}/shop?payment_status=Credit`,
+        redirectUrl: `${window.location.origin}/shop?payment_status=credit&product_id=${encodeURIComponent(productId)}`,
         notes: {
           product_id: productId,
           product_name: product.name,
@@ -277,14 +278,14 @@ function ShopNew() {
       disabled: "निष्क्रिय",
       bestseller: "बेस्टसेलर",
       trending: "ट्रेंडिंग",
-      expertGuide: "एक्सपर्ट गाइड",
+      expertGuide: "एक्सपर���ट गाइड",
       offerEnds: "ऑफर समाप्त होता है",
       downloads: "डाउनलोड",
       rating: "रेटिंग",
       securePayment: "सुरक्षित भुगतान",
       instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभी खरीदें",
-      downloadFree: "फ्री डाउनलोड करें",
+      downloadFree: "फ्री ��ाउनलोड करें",
       bundleOffer: "सीमित समय बंडल ऑफर 🔥",
       save: "बचत करें",
       getBundle: "कम्प्लीट बंडल प्राप्त करें",
@@ -409,7 +410,7 @@ function ShopNew() {
                   className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <Home className="w-4 h-4" />
-                  Back to Home
+                  {language === "hindi" ? "होम पर लौटें" : "Back to Home"}
                 </Link>
                 <select
                   value={language}
@@ -451,7 +452,7 @@ function ShopNew() {
                     className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-4 px-6 rounded-xl hover:shadow-lg transition-all"
                   >
                     <Download className="w-4 h-4 inline mr-2" />
-                    Download Complete Bundle (All Products)
+                    {language === "hindi" ? "कम्प्लीट बंडल डाउनलोड करें (सभी प्रोडक्ट्स)" : "Download Complete Bundle (All Products)"}
                   </button>
                 </div>
               ) : (
@@ -506,7 +507,7 @@ function ShopNew() {
                 className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <Home className="w-4 h-4" />
-                Back to Home
+                  {language === "hindi" ? "होम पर लौटें" : "Back to Home"}
               </Link>
 
               <select
@@ -575,56 +576,7 @@ function ShopNew() {
           </div>
         )}
 
-        <div className="flex justify-end mb-6">
-          <button
-            type="button"
-            onClick={() => setShowAdminPanel((prev) => !prev)}
-            className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors"
-          >
-            {showAdminPanel ? currentLang.adminToggleHide : currentLang.adminToggleShow}
-          </button>
-        </div>
-
-        {showAdminPanel && (
-          <section className="mb-12 border border-gray-200 rounded-2xl p-6 bg-gray-50">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              {currentLang.adminPanel}
-            </h2>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {productConfigs.map((product) => (
-                <div key={product.id} className="bg-white border border-gray-200 rounded-xl p-4">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {product.name}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        ₹{product.price} • {product.category}
-                      </p>
-                    </div>
-                    <span
-                      className={`text-xs font-bold px-2 py-1 rounded-full ${
-                        product.isEnabled
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-200 text-gray-600"
-                      }`}
-                    >
-                      {product.isEnabled
-                        ? currentLang.enabled
-                        : currentLang.disabled}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => toggleProduct(product.id)}
-                    className="w-full bg-gray-900 text-white py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors"
-                  >
-                    {currentLang.toggleProduct}
-                  </button>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Admin panel removed for production */}
 
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
@@ -672,7 +624,7 @@ function ShopNew() {
                         {language === "hindi" && product.id === "complete-growth-kit"
                           ? "कम्प्लीट क्रिएटर ग्रोथ किट"
                           : language === "hindi" && product.id === "reels-mastery"
-                            ? "इंस्टाग्��ाम री���्स मास्टरी कोर्स"
+                            ? "इंस्टाग्राम रील्स मास्टरी कोर्स"
                             : language === "hindi" && product.id === "brand-masterclass"
                               ? "ब्रांड कोलैबोरेशन मास्टरक्लास"
                               : language === "hindi" && product.id === "complete-bundle"
@@ -691,7 +643,7 @@ function ShopNew() {
                         </span>
                         {isPurchased && (
                           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                            ✅ Purchased
+                            ✅ {language === "hindi" ? "खरीदा गया" : "Purchased"}
                           </span>
                         )}
                       </div>
@@ -739,7 +691,7 @@ function ShopNew() {
                               className="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-600 transition-all mb-4"
                             >
                               <Download className="w-4 h-4 inline mr-2" />
-                              Download Products
+                              {language === "hindi" ? "प्रोडक्ट्स डाउनलोड करें" : "Download Products"}
                             </button>
                           ) : (
                             <>
