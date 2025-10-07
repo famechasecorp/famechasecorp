@@ -198,7 +198,7 @@ export default function Shop() {
         name: quizData?.name || '',
         email: quizData?.email || '',
         phone: quizData?.phone || '',
-        redirectUrl: `${window.location.origin}/shop?payment_status=Credit`,
+        redirectUrl: `${window.location.origin}/shop?payment_status=credit&product_id=${encodeURIComponent(productId)}`,
         notes: {
           product_id: productId,
           product_name: product.name,
@@ -305,7 +305,7 @@ export default function Shop() {
       bundleOffer: "सीमित समय बंडल ऑफर 🔥",
       save: "बचाएं",
       getBundle: "कम्प्लीट बंडल पाएं",
-      validFor: "ऑफर केवल अगले 24 घंटे के लिए वैध",
+      validFor: "ऑफर केवल अग���े 24 घंटे के लिए वैध",
       paymentForm: "अपनी जानकारी पूरी करें",
       fullName: "पूरा नाम",
       emailAddress: "ईमेल पता",
