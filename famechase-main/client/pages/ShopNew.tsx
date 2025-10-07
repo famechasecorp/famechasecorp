@@ -32,10 +32,7 @@ interface PurchasedProduct {
 }
 
 function ShopNew() {
-  const [language, setLanguage] = useState<"english" | "hindi">(() => {
-    const savedLanguage = localStorage.getItem("famechase-language");
-    return (savedLanguage as "english" | "hindi") || "english";
-  });
+  const [language, setLanguage] = useState<"english" | "hindi">("english");
   const [products, setProducts] = useState<ProductConfig[]>([]);
   const [showQuizRequiredPopup, setShowQuizRequiredPopup] = useState(false);
   const [timeLeft, setTimeLeft] = useState(86400);
@@ -72,9 +69,7 @@ function ShopNew() {
       try {
         parsedQuizData = JSON.parse(storedQuizData);
         setQuizData(parsedQuizData);
-        if (parsedQuizData.language) {
-          setLanguage(parsedQuizData.language);
-        }
+        /* keep default language (English) */
       } catch (error) {
         console.warn("Unable to parse quiz data", error);
       }
@@ -82,9 +77,14 @@ function ShopNew() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const rawStatus = (urlParams.get("payment_status") || urlParams.get("status") || "").toLowerCase();
-    const urlProductId = urlParams.get("product_id");
+    const urlProductId = urlParams.get("product_id") || urlParams.get("data_product_id");
     const pendingPurchase = localStorage.getItem("pendingProductPurchase");
-    const success = rawStatus === "credit" || rawStatus === "success" || rawStatus === "completed";
+    const success =
+      rawStatus === "credit" ||
+      rawStatus === "success" ||
+      rawStatus === "completed" ||
+      rawStatus === "paid" ||
+      !!urlParams.get("payment_id");
 
     const resolvedProductId = urlProductId || pendingPurchase || null;
 
@@ -278,7 +278,7 @@ function ShopNew() {
       disabled: "निष्क्रिय",
       bestseller: "बेस्टसेलर",
       trending: "ट्रेंडिंग",
-      expertGuide: "एक्सपर्ट गाइड",
+      expertGuide: "एक्सपर���ट गाइड",
       offerEnds: "ऑफर समाप्त होता है",
       downloads: "डाउनलोड",
       rating: "रेटिंग",
@@ -410,7 +410,7 @@ function ShopNew() {
                   className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <Home className="w-4 h-4" />
-                  Back to Home
+                  {language === "hindi" ? "होम पर लौटें" : "Back to Home"}
                 </Link>
                 <select
                   value={language}
@@ -452,7 +452,7 @@ function ShopNew() {
                     className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-4 px-6 rounded-xl hover:shadow-lg transition-all"
                   >
                     <Download className="w-4 h-4 inline mr-2" />
-                    Download Complete Bundle (All Products)
+                    {language === "hindi" ? "कम्प्लीट बंडल डाउनलोड करें (सभी प्रोडक्ट्स)" : "Download Complete Bundle (All Products)"}
                   </button>
                 </div>
               ) : (
@@ -507,7 +507,7 @@ function ShopNew() {
                 className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <Home className="w-4 h-4" />
-                Back to Home
+                  {language === "hindi" ? "होम पर लौटें" : "Back to Home"}
               </Link>
 
               <select
@@ -624,7 +624,7 @@ function ShopNew() {
                         {language === "hindi" && product.id === "complete-growth-kit"
                           ? "कम्प्लीट क्रिएटर ग्रोथ किट"
                           : language === "hindi" && product.id === "reels-mastery"
-                            ? "इंस्टाग्��ाम री���्स मास्टरी कोर्स"
+                            ? "इंस्टाग्राम रील्स मास्टरी कोर्स"
                             : language === "hindi" && product.id === "brand-masterclass"
                               ? "ब्रांड कोलैबोरेशन मास्टरक्लास"
                               : language === "hindi" && product.id === "complete-bundle"
@@ -643,7 +643,7 @@ function ShopNew() {
                         </span>
                         {isPurchased && (
                           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                            ✅ Purchased
+                            ✅ {language === "hindi" ? "खरीदा गया" : "Purchased"}
                           </span>
                         )}
                       </div>
@@ -691,7 +691,7 @@ function ShopNew() {
                               className="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-600 transition-all mb-4"
                             >
                               <Download className="w-4 h-4 inline mr-2" />
-                              Download Products
+                              {language === "hindi" ? "प्रोडक्ट्स डाउनलोड करें" : "Download Products"}
                             </button>
                           ) : (
                             <>
