@@ -284,7 +284,7 @@ export default function Shop() {
       backToShop: "Back to Shop",
     },
     hindi: {
-      title: "क्रिएटर टूल्स और संसाधन",
+      title: "क्रिएटर टू���्स और संसाधन",
       subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
       freeResources: "फ्री क्रिएटर संसाधन",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
@@ -305,7 +305,7 @@ export default function Shop() {
       bundleOffer: "सीमित समय बंडल ऑफर 🔥",
       save: "बचाएं",
       getBundle: "कम्प्लीट बंडल पाएं",
-      validFor: "ऑफर केवल अग���े 24 घंटे के लिए वैध",
+      validFor: "ऑफर केवल अगले 24 घंटे के लिए वैध",
       paymentForm: "अपनी जानकारी पूरी करें",
       fullName: "पूरा नाम",
       emailAddress: "ईमेल पता",
@@ -433,7 +433,7 @@ export default function Shop() {
                   className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <Home className="w-4 h-4" />
-                  Back to Home
+                  {language === "hindi" ? "होम पर लौटें" : "Back to Home"}
                 </Link>
                 <select
                   value={language}
@@ -798,7 +798,7 @@ export default function Shop() {
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 animate-pulse" />
             <div className="text-sm font-bold">
-              {language === "hindi" ? "⏰ सीमित समय!" : "��� Limited Time!"}
+              {language === "hindi" ? "⏰ स���मित समय!" : "��� Limited Time!"}
             </div>
           </div>
           <div className="text-xs font-mono bg-black bg-opacity-20 px-2 py-1 rounded">
