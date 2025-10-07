@@ -1,0 +1,10 @@
+POST http://localhost:5000/api/payuhash
+Content-Type: application/json
+
+{
+  "txnid": "12345",
+  "amount": "10",
+  "productinfo": "Test Product",
+  "firstname": "John",
+  "email": "john@example.com"
+}

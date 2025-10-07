@@ -1,0 +1,12 @@
+{
+  "admins": [
+    {
+      "id": "11111111-1111-1111-1111-111111111111",
+      "email": "admin@flare.garden",
+      "password": "Admin123!",
+      "createdAt": "2025-08-29T18:47:30.000Z"
+    }
+  ],
+  "events": [],
+  "sessions": {}
+}

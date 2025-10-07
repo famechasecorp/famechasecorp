@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>PayU Test Checkout</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; }
+      button { padding: 10px 16px; font-size: 16px; }
+      pre { background: #f6f8fa; padding: 12px; overflow: auto; }
+      label { display:inline-block; margin: 8px 0; }
+      input { padding: 6px 8px; font-size: 16px; }
+      .wrap { max-width: 720px; margin: 0 auto; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>PayU Test Checkout</h1>
+      <p>This page triggers a Test Mode payment from famechase.com using your Netlify serverless function.</p>
+
+      <label>
+        Amount (₹):
+        <input id="amt" type="number" value="99" min="1" step="1" />
+      </label>
+      <br /><br />
+      <button id="pay">Pay (Test Mode)</button>
+
+      <h3>Debug</h3>
+      <pre id="out"></pre>
+    </div>
+
+    <script>
+      const out = document.getElementById("out");
+      const log = (x) => (out.textContent = JSON.stringify(x, null, 2));
+
+      document.getElementById("pay").addEventListener("click", async () => {
+        const amount = Number(document.getElementById("amt").value || 99);
+
+        log({ status: "calling initiate", amount });
+
+        try {
+          const res = await fetch("/.netlify/functions/payu-initiate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              amount,
+              productinfo: "Webhook test",
+              firstname: "Test",
+              email: "test@example.com",
+              phone: "9999999999",
+              surl: "https://famechase.com/thank-you",
+              furl: "https://famechase.com/payment-failed"
+            }),
+          });
+
+          if (!res.ok) {
+            const txt = await res.text();
+            log({ error: `HTTP ${res.status}`, body: txt });
+            alert("Initiate failed (HTTP). See debug output below.");
+            return;
+          }
+
+          const data = await res.json();
+          log(data);
+
+          if (!data || !data.action || !data.params) {
+            alert("Initiate failed, see debug output below.");
+            return;
+          }
+
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = data.action;
+
+          Object.entries(data.params).forEach(([k, v]) => {
+            const i = document.createElement("input");
+            i.type = "hidden";
+            i.name = k;
+            i.value = v;
+            form.appendChild(i);
+          });
+
+          document.body.appendChild(form);
+          form.submit();
+        } catch (e) {
+          log({ error: String(e) });
+          alert("Error: " + String(e));
+        }
+      });
+    </script>
+  </body>
+</html>

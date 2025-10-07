@@ -1,0 +1,10 @@
+# SPA redirects
+/api/* /.netlify/functions/api/:splat 200
+/* /index.html 200
+
+# Payment redirects for PayU
+/payment-success /payment-success 200
+/payment-failure /payment-failure 200
+
+# Admin routes
+/admin /admin 200
