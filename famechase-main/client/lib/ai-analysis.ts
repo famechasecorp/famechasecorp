@@ -1,6 +1,7 @@
 interface QuizData {
   name: string;
   email: string;
+  phone?: string;
   age: string;
   city: string;
   primaryPlatform: string;
@@ -30,6 +31,8 @@ interface FameScoreAnalysis {
   fameScore: number;
   confidenceScore: number;
   confidenceExplanation: string;
+  famePotentialIndex: number;
+  monetizationReadinessIndex: number;
   experienceLevel: string;
   growthTrajectory: string;
   swotAnalysis: {
@@ -38,6 +41,12 @@ interface FameScoreAnalysis {
     opportunities: string[];
     threats: string[];
   };
+  marketInsights: string[];
+  advancedMarketInsights: Record<string, unknown>;
+  competitorAnalysis: string;
+  growthPotential: number;
+  incomeProjection: string;
+  suggestions: string[];
   monetizationRoadmap: {
     currentPhase: string;
     nextSteps: string[];

@@ -107,6 +107,9 @@
     "typescript": "^5.5.3",
     "vaul": "^0.9.3",
     "vite": "^6.3.5",
-    "vitest": "^3.1.4"
+    "vitest": "^3.1.4",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/dom": "^9.3.4",
+    "jsdom": "^24.1.3"
   }
 }

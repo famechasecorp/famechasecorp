@@ -50,7 +50,7 @@ const App = () => (
 );
 
 // Ensure createRoot is only called once
-const container = document.getElementById("root")!;
+const container = document.getElementById("root") as (HTMLElement & { _reactRoot?: ReturnType<typeof createRoot> });
 if (!container._reactRoot) {
   container._reactRoot = createRoot(container);
 }
