@@ -108,7 +108,7 @@
     "vaul": "^0.9.3",
     "vite": "^6.3.5",
     "vitest": "^3.1.4",
-    "@testing-library/react": "^16.0.1",
+    "@testing-library/react": "^14.1.2",
     "jsdom": "^24.1.3"
   }
 }
