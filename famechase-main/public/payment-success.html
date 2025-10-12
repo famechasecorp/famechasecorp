@@ -62,6 +62,20 @@
           dlWrap.style.display = 'block'
           dlContainer.innerHTML = ''
 
+          // Mark product as purchased locally so Shop unlocks immediately
+          try {
+            const productId = params.get('product_id')
+            if (productId) {
+              const stored = localStorage.getItem('purchasedProducts')
+              const list = stored ? JSON.parse(stored) : []
+              const exists = Array.isArray(list) && list.some(p => p && p.id === productId)
+              if (!exists) {
+                list.push({ id: productId, purchaseDate: new Date().toISOString(), customerInfo: {} })
+                localStorage.setItem('purchasedProducts', JSON.stringify(list))
+              }
+            }
+          } catch (e) { /* no-op */ }
+
           if (json.downloads && json.downloads.length) {
             json.downloads.forEach(d => {
               const a = document.createElement('a')

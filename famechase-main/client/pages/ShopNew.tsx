@@ -209,7 +209,7 @@ function ShopNew() {
         name: quizInfo.name || "",
         email: quizInfo.email || "",
         phone: quizInfo.phone || "",
-        redirectUrl: `${window.location.origin}/shop?payment_status=credit&product_id=${encodeURIComponent(productId)}`,
+        redirectUrl: `${window.location.origin}/payment-success.html?product_id=${encodeURIComponent(productId)}`,
         notes: {
           product_id: productId,
           product_name: product.name,
@@ -284,7 +284,7 @@ function ShopNew() {
       rating: "रेटिंग",
       securePayment: "सुरक्षित भुगतान",
       instantDownload: "तुरंत डाउनलोड",
-      buyNow: "अभी खरीदें",
+      buyNow: "अभ��� खरीदें",
       downloadFree: "फ्री ��ाउनलोड करें",
       bundleOffer: "सीमित समय बंडल ऑफर 🔥",
       save: "बचत करें",
@@ -302,7 +302,7 @@ function ShopNew() {
       thanksForPurchase:
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
-      recentHeadline: "अ��ी-अभी जिन्होंने अपना किट लिया",
+      recentHeadline: "अ��ी-अभी ज��न्होंने अपना किट लिया",
       adminToggleShow: "एडमिन पैनल खोलें",
       adminToggleHide: "एडमिन पैन�� बंद करें",
       instamojoNote:
@@ -705,7 +705,7 @@ function ShopNew() {
                               </button>
                               <p className="text-xs text-gray-600 mb-4 text-center">
                                 {language === "hindi"
-                                  ? "भुगतान पूरा होने के बाद डाउनलोड अपने आप खुल जाएगा।"
+                                  ? "भुगतान पूरा होन�� के बाद डाउनलोड अपने आप खुल जाएगा।"
                                   : "Payment completes in a secure popup. Downloads unlock instantly."}
                               </p>
                             </>
@@ -782,7 +782,7 @@ function ShopNew() {
             to="/quiz"
             className="bg-neon-green text-black px-3 py-1 rounded-full text-sm font-bold hover:bg-emerald-400 transition-colors"
           >
-            {language === "hindi" ? "शुरू करें" : "Start Quiz"}
+            {language === "hindi" ? "शुरू कर��ं" : "Start Quiz"}
           </Link>
         </div>
       </div>
