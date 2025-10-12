@@ -126,7 +126,7 @@ export const openInstamojoCheckout = async (
     await ensureInstamojoScript();
   } catch (error) {
     console.warn("Falling back to direct navigation for Instamojo", error);
-    window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+    window.location.href = checkoutUrl;
     return;
   }
 
@@ -135,5 +135,5 @@ export const openInstamojoCheckout = async (
     return;
   }
 
-  window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+  window.location.href = checkoutUrl;
 };
