@@ -70,7 +70,7 @@ const translateSuggestionToHindi = (suggestion: string): string => {
     ],
     [/Expected result: ([^.]*)/i, "अपेक्षित परिणाम: $1"],
     [/Use these hashtags: ([^.]+)/i, "इन हैशटैग का उपयोग करें: $1"],
-    [/Start paid story promotions/i, "पेड स्टोर��� प्रमोशन शुरू करें"],
+    [/Start paid story promotions/i, "पेड स्टोर���� प्रमोशन शुरू करें"],
     [/Create affiliate content/i, "एफिलिएट कंटेंट ���नाएं"],
     [/Day 1-2:/i, "दिन 1-2:"],
     [/Day 3-7:/i, "दिन 3-7:"],
@@ -175,7 +175,7 @@ const languages = {
     age: "उम्र",
     paySecure: "सुरक्षित भुगतान करें",
     processing: "प्रसंस्करण...",
-    whatYouGet: "भुगतान करने के बाद आपको मिलेगा:",
+    whatYouGet: "भुगतान करने के बाद आपको मिल��गा:",
     fameScoreReport: "फेम स्कोर रिपोर्ट",
     mediaKitTemplate: "�����डिया कि�� टेम्प्लेट",
     growthStrategy: "ग्���ोथ स्ट्रैटेजी",
@@ -193,7 +193,7 @@ const languages = {
     postingFrequency: "पोस्टिंग आवृत्ति:",
     followers: "फॉलोअर्स:",
     monthlyIncome: "मासिक आय:",
-    experienceLevel: "अनुभव स्त��:",
+    experienceLevel: "अ���ुभव स्त��:",
     activePlatforms: "सक्रिय प्लेटफॉर्म:",
     competitorAnalysis: "प्रत��योगी विश्लेषण",
     marketInsights: "बाज���र अंतर्दृष्टि",
@@ -442,7 +442,7 @@ export default function Results() {
         name: personalInfo.name || quizData?.name || "",
         email: personalInfo.email || quizData?.email || "",
         phone: personalInfo.phone || quizData?.phone || "",
-        redirectUrl: `${window.location.origin}/results?payment_status=credit&product_id=complete-growth-kit`,
+        redirectUrl: `${window.location.origin}/payment-success.html?product_id=complete-growth-kit`,
         notes: {
           product_id: "complete-growth-kit",
           product_name: toolkitProduct?.name ?? "Complete Creator Toolkit",
@@ -584,7 +584,7 @@ ${analysis.swotAnalysis.weaknesses.map((w: string, i: number) => `${i + 1}. ${w}
 
 
 🚀 ${language === "hindi" ? "अवसर:" : "OPPORTUNITIES:"}
-───────────────────────────────────────────────
+─���─────────────────────────────────────────────
 
 ${analysis.swotAnalysis.opportunities.map((o: string, i: number) => `${i + 1}. ${o}\n`).join("\n")}
 
@@ -858,7 +858,7 @@ ${language === "hindi" ? "⚡ एक्शनेबल इनसाइट्स:
 • ${language === "hindi" ? "आपका CPM इंडस्ट्री एवरेज े " + Math.round((niche.avgCPM / 15 - 1) * 100) + "% ज्यादा" : "Your CPM is " + Math.round((niche.avgCPM / 15 - 1) * 100) + "% above industry average"}
 • ${language === "hindi" ? "बेस्ट पोस्टिंग टाइम्स: 7-9 PM IST (" + niche.avgCPM + "% हाई एंगेजमेंट)" : "Best posting times: 7-9 PM IST (" + niche.avgCPM + "% higher engagement)"}
 
-${language === "hindi" ? "🔥 प्रो टिप्स:" : "🔥 PRO TIPS:"}
+${language === "hindi" ? "���� प्रो टिप्स:" : "🔥 PRO TIPS:"}
 1. ${language === "hindi" ? "मिनिमम रेट हमेशा ₹" + Math.round(followerNum * 0.008).toLocaleString() + "/पोस्ट रखें" : "Never charge less than ₹" + Math.round(followerNum * 0.008).toLocaleString() + "/post"}
 2. ${language === "hindi" ? "स्टोरी ���ेट्स को अलग से च��र्ज करें (+40% प्रीमियम)" : "Always charge story rates separately (+40% premium)"}
 3. ${language === "hindi" ? "लॉन्ग-टर्म कैंपेन्स के लिए 25% डिस्काउंट ऑफर करें" : "Offer 25% package discount for 3+ month campaigns"}
@@ -866,7 +866,7 @@ ${language === "hindi" ? "🔥 प्रो टिप्स:" : "🔥 PRO TIPS:"
 ${language === "hindi" ? "🎯 आपका कस्���म रेट कार्ड (तुरंत इस्तेमाल रें):" : " YOUR CUSTOM RATE CARD (Use Immediately):"}
 ═══════════════════════════════���══════════��════
 ${language === "hindi" ? "बिक पैकेज:" : "Basic Package:"} ₹${Math.round(followerNum * 0.012 * niche.multiplier).toLocaleString()}
-${language === "hindi" ? "स्टैंडर्ड पैेज:" : "Standard Package:"} ₹${Math.round(followerNum * 0.025 * niche.multiplier).toLocaleString()}
+${language === "hindi" ? "स्टैंडर्ड पैे��:" : "Standard Package:"} ₹${Math.round(followerNum * 0.025 * niche.multiplier).toLocaleString()}
 ${language === "hindi" ? "प्रीम��यम पैकेज:" : "Premium Package:"} ₹${Math.round(followerNum * 0.045 * niche.multiplier).toLocaleString()}
 
 ${language === "hindi" ? "⏱️ लस्ट अपडेटेड:" : "⏱️ Last Updated:"} ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
@@ -909,7 +909,7 @@ ${language === "hindi" ? "नाम:" : "Name:"} ${userName}
 ${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche} (${targetEngagementRate}% target engagement)
 ${language === "hindi" ? "प्ेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}
 ${language === "hindi" ? "करं�� ॉलोअर्स:" : "Current Followers:"} ${currentFollowers.toLocaleString()}
-${language === "hindi" ? "टारगेट ��ॉलोअ्स (30 दिन):" : "Target Followers (30 days):"} ${projectedFollowers.toLocaleString()}
+${language === "hindi" ? "टारगेट ��ॉलोअ��स (30 दिन):" : "Target Followers (30 days):"} ${projectedFollowers.toLocaleString()}
 ${language === "hindi" ? "एस्टिमेटेड रीच:" : "Estimated Reach:"} ${estimatedReach.toLocaleString()}/post
 
 ${language === "hindi" ? "📈 प्रीमयम परफॉर्मेंस ट्रैकिंग मेट्���िक्स:" : "📈 PREMIUM PERFORMANCE TRACKING METRICS:"}
@@ -922,7 +922,7 @@ ${language === "hindi" ? "🎯 डेली ट्रैकिंग (भरे�
 │ ${language === "hindi" ? "ला���क्स" : "Likes"}: _______ (टारगेट: ${Math.round((estimatedReach * targetEngagementRate) / 100)})        │
 │ ${language === "hindi" ? "कमेंट्स" : "Comments"}: _______ (लाइक्स का 8-12%)     
 │ ${language === "hindi" ? "शेयर्स" : "Shares"}: _______ (लाइक्स का 3-5%)       │
-│ ${language === "hindi" ? "सेव्स" : "Saves"}: _______ (सबसे इंपर्टेंट!)       │
+│ ${language === "hindi" ? "सेव���स" : "Saves"}: _______ (सबसे इंपर्टेंट!)       │
 │ ${language === "hindi" ? "नए फॉलोअर्स" : "New Followers"}: _______ (टारगेट: ${Math.round(targetGrowthRate)})  │
 └──��──────────────────────────────────────────┘
 
@@ -981,7 +981,7 @@ ${language === "hindi" ? "📈 मासिक ROI ट्रैकर:" : "📈 
 │                                           │
 │ ${language === "hindi" ? "ने��� प्रॉफिट" : "Net Profit"}: ₹_____ - ₹_____ = _____ │
 │ ROI: (_____ ÷ _____) × 100 = _____%      │
-└───────────────────────────────────────────┘
+└─��─────────────────────────────────────────┘
 
 ${language === "hindi" ? "⚡ ��क्शन आइटम्स (हर हफ्ते करें):" : "⚡ ACTION ITEMS (Do Every Week):"}
 □ ${language === "hindi" ? "टॉप 3 परफॉर्मिंग पोस्ट्स को analyze रें औ�� pattern ढूढं" : "Analyze top 3 performing posts and find patterns"}
@@ -1079,7 +1079,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
             </h1>
             <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
               {language === "hindi"
-                ? "आपका संपूर्ण क्रिएटर ट���लकिट तैया��� है। अपनी व्यक्तिगत फाइलें डाउनलोड करें।"
+                ? "आपका संपूर्ण क्रिएटर ट���लकिट तैया��� है। अ���नी व्यक्तिगत फाइलें डाउनलोड करें।"
                 : "Your complete Creator Toolkit is ready. Download your personalized files."}
             </p>
 
@@ -1712,7 +1712,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                     <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
                     <p className="text-gray-700">
                       {language === "hindi"
-                        ? `आपकी ${quizData.postingFrequency} पोस्टिं frequency algorithm े लिए बिल्कुल सही है। Consistency ही success ���ी key ह।`
+                        ? `आपकी ${quizData.postingFrequency} पोस्टिं frequency algorithm े लिए बिल्कुल सही है। Consistency ह�� success ���ी key ह।`
                         : `Your ${quizData.postingFrequency.toLowerCase()} posting frequency is optimal for algorithm growth. Consistency is the key to success.`}
                     </p>
                   </div>
