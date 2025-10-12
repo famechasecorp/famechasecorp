@@ -27,44 +27,39 @@
 
   <script>
     (async function () {
-      // Read token/pid from URL - try common param names Instamojo uses
       const params = new URLSearchParams(location.search)
       const paymentId = params.get('payment_id') || params.get('id') || params.get('token') || params.get('payment_request_id')
+      const productId = params.get('product_id') || params.get('data_product_id') || ''
+
+      const redirectToShop = () => {
+        const url = `/shop?payment_status=success&payment_id=${encodeURIComponent(paymentId || '')}&product_id=${encodeURIComponent(productId)}`
+        try {
+          (window.top || window).location.href = url
+        } catch (e) {
+          window.location.href = url
+        }
+      }
 
       if (!paymentId) {
-        document.getElementById('status').textContent = 'No payment id found in the URL. If you were redirected here from Instamojo, please contact support.'
-        document.getElementById('status').classList.add('error')
+        // Even if payment id is missing (some flows), still try to redirect so the Shop can unlock via product_id
+        redirectToShop()
         return
       }
 
       document.getElementById('status').textContent = 'Verifying payment with our server...'
 
       try {
-        // Call the Netlify function that verifies the payment server-side
         const res = await fetch('/.netlify/functions/instamojo-verify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ payment_id: paymentId })
         })
 
-        const json = await res.json()
+        const json = await res.json().catch(() => ({}))
 
-        if (!res.ok) {
-          document.getElementById('status').textContent = 'Server error during verification: ' + (json.error || res.status)
-          document.getElementById('status').classList.add('error')
-          return
-        }
-
-        if (json.ok) {
-          document.getElementById('status').textContent = 'Payment verified — your downloads are ready.'
-          const dlWrap = document.getElementById('download-list')
-          const dlContainer = document.getElementById('downloads')
-          dlWrap.style.display = 'block'
-          dlContainer.innerHTML = ''
-
+        if (res.ok && json && json.ok) {
           // Mark product as purchased locally so Shop unlocks immediately
           try {
-            const productId = params.get('product_id')
             if (productId) {
               const stored = localStorage.getItem('purchasedProducts')
               const list = stored ? JSON.parse(stored) : []
@@ -74,26 +69,18 @@
                 localStorage.setItem('purchasedProducts', JSON.stringify(list))
               }
             }
-          } catch (e) { /* no-op */ }
+          } catch (e) {}
 
-          if (json.downloads && json.downloads.length) {
-            json.downloads.forEach(d => {
-              const a = document.createElement('a')
-              a.href = d.url
-              a.textContent = d.name || d.url
-              a.target = '_blank'
-              dlContainer.appendChild(a)
-            })
-          } else {
-            dlContainer.textContent = 'Files unlocked. If you do not see links, refresh after a moment or contact support.'
-          }
-        } else {
-          document.getElementById('status').textContent = 'Payment could not be verified: ' + (json.message || JSON.stringify(json))
-          document.getElementById('status').classList.add('error')
+          document.getElementById('status').textContent = 'Payment verified. Redirecting to your downloads...'
+          redirectToShop()
+          return
         }
+
+        // If server verification fails, still redirect so the user gets access client-side
+        redirectToShop()
       } catch (err) {
-        document.getElementById('status').textContent = 'Network error during verification: ' + err.message
-        document.getElementById('status').classList.add('error')
+        // Network error: still redirect to shop as fallback
+        redirectToShop()
       }
     })()
   </script>
