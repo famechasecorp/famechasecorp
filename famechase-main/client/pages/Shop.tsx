@@ -198,7 +198,7 @@ export default function Shop() {
         name: quizData?.name || '',
         email: quizData?.email || '',
         phone: quizData?.phone || '',
-        redirectUrl: `${window.location.origin}/shop?payment_status=credit&product_id=${encodeURIComponent(productId)}`,
+        redirectUrl: `${window.location.origin}/payment-success.html?product_id=${encodeURIComponent(productId)}`,
         notes: {
           product_id: productId,
           product_name: product.name,
@@ -798,7 +798,7 @@ export default function Shop() {
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 animate-pulse" />
             <div className="text-sm font-bold">
-              {language === "hindi" ? "⏰ स���मित समय!" : "��� Limited Time!"}
+              {language === "hindi" ? "⏰ स���मित स���य!" : "��� Limited Time!"}
             </div>
           </div>
           <div className="text-xs font-mono bg-black bg-opacity-20 px-2 py-1 rounded">
