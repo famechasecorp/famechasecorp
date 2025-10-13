@@ -209,7 +209,6 @@ function ShopNew() {
         name: quizInfo.name || "",
         email: quizInfo.email || "",
         phone: quizInfo.phone || "",
-        redirectUrl: `${window.location.origin}/payment-success.html?product_id=${encodeURIComponent(productId)}`,
         notes: {
           product_id: productId,
           product_name: product.name,
@@ -217,10 +216,29 @@ function ShopNew() {
         },
         lockAmount: true,
         allowRepeatedPayments: false,
+        mode: "popup",
       },
     );
 
-    await openInstamojoCheckout(checkoutUrl);
+    await openInstamojoCheckout(checkoutUrl, {
+      onSuccess: () => {
+        try {
+          const storedPurchases = localStorage.getItem("purchasedProducts");
+          const list: PurchasedProduct[] = storedPurchases ? JSON.parse(storedPurchases) : [];
+          const already = list.some((p) => p.id === productId);
+          const purchase: PurchasedProduct = {
+            id: productId,
+            purchaseDate: new Date().toISOString(),
+            customerInfo: quizInfo,
+          };
+          const updated = already ? list : [...list, purchase];
+          localStorage.setItem("purchasedProducts", JSON.stringify(updated));
+          setPurchasedProducts(updated);
+          localStorage.removeItem("pendingProductPurchase");
+          setShowSuccessPage(productId);
+        } catch (e) {}
+      },
+    });
   };
 
 
