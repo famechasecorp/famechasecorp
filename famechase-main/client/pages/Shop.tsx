@@ -12,7 +12,6 @@ import {
 } from "../lib/products";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
-import { openInstamojoCheckout, buildInstamojoCheckoutUrl } from "@/lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -100,6 +99,28 @@ export default function Shop() {
     localStorage.setItem("famechase-language", language);
   }, [language]);
 
+  useEffect(() => {
+    const storedQuizData = localStorage.getItem("fameChaseQuizData");
+    let complete = false;
+    if (storedQuizData) {
+      try {
+        const data = JSON.parse(storedQuizData);
+        complete = !!(
+          data.name &&
+          data.niche &&
+          data.primaryPlatform &&
+          data.followerCount &&
+          data.goals
+        );
+      } catch (e) {
+        complete = false;
+      }
+    }
+    if (!complete) {
+      window.location.replace("/quiz");
+    }
+  }, []);
+
   // Auto-scroll to top when component mounts (for proper navigation)
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -186,51 +207,10 @@ export default function Shop() {
     const product = getProductConfig(productId);
     if (!product) return;
 
-    // Store pending purchase (used for fallback flows)
     localStorage.setItem('pendingProductPurchase', productId);
 
-    // Build Instamojo checkout URL for popup mode (no redirect)
-    const checkoutUrl = buildInstamojoCheckoutUrl(
-      'https://www.instamojo.com/@famechase',
-      {
-        amount: product.price,
-        purpose: product.name,
-        name: quizData?.name || '',
-        email: quizData?.email || '',
-        phone: quizData?.phone || '',
-        redirectUrl: `${window.location.origin}/payment-success.html?product_id=${encodeURIComponent(productId)}`,
-        notes: {
-          product_id: productId,
-          product_name: product.name,
-        },
-        lockAmount: true,
-        allowRepeatedPayments: false,
-        mode: 'embed',
-      }
-    );
-
-    // Open Instamojo popup with success handler to unlock immediately
-    await openInstamojoCheckout(checkoutUrl, {
-      onSuccess: (response?: any) => {
-        try {
-          const purchase: PurchasedProduct = {
-            id: productId,
-            purchaseDate: new Date().toISOString(),
-            customerInfo: quizData || {},
-          };
-          const stored = localStorage.getItem('purchasedProducts');
-          const existing: PurchasedProduct[] = stored ? JSON.parse(stored) : [];
-          const already = existing.some((p) => p.id === productId);
-          const updated = already ? existing : [...existing, purchase];
-          localStorage.setItem('purchasedProducts', JSON.stringify(updated));
-          setPurchasedProducts(updated);
-          localStorage.removeItem('pendingProductPurchase');
-          setShowSuccessPage(productId);
-        } catch (e) {
-          // Silent failure: fallback remains via redirect flow if used elsewhere
-        }
-      },
-    });
+    const phonePeLink = 'ppe://pay?pa=BasisPay16840@icici&pn=devendra%20Bahuguna&mc=8249&tr=ATC19753933&tn=PayTo:9464778&am=9.00&mam=9.00&cu=INR&/#Intent;scheme=upi;package=com.phonepe.app;end';
+    window.location.href = phonePeLink;
   };
 
   const validatePromoCode = (code: string) => {
@@ -306,7 +286,7 @@ export default function Shop() {
     },
     hindi: {
       title: "क्रिएटर टू���्स और संसाधन",
-      subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
+      subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफे��नल टूल्स",
       freeResources: "फ्री क्रिएटर संसाधन",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
       adminPanel: "एडमिन पैनल",
@@ -332,7 +312,7 @@ export default function Shop() {
       emailAddress: "ईमेल पता",
       phoneNumber: "फोन नंबर",
       city: "शहर",
-      processing: "प्रसंस्करण...",
+      processing: "प्रसंस्���रण...",
       paySecure: "सुरक्षित भुगतान करें",
       downloadYourProducts: "अपने प्रोडक्ट्स डाउनलोड करें",
       purchaseSuccess: "खरीदारी सफल! 🎉",
@@ -652,7 +632,7 @@ export default function Shop() {
                       <h3 className="text-2xl font-bold text-gray-900 mb-2">
                         {language === "hindi" &&
                         product.id === "complete-growth-kit"
-                          ? "कम्प्लीट क्रिएटर ग्रोथ किट"
+                          ? "कम्प्लीट क्रिएटर ग्रो��� किट"
                           : language === "hindi" &&
                               product.id === "reels-mastery"
                             ? "इंस्टाग्राम रील्स मास्टरी कोर्स"
