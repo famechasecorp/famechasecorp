@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayU UPI Payment Test - FameChase</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .upi-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .upi-btn {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .upi-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        .upi-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .pay-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .pay-btn:hover {
+            transform: scale(1.02);
+        }
+        .pay-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .info-box {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .info-box h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .info-box li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 PayU UPI Payment Test</h1>
+        <p class="subtitle">Test the UPI payment integration with PhonePe, Google Pay, and Paytm</p>
+        
+        <div class="info-box">
+            <h3>✨ What's Fixed</h3>
+            <ul>
+                <li><strong>Blank Screen Issue:</strong> Now properly redirects after UPI payment</li>
+                <li><strong>UPI Support:</strong> Works with PhonePe, Google Pay, Paytm</li>
+                <li><strong>Better Error Handling:</strong> Clear feedback on payment failures</li>
+                <li><strong>All Parameters Passed:</strong> Complete payment details preserved</li>
+            </ul>
+        </div>
+
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required placeholder="9999999999" pattern="[0-9]{10}">
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Amount (₹)</label>
+                <input type="number" id="amount" name="amount" required value="100" min="1">
+            </div>
+
+            <div class="form-group">
+                <label for="product">Product</label>
+                <select id="product" name="product" required>
+                    <option value="creator-toolkit">Creator Toolkit - ₹99</option>
+                    <option value="growth-guide">Growth Guide - ₹199</option>
+                    <option value="complete-bundle">Complete Bundle - ₹499</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Select UPI Payment Method (Optional)</label>
+                <div class="upi-options">
+                    <button type="button" class="upi-btn" data-upi="any">
+                        💳 Any UPI
+                    </button>
+                    <button type="button" class="upi-btn" data-upi="phonepe">
+                        📱 PhonePe
+                    </button>
+                    <button type="button" class="upi-btn" data-upi="googlepay">
+                        🔵 Google Pay
+                    </button>
+                    <button type="button" class="upi-btn" data-upi="paytm">
+                        💙 Paytm
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="pay-btn" id="payBtn">
+                🔒 Pay Securely with PayU
+            </button>
+        </form>
+    </div>
+
+    <script>
+        let selectedUPI = 'any';
+
+        // Handle UPI button selection
+        document.querySelectorAll('.upi-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.upi-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedUPI = this.getAttribute('data-upi');
+            });
+        });
+
+        // Select "Any UPI" by default
+        document.querySelector('[data-upi="any"]').classList.add('selected');
+
+        // Handle form submission
+        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const payBtn = document.getElementById('payBtn');
+            payBtn.disabled = true;
+            payBtn.textContent = '⏳ Initiating Payment...';
+
+            const formData = {
+                amount: document.getElementById('amount').value,
+                productinfo: document.getElementById('product').value,
+                firstname: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                // Store product ID in udf3 for tracking
+                udf3: document.getElementById('product').value
+            };
+
+            // Add UPI preference if not "any"
+            if (selectedUPI !== 'any') {
+                formData.pg = 'UPI';
+                // Map UPI app to bankcode
+                const bankcodeMap = {
+                    'phonepe': 'PPBL',
+                    'googlepay': 'UPI',
+                    'paytm': 'PYTM'
+                };
+                formData.bankcode = bankcodeMap[selectedUPI];
+            }
+
+            try {
+                // Call the Netlify function to get payment params
+                const response = await fetch('/.netlify/functions/payu-initiate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to initiate payment');
+                }
+
+                const data = await response.json();
+
+                // Create and submit form
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = data.action;
+
+                // Add all parameters as hidden inputs
+                Object.keys(data.params).forEach(key => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = data.params[key];
+                    form.appendChild(input);
+                });
+
+                document.body.appendChild(form);
+                form.submit();
+
+            } catch (error) {
+                console.error('Payment initiation failed:', error);
+                alert('Failed to initiate payment. Please try again.');
+                payBtn.disabled = false;
+                payBtn.textContent = '🔒 Pay Securely with PayU';
+            }
+        });
+    </script>
+</body>
+</html>
