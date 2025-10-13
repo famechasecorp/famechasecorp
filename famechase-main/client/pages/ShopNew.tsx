@@ -222,8 +222,9 @@ function ShopNew() {
 
     localStorage.setItem("pendingProductPurchase", productId);
 
-    const phonePeLink = "ppe://pay?pa=BasisPay16840@icici&pn=devendra%20Bahuguna&mc=8249&tr=ATC19753933&tn=PayTo:9464778&am=9.00&mam=9.00&cu=INR&/#Intent;scheme=upi;package=com.phonepe.app;end";
-    window.location.href = phonePeLink;
+    // Redirect to Instamojo Default Payment Link
+    const instamojoPaymentLink = "https://www.instamojo.com/@famechase";
+    window.location.href = instamojoPaymentLink;
   };
 
 
