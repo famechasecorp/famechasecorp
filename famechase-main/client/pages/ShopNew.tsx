@@ -20,7 +20,6 @@ import {
   type ProductConfig,
   productConfigs,
 } from "../lib/products";
-import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "@/lib/instamojo";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
@@ -118,6 +117,28 @@ function ShopNew() {
   }, [language]);
 
   useEffect(() => {
+    const storedQuizData = localStorage.getItem("fameChaseQuizData");
+    let complete = false;
+    if (storedQuizData) {
+      try {
+        const data = JSON.parse(storedQuizData);
+        complete = Boolean(
+          data.name &&
+          data.niche &&
+          data.primaryPlatform &&
+          data.followerCount &&
+          data.goals
+        );
+      } catch (e) {
+        complete = false;
+      }
+    }
+    if (!complete) {
+      window.location.replace("/quiz");
+    }
+  }, []);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
@@ -201,27 +222,8 @@ function ShopNew() {
 
     localStorage.setItem("pendingProductPurchase", productId);
 
-    const checkoutUrl = buildInstamojoCheckoutUrl(
-      "https://www.instamojo.com/@famechase",
-      {
-        amount: product.price,
-        purpose: product.name,
-        name: quizInfo.name || "",
-        email: quizInfo.email || "",
-        phone: quizInfo.phone || "",
-        redirectUrl: `${window.location.origin}/payment-success.html?product_id=${encodeURIComponent(productId)}`,
-        notes: {
-          product_id: productId,
-          product_name: product.name,
-          preferred_language: language,
-        },
-        lockAmount: true,
-        allowRepeatedPayments: false,
-        mode: "embed",
-      },
-    );
-
-    await openInstamojoCheckout(checkoutUrl);
+    const phonePeLink = "ppe://pay?pa=BasisPay16840@icici&pn=devendra%20Bahuguna&mc=8249&tr=ATC19753933&tn=PayTo:9464778&am=9.00&mam=9.00&cu=INR&/#Intent;scheme=upi;package=com.phonepe.app;end";
+    window.location.href = phonePeLink;
   };
 
 
@@ -265,7 +267,7 @@ function ShopNew() {
       adminToggleShow: "Open Admin Panel",
       adminToggleHide: "Hide Admin Panel",
       instamojoNote:
-        "After paying with Instamojo, please return and click ‘Download’ to access your product.",
+        "After paying with Instamojo, please return and click ‘Download�� to access your product.",
       instamojoNoteShort:
         "After paying, come back and click ‘Download’ to get your files.",
     },
@@ -287,7 +289,7 @@ function ShopNew() {
       instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभ��� खरीदें",
       downloadFree: "फ्री ��ाउनलोड करें",
-      bundleOffer: "सीमित समय बंडल ऑफर 🔥",
+      bundleOffer: "सीम��त समय बंडल ऑफर 🔥",
       save: "बचत करें",
       getBundle: "कम्प्लीट बंडल प्राप्त करें",
       validFor: "ऑफर केवल अगले 24 घंटे के लिए मान्य",
@@ -421,7 +423,7 @@ function ShopNew() {
                   className="bg-white border border-gray-300 text-gray-900 px-3 py-2 rounded-lg text-sm font-medium"
                 >
                   <option value="english">English</option>
-                  <option value="hindi">हिंदी</option>
+                  <option value="hindi">हि��दी</option>
                 </select>
               </div>
             </div>
@@ -741,7 +743,7 @@ function ShopNew() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "hindi"
-                ? "❌ पहले अपनी प्रोफाइल पू���्ण करें"
+                ? "�� पहले अपनी प्रोफाइल पू���्ण करें"
                 : "❌ Complete Your Profile First"}
             </h3>
             <p className="text-gray-600 mb-6">
