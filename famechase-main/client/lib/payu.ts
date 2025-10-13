@@ -24,6 +24,8 @@ export interface PayUPaymentData {
   udf3?: string;
   udf4?: string;
   udf5?: string;
+  pg?: string; // Payment gateway preference (e.g., "UPI" for UPI payments)
+  bankcode?: string; // Bank code for specific payment method
 }
 
 export interface PayUResponse {
@@ -255,6 +257,25 @@ export const paymentHelpers = {
       default:
         return "text-gray-600";
     }
+  },
+
+  // Get UPI payment gateway code
+  // This helps specify preferred UPI app for PayU
+  getUPIPaymentGateway(upiApp?: "phonepe" | "googlepay" | "paytm"): {
+    pg?: string;
+    bankcode?: string;
+  } {
+    // For UPI payments, use the UPI payment gateway
+    // Note: Specific bankcode values may need to be configured based on PayU's documentation
+    if (upiApp === "phonepe") {
+      return { pg: "UPI", bankcode: "PPBL" }; // PhonePe
+    } else if (upiApp === "googlepay") {
+      return { pg: "UPI", bankcode: "UPI" }; // Google Pay
+    } else if (upiApp === "paytm") {
+      return { pg: "UPI", bankcode: "PYTM" }; // Paytm
+    }
+    // Default: let user choose UPI app
+    return { pg: "UPI" };
   },
 };
 

@@ -62,12 +62,19 @@ exports.handler = async (event) => {
   const valid = (postedHash || "").toLowerCase() === calculated;
 
   const o = originFrom(event);
-  const baseQS = `txnid=${encodeURIComponent(txnid)}&amount=${encodeURIComponent(amount)}&status=${encodeURIComponent(status)}&valid=${valid ? "1" : "0"}`;
+  
+  // Pass all payment parameters to the redirect URL
+  const allParams = new URLSearchParams();
+  for (const [key, value] of params.entries()) {
+    allParams.set(key, value);
+  }
+  allParams.set('valid', valid ? '1' : '0');
+  const queryString = allParams.toString();
 
   const success = status.toLowerCase() === "success" && valid;
   const target = success
-    ? `${o}/thank-you.html?${baseQS}`
-    : `${o}/payment-failed.html?${baseQS}`;
+    ? `${o}/thank-you.html?${queryString}`
+    : `${o}/payment-failed.html?${queryString}`;
 
   return {
     statusCode: 303,

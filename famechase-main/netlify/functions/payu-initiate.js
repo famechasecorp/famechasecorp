@@ -43,6 +43,8 @@ exports.handler = async (event) => {
       udf8 = "",
       udf9 = "",
       udf10 = "",
+      pg = "", // Payment gateway preference (UPI for UPI payments)
+      bankcode = "", // Bank code for specific payment method
     } = JSON.parse(event.body || "{}");
 
     if (!amount) {
@@ -120,6 +122,14 @@ exports.handler = async (event) => {
       udf10,
       hash,
     };
+
+    // Add optional payment gateway preference if provided
+    if (pg) {
+      params.pg = pg;
+    }
+    if (bankcode) {
+      params.bankcode = bankcode;
+    }
 
     return json(200, { action, params, mode: "test" });
   } catch (e) {
