@@ -175,7 +175,7 @@ const languages = {
     age: "उम्र",
     paySecure: "सुरक्षित भुगतान करें",
     processing: "प्रसंस्करण...",
-    whatYouGet: "भुगतान करने के बाद आपको मिल��गा:",
+    whatYouGet: "भुगतान कर���े के बाद आपको मिल��गा:",
     fameScoreReport: "फेम स्कोर रिपोर्ट",
     mediaKitTemplate: "�����डिया कि�� टेम्प्लेट",
     growthStrategy: "ग्���ोथ स्ट्रैटेजी",
@@ -195,7 +195,7 @@ const languages = {
     monthlyIncome: "मासिक आय:",
     experienceLevel: "अ���ुभव स्त��:",
     activePlatforms: "सक्रिय प्लेटफॉर्म:",
-    competitorAnalysis: "प्रत��योगी विश्लेषण",
+    competitorAnalysis: "प्र�����योगी विश्लेषण",
     marketInsights: "बाज���र अंतर्दृष्टि",
   },
 };
@@ -451,11 +451,32 @@ export default function Results() {
         },
         lockAmount: true,
         allowRepeatedPayments: false,
+        mode: "embed",
       },
     );
 
     try {
-      await openInstamojoCheckout(checkoutUrl);
+      await openInstamojoCheckout(checkoutUrl, {
+        onSuccess: () => {
+          try {
+            const storedPurchases = localStorage.getItem("purchasedProducts");
+            const purchases: StoredPurchase[] = storedPurchases ? JSON.parse(storedPurchases) : [];
+            const already = purchases.some((p) => p.id === "complete-growth-kit");
+            if (!already) {
+              const purchase: StoredPurchase = {
+                id: "complete-growth-kit",
+                purchaseDate: new Date().toISOString(),
+                customerInfo: quizData ?? {},
+              };
+              const updated = [...purchases, purchase];
+              localStorage.setItem("purchasedProducts", JSON.stringify(updated));
+            }
+            localStorage.removeItem("pendingProductPurchase");
+            setPaymentSuccess(true);
+            setShowPaymentForm(false);
+          } catch (e) {}
+        },
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -544,7 +565,7 @@ export default function Results() {
         `
 
 🏆 ${language === "hindi" ? "फेम स्कोर रिपोर्ट" : "FAME SCORE REPORT"} - ${userName}
-═════════════════════════════════════════════════════════
+═══════���═════════════════════════════════════════════════
 
 
 📊 ${language === "hindi" ? "व्यक्तिगत विश्लेषण:" : "PERSONAL ANALYSIS:"}
@@ -560,7 +581,7 @@ ${language === "hindi" ? "💰 आय प्रक्षेपण:" : "💰 Inco
 
 
 🎯 ${language === "hindi" ? "प्रोफाइल सारांश:" : "PROFILE SUMMARY:"}
-─────────────────────────────────────────────
+───────���─────────────────────────────────────
 
 ${language === "hindi" ? "📱 प्लेटफॉर्म:" : "📱 Platform:"} ${quizData.primaryPlatform}
 
@@ -584,7 +605,7 @@ ${analysis.swotAnalysis.weaknesses.map((w: string, i: number) => `${i + 1}. ${w}
 
 
 🚀 ${language === "hindi" ? "अवसर:" : "OPPORTUNITIES:"}
-─���─────────────────────────────────────────────
+�����─────────────────────────────────────────────
 
 ${analysis.swotAnalysis.opportunities.map((o: string, i: number) => `${i + 1}. ${o}\n`).join("\n")}
 
@@ -848,7 +869,7 @@ ${language === "hindi" ? "महीना 5-6:" : "Month 5-6:"} ₹${Math.round(
 ⚡ FACT: 73% of creators who follow structured plans see 5x income growth vs. those without plans
 💡 TIMING MATTERS: Best time to start monetization is NOW - creator economy growing 25% yearly
 
-${language === "hindi" ? "🎯 ब्रांड कोलैबोरेशन पोटेंशियल:" : "🎯 BRAND COLLABORATION POTENTIAL:"}
+${language === "hindi" ? "🎯 ब्रांड कोलैबोरेशन पोटें���ियल:" : "🎯 BRAND COLLABORATION POTENTIAL:"}
 ${language === "hindi" ? "मासिक इंक्वायरी:" : "Monthly Inquiries:"} ${Math.round(followerNum / 5000)}-${Math.round(followerNum / 2000)}
 ${language === "hindi" ? "कन्वर्जन रेट:" : "Conversion Rate:"} 15-30%
 ${language === "hindi" ? "औसत डील वैल्यू:" : "Average Deal Value:"} ���${Math.round(followerNum * 0.012 * niche.multiplier).toLocaleString()}
@@ -990,7 +1011,7 @@ ${language === "hindi" ? "⚡ ��क्शन आइटम्स (हर ह�
 □ ${language === "hindi" ? "Audience insights देख���ं - कब ऑनलाइन हैं, demographics" : "Review audience insights - when online, demographics"}
 □ ${language === "hindi" ? "नए ट्रेटड्स research करें और next week plan करें" : "Research new trends and plan next week content"}
 
-${language === "hindi" ? "🎯 अगले 30 दिन का टारगेट:" : "🎯 NEXT 30 DAYS TARGET:"}
+${language === "hindi" ? "🎯 अ��ले 30 दिन का टारगेट:" : "🎯 NEXT 30 DAYS TARGET:"}
 • ${projectedFollowers.toLocaleString()} followers (${targetGrowthRate}% growth)
 • ${targetEngagementRate}% average engagement rate
  ${Math.round(currentFollowers / 5000)} brand inquiries
@@ -1079,7 +1100,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
             </h1>
             <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
               {language === "hindi"
-                ? "आपका संपूर्ण क्रिएटर ट���लकिट तैया��� है। अ���नी व्यक्तिगत फाइलें डाउनलोड करें।"
+                ? "आपका संपूर्ण क्रिएटर ट���लकिट त��या��� है। अ���नी व्यक्तिगत फाइलें डाउनलोड करें।"
                 : "Your complete Creator Toolkit is ready. Download your personalized files."}
             </p>
 
@@ -1147,7 +1168,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                 </h3>
                 <p className="text-gray-600 mb-4">
                   {language === "hindi"
-                    ? "आपके लिए बनाई ग��� विस्तृत 90-दिन की actionable growth strategy"
+                    ? "आपके लि��� बनाई ग��� विस्तृत 90-दिन की actionable growth strategy"
                     : "Detailed 90-day actionable growth strategy tailored specifically for you"}
                 </p>
                 <div className="bg-gray-50 rounded-lg p-4 mb-4">
@@ -1731,7 +1752,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                 <h3 className="font-bold text-orange-800 mb-4 flex items-center gap-2">
                   <Target className="w-5 h-5" />
                   {language === "hindi"
-                    ? "तुरंत सधार के क्षेत्र"
+                    ? "तुरंत सधार के क्ष��त्र"
                     : "Immediate Improvement Areas"}
                 </h3>
                 <div className="space-y-4">
@@ -1795,7 +1816,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                                   <p>
                                     {language === "hindi"
                                       ? "• Cross-platform पर भी same time post करें"
-                                      : "• Cross-post at same time on multiple platforms"}
+                                      : "�� Cross-post at same time on multiple platforms"}
                                   </p>
                                 </>
                               )}
@@ -2149,7 +2170,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                   </h4>
                   <div className="text-lg font-bold text-green-600">
                     {quizData.monthlyIncome === "₹0 (No income yet)" ||
-                    quizData.monthlyIncome === "0 (अभी त�� को आय नहीं)"
+                    quizData.monthlyIncome === "0 (अभी त��� को आय नहीं)"
                       ? "🔴"
                       : "🟢"}
                   </div>

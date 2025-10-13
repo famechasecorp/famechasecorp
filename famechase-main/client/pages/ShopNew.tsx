@@ -217,6 +217,7 @@ function ShopNew() {
         },
         lockAmount: true,
         allowRepeatedPayments: false,
+        mode: "embed",
       },
     );
 
@@ -668,7 +669,7 @@ function ShopNew() {
                         </div>
                         <p className="text-green-600 text-xs mt-1">
                           {language === "hindi"
-                            ? "तुरंत डाउनलोड • सफलता की गारंटी"
+                            ? "तुरंत डाउन���ोड • सफलता की गारंटी"
                             : "Instant download • Success guarantee"}
                         </p>
                       </div>
@@ -691,7 +692,7 @@ function ShopNew() {
                               className="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-600 transition-all mb-4"
                             >
                               <Download className="w-4 h-4 inline mr-2" />
-                              {language === "hindi" ? "प्रोडक्ट्स डाउनलोड करें" : "Download Products"}
+                              {language === "hindi" ? "���्रोडक्ट्स डाउनलोड करें" : "Download Products"}
                             </button>
                           ) : (
                             <>

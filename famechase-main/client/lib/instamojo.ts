@@ -7,6 +7,14 @@ declare global {
   interface Window {
     Instamojo?: {
       open: (checkoutUrl: string) => void;
+      configure?: (options: {
+        handlers?: {
+          onOpen?: () => void;
+          onClose?: () => void;
+          onSuccess?: (response?: any) => void;
+          onFailure?: (response?: any) => void;
+        };
+      }) => void;
     };
   }
 }
@@ -21,6 +29,7 @@ export interface InstamojoCheckoutParams {
   notes?: Record<string, string | number>;
   allowRepeatedPayments?: boolean;
   lockAmount?: boolean;
+  mode?: "popup" | "embed"; // default: popup
 }
 
 export const ensureInstamojoScript = async (): Promise<void> => {
@@ -80,7 +89,12 @@ export const buildInstamojoCheckoutUrl = (
   const url = new URL(baseUrl);
   const searchParams = url.searchParams;
 
-  searchParams.set("embed", "form");
+  // Only use embed=form when explicitly requested
+  const mode = params.mode || "popup";
+  if (mode === "embed") {
+    searchParams.set("embed", "form");
+  }
+
   searchParams.set("amount", params.amount.toFixed(2));
   searchParams.set("purpose", params.purpose);
   if (params.lockAmount === false) {
@@ -121,7 +135,97 @@ export const buildInstamojoCheckoutUrl = (
 
 export const openInstamojoCheckout = async (
   checkoutUrl: string,
+  handlers?: {
+    onOpen?: () => void;
+    onClose?: () => void;
+    onSuccess?: (response?: any) => void;
+    onFailure?: (response?: any) => void;
+  },
 ): Promise<void> => {
+  // If caller passed an embed URL, render it in our own overlay iframe
+  const isEmbed = /[?&]embed=form(&|$)/.test(checkoutUrl);
+  if (isEmbed) {
+    const overlay = document.createElement("div");
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    Object.assign(overlay.style, {
+      position: "fixed",
+      inset: "0",
+      background: "rgba(0,0,0,0.6)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: "9999",
+    });
+
+    const frameWrapper = document.createElement("div");
+    Object.assign(frameWrapper.style, {
+      width: "100%",
+      maxWidth: "520px",
+      height: "700px",
+      background: "#fff",
+      borderRadius: "12px",
+      boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
+      overflow: "hidden",
+      position: "relative",
+    });
+
+    const closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.setAttribute("aria-label", "Close");
+    closeBtn.textContent = "×";
+    Object.assign(closeBtn.style, {
+      position: "absolute",
+      top: "6px",
+      right: "12px",
+      fontSize: "28px",
+      lineHeight: "1",
+      background: "transparent",
+      border: "none",
+      color: "#333",
+      cursor: "pointer",
+      zIndex: "2",
+    });
+
+    const iframe = document.createElement("iframe");
+    iframe.src = checkoutUrl;
+    iframe.title = "Secure payment";
+    iframe.allow = "payment *; clipboard-write";
+    iframe.frameBorder = "0";
+    Object.assign(iframe.style, {
+      width: "100%",
+      height: "100%",
+      border: "0",
+      display: "block",
+    });
+
+    const closeOverlay = () => {
+      try { handlers?.onClose?.(); } catch {}
+      overlay.remove();
+    };
+
+    closeBtn.addEventListener("click", closeOverlay);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) closeOverlay();
+    });
+    document.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Escape") closeOverlay();
+      },
+      { once: true },
+    );
+
+    try { handlers?.onOpen?.(); } catch {}
+
+    frameWrapper.appendChild(closeBtn);
+    frameWrapper.appendChild(iframe);
+    overlay.appendChild(frameWrapper);
+    document.body.appendChild(overlay);
+    return;
+  }
+
+  // Default: use Instamojo JS popup
   try {
     await ensureInstamojoScript();
   } catch (error) {
@@ -131,6 +235,11 @@ export const openInstamojoCheckout = async (
   }
 
   if (window.Instamojo && typeof window.Instamojo.open === "function") {
+    try {
+      if (typeof window.Instamojo.configure === "function" && handlers) {
+        window.Instamojo.configure({ handlers });
+      }
+    } catch (e) {}
     window.Instamojo.open(checkoutUrl);
     return;
   }

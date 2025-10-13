@@ -186,10 +186,10 @@ export default function Shop() {
     const product = getProductConfig(productId);
     if (!product) return;
 
-    // Store pending purchase
+    // Store pending purchase (used for fallback flows)
     localStorage.setItem('pendingProductPurchase', productId);
 
-    // Build Instamojo checkout URL with embedded form
+    // Build Instamojo checkout URL for popup mode (no redirect)
     const checkoutUrl = buildInstamojoCheckoutUrl(
       'https://www.instamojo.com/@famechase',
       {
@@ -205,11 +205,32 @@ export default function Shop() {
         },
         lockAmount: true,
         allowRepeatedPayments: false,
+        mode: 'embed',
       }
     );
 
-    // Open Instamojo embedded checkout
-    await openInstamojoCheckout(checkoutUrl);
+    // Open Instamojo popup with success handler to unlock immediately
+    await openInstamojoCheckout(checkoutUrl, {
+      onSuccess: (response?: any) => {
+        try {
+          const purchase: PurchasedProduct = {
+            id: productId,
+            purchaseDate: new Date().toISOString(),
+            customerInfo: quizData || {},
+          };
+          const stored = localStorage.getItem('purchasedProducts');
+          const existing: PurchasedProduct[] = stored ? JSON.parse(stored) : [];
+          const already = existing.some((p) => p.id === productId);
+          const updated = already ? existing : [...existing, purchase];
+          localStorage.setItem('purchasedProducts', JSON.stringify(updated));
+          setPurchasedProducts(updated);
+          localStorage.removeItem('pendingProductPurchase');
+          setShowSuccessPage(productId);
+        } catch (e) {
+          // Silent failure: fallback remains via redirect flow if used elsewhere
+        }
+      },
+    });
   };
 
   const validatePromoCode = (code: string) => {
