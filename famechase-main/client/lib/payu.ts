@@ -9,6 +9,30 @@ const PAYU_CONFIG = {
   mode: import.meta.env.VITE_PAYU_MODE || "test",
 };
 
+// UPI App Configuration
+const UPI_APPS = {
+  phonepe: {
+    name: "PhonePe",
+    appScheme: "phonepe://",
+    webFallback: "https://phon.pe/",
+  },
+  googlepay: {
+    name: "Google Pay",
+    appScheme: "tez://upi/",
+    webFallback: "https://pay.google.com/",
+  },
+  paytm: {
+    name: "Paytm",
+    appScheme: "paytmmp://",
+    webFallback: "https://paytm.com/",
+  },
+  bhim: {
+    name: "BHIM",
+    appScheme: "bhim://",
+    webFallback: "https://www.bhimupi.org.in/",
+  },
+};
+
 export interface PayUPaymentData {
   txnid: string;
   amount: number;
@@ -150,11 +174,102 @@ export function createPayUForm(paymentData: PayUPaymentData): HTMLFormElement {
   return form;
 }
 
-// Initialize PayU payment
+// Handle UPI app payment with fallback
+export async function handleUpiAppPayment(
+  appName: keyof typeof UPI_APPS,
+  paymentUrl: string
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const app = UPI_APPS[appName];
+    
+    if (!app) {
+      throw new Error(`Unknown UPI app: ${appName}`);
+    }
+
+    console.log(`Attempting to open ${app.name}...`);
+
+    // Try to open the app
+    const appOpened = await attemptAppOpen(paymentUrl);
+
+    if (appOpened) {
+      return {
+        success: true,
+        message: `Opening ${app.name}...`,
+      };
+    } else {
+      // Fallback to web version
+      console.log(`${app.name} app not available, using web fallback`);
+      window.location.href = paymentUrl;
+      
+      return {
+        success: true,
+        message: `Redirecting to payment page...`,
+      };
+    }
+  } catch (error) {
+    console.error("UPI app payment failed:", error);
+    return {
+      success: false,
+      message: "Failed to open payment app. Please try again or use a different payment method.",
+    };
+  }
+}
+
+// Attempt to open app with timeout detection
+function attemptAppOpen(url: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    // Try to open in a new window/tab
+    const paymentWindow = window.open(url, "_blank");
+
+    // Set timeout to check if app opened
+    const timeout = setTimeout(() => {
+      // If we reach here, assume app didn't open
+      if (paymentWindow && !paymentWindow.closed) {
+        paymentWindow.close();
+      }
+      resolve(false);
+    }, 2000);
+
+    // Check if window was blocked by popup blocker
+    if (!paymentWindow || paymentWindow.closed) {
+      clearTimeout(timeout);
+      resolve(false);
+      return;
+    }
+
+    // Listen for window close (indicates app opened)
+    const checkInterval = setInterval(() => {
+      if (paymentWindow.closed) {
+        clearTimeout(timeout);
+        clearInterval(checkInterval);
+        resolve(true);
+      }
+    }, 100);
+
+    // Clean up after timeout
+    setTimeout(() => {
+      clearInterval(checkInterval);
+    }, 2100);
+  });
+}
+
+// Initialize PayU payment with improved error handling
 export function initiatePayUPayment(paymentData: PayUPaymentData): void {
-  const form = createPayUForm(paymentData);
-  document.body.appendChild(form);
-  form.submit();
+  try {
+    const form = createPayUForm(paymentData);
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Clean up form after submission
+    setTimeout(() => {
+      if (form.parentNode) {
+        form.parentNode.removeChild(form);
+      }
+    }, 1000);
+  } catch (error) {
+    console.error("Failed to initiate payment:", error);
+    alert("Payment initialization failed. Please try again.");
+  }
 }
 
 // Payment helper functions
@@ -192,18 +307,38 @@ export const paymentHelpers = {
     };
   },
 
-  // Process payment
-  async processPayment(paymentData: PayUPaymentData): Promise<void> {
+  // Process payment with UPI app support
+  async processPayment(
+    paymentData: PayUPaymentData,
+    upiApp?: keyof typeof UPI_APPS
+  ): Promise<void> {
     try {
       // Log payment attempt (for analytics)
       console.log("Initiating PayU payment:", {
         txnid: paymentData.txnid,
         amount: paymentData.amount,
         product: paymentData.productinfo,
+        upiApp: upiApp || "default",
       });
 
-      // Initiate payment
-      initiatePayUPayment(paymentData);
+      // If UPI app is specified, handle it specially
+      if (upiApp) {
+        // First submit to PayU to get payment URL
+        const form = createPayUForm(paymentData);
+        const paymentUrl = form.action;
+        
+        // Try to open with UPI app
+        const result = await handleUpiAppPayment(upiApp, paymentUrl);
+        
+        if (!result.success) {
+          // Fallback to standard payment
+          console.log("UPI app failed, falling back to standard payment");
+          initiatePayUPayment(paymentData);
+        }
+      } else {
+        // Standard payment flow
+        initiatePayUPayment(paymentData);
+      }
     } catch (error) {
       console.error("Payment initiation failed:", error);
       throw new Error("Failed to initiate payment. Please try again.");
@@ -256,7 +391,17 @@ export const paymentHelpers = {
         return "text-gray-600";
     }
   },
+
+  // Get available UPI apps
+  getAvailableUpiApps() {
+    return Object.keys(UPI_APPS);
+  },
+
+  // Get UPI app details
+  getUpiAppDetails(appName: keyof typeof UPI_APPS) {
+    return UPI_APPS[appName];
+  },
 };
 
 // Export configuration for server-side use
-export { PAYU_CONFIG };
+export { PAYU_CONFIG, UPI_APPS };
