@@ -198,13 +198,14 @@ export default function Shop() {
         name: quizData?.name || '',
         email: quizData?.email || '',
         phone: quizData?.phone || '',
+        redirectUrl: `${window.location.origin}/payment-success.html?product_id=${encodeURIComponent(productId)}`,
         notes: {
           product_id: productId,
           product_name: product.name,
         },
         lockAmount: true,
         allowRepeatedPayments: false,
-        mode: 'popup',
+        mode: 'embed',
       }
     );
 
@@ -318,7 +319,7 @@ export default function Shop() {
       offerEnds: "ऑफर समाप्त होता है",
       downloads: "डाउनलोड",
       rating: "रेटिंग",
-      securePayment: "सुरक्षित भुगत��न",
+      securePayment: "सुरक्षित भुगतान",
       instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभी खरीदें",
       downloadFree: "फ्री डाउनलोड करें",
@@ -640,7 +641,7 @@ export default function Shop() {
                     {product.category === "masterclass" && (
                       <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                         {language === "hindi"
-                          ? "ए�����सपर्ट गाइड"
+                          ? "एक���सपर्ट गाइड"
                           : "Expert Guide"}
                       </div>
                     )}
