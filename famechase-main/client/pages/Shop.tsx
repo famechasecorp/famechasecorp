@@ -186,10 +186,10 @@ export default function Shop() {
     const product = getProductConfig(productId);
     if (!product) return;
 
-    // Store pending purchase
+    // Store pending purchase (used for fallback flows)
     localStorage.setItem('pendingProductPurchase', productId);
 
-    // Build Instamojo checkout URL with embedded form
+    // Build Instamojo checkout URL for popup mode (no redirect)
     const checkoutUrl = buildInstamojoCheckoutUrl(
       'https://www.instamojo.com/@famechase',
       {
@@ -198,18 +198,38 @@ export default function Shop() {
         name: quizData?.name || '',
         email: quizData?.email || '',
         phone: quizData?.phone || '',
-        redirectUrl: `${window.location.origin}/payment-success.html?product_id=${encodeURIComponent(productId)}`,
         notes: {
           product_id: productId,
           product_name: product.name,
         },
         lockAmount: true,
         allowRepeatedPayments: false,
+        mode: 'popup',
       }
     );
 
-    // Open Instamojo embedded checkout
-    await openInstamojoCheckout(checkoutUrl);
+    // Open Instamojo popup with success handler to unlock immediately
+    await openInstamojoCheckout(checkoutUrl, {
+      onSuccess: (response?: any) => {
+        try {
+          const purchase: PurchasedProduct = {
+            id: productId,
+            purchaseDate: new Date().toISOString(),
+            customerInfo: quizData || {},
+          };
+          const stored = localStorage.getItem('purchasedProducts');
+          const existing: PurchasedProduct[] = stored ? JSON.parse(stored) : [];
+          const already = existing.some((p) => p.id === productId);
+          const updated = already ? existing : [...existing, purchase];
+          localStorage.setItem('purchasedProducts', JSON.stringify(updated));
+          setPurchasedProducts(updated);
+          localStorage.removeItem('pendingProductPurchase');
+          setShowSuccessPage(productId);
+        } catch (e) {
+          // Silent failure: fallback remains via redirect flow if used elsewhere
+        }
+      },
+    });
   };
 
   const validatePromoCode = (code: string) => {
@@ -298,7 +318,7 @@ export default function Shop() {
       offerEnds: "ऑफर समाप्त होता है",
       downloads: "डाउनलोड",
       rating: "रेटिंग",
-      securePayment: "सुरक्षित भुगतान",
+      securePayment: "सुरक्षित भुगत��न",
       instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभी खरीदें",
       downloadFree: "फ्री डाउनलोड करें",
@@ -620,7 +640,7 @@ export default function Shop() {
                     {product.category === "masterclass" && (
                       <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                         {language === "hindi"
-                          ? "एक���सपर्ट गाइड"
+                          ? "ए�����सपर्ट गाइड"
                           : "Expert Guide"}
                       </div>
                     )}
