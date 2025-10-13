@@ -7,6 +7,14 @@ declare global {
   interface Window {
     Instamojo?: {
       open: (checkoutUrl: string) => void;
+      configure?: (options: {
+        handlers?: {
+          onOpen?: () => void;
+          onClose?: () => void;
+          onSuccess?: (response?: any) => void;
+          onFailure?: (response?: any) => void;
+        };
+      }) => void;
     };
   }
 }
@@ -21,6 +29,7 @@ export interface InstamojoCheckoutParams {
   notes?: Record<string, string | number>;
   allowRepeatedPayments?: boolean;
   lockAmount?: boolean;
+  mode?: "popup" | "embed"; // default: popup
 }
 
 export const ensureInstamojoScript = async (): Promise<void> => {
@@ -80,7 +89,12 @@ export const buildInstamojoCheckoutUrl = (
   const url = new URL(baseUrl);
   const searchParams = url.searchParams;
 
-  searchParams.set("embed", "form");
+  // Only use embed=form when explicitly requested
+  const mode = params.mode || "popup";
+  if (mode === "embed") {
+    searchParams.set("embed", "form");
+  }
+
   searchParams.set("amount", params.amount.toFixed(2));
   searchParams.set("purpose", params.purpose);
   if (params.lockAmount === false) {
@@ -121,6 +135,12 @@ export const buildInstamojoCheckoutUrl = (
 
 export const openInstamojoCheckout = async (
   checkoutUrl: string,
+  handlers?: {
+    onOpen?: () => void;
+    onClose?: () => void;
+    onSuccess?: (response?: any) => void;
+    onFailure?: (response?: any) => void;
+  },
 ): Promise<void> => {
   try {
     await ensureInstamojoScript();
@@ -131,6 +151,13 @@ export const openInstamojoCheckout = async (
   }
 
   if (window.Instamojo && typeof window.Instamojo.open === "function") {
+    try {
+      if (typeof window.Instamojo.configure === "function" && handlers) {
+        window.Instamojo.configure({ handlers });
+      }
+    } catch (e) {
+      // Ignore configuration errors and proceed to open
+    }
     window.Instamojo.open(checkoutUrl);
     return;
   }
