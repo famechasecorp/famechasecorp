@@ -12,6 +12,7 @@ import {
 } from "../lib/products";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
+import { buildInstamojoCheckoutUrl } from "../lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -207,11 +208,38 @@ export default function Shop() {
     const product = getProductConfig(productId);
     if (!product) return;
 
+    // Calculate amount with discount if applied
+    const amount = calculateDiscountedPrice(product.price);
+
+    // Get customer info from quizData
+    const name = quizData?.name || '';
+    const email = quizData?.email || '';
+    const phone = quizData?.phone || '';
+
+    // Build Instamojo checkout URL with all parameters
+    const baseUrl = 'https://www.instamojo.com/@famechase';
+    const redirectUrl = `${window.location.origin}/payment-success.html?product_id=${productId}`;
+    
+    const checkoutUrl = buildInstamojoCheckoutUrl(baseUrl, {
+      amount: amount,
+      purpose: product.name,
+      name: name,
+      email: email,
+      phone: phone,
+      redirectUrl: redirectUrl,
+      notes: {
+        product_id: productId,
+        product_name: product.name,
+      },
+      lockAmount: true,
+      allowRepeatedPayments: false,
+      mode: 'popup',
+    });
+
     localStorage.setItem('pendingProductPurchase', productId);
 
-    // Redirect to Instamojo Default Payment Link
-    const instamojoPaymentLink = 'https://www.instamojo.com/@famechase';
-    window.location.href = instamojoPaymentLink;
+    // Navigate to checkout URL in same tab
+    window.location.href = checkoutUrl;
   };
 
   const validatePromoCode = (code: string) => {
