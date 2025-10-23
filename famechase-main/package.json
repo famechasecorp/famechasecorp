@@ -18,8 +18,8 @@
     "build:server": "vite build --config vite.config.server.ts",
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
-    "test:e2e": "jest --config jest.config.e2e.js",
-    "test:e2e:headed": "HEADLESS=false jest --config jest.config.e2e.js",
+    "test:e2e": "jest --config jest.config.e2e.cjs",
+    "test:e2e:headed": "HEADLESS=false jest --config jest.config.e2e.cjs",
     "format.fix": "prettier --write .",
     "typecheck": "tsc"
   },

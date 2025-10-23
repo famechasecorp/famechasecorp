@@ -175,34 +175,34 @@ describe('Instamojo E2E Test', () => {
       console.log('✓ Buy button clicked');
 
       // Wait for navigation or checkout URL to be captured
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-      // If we captured a URL but didn't navigate, navigate to it
-      if (checkoutUrl && !navigationStarted) {
-        console.log('Manually navigating to checkout URL...');
-        await page.goto(checkoutUrl, { waitUntil: 'networkidle0', timeout: 30000 });
-      } else if (!checkoutUrl) {
-        // Wait a bit more for URL to be captured or page to navigate
-        await page.waitForNavigation({ timeout: 5000 }).catch(() => {});
-        checkoutUrl = page.url();
+      // Check if we captured the checkout URL
+      if (!checkoutUrl) {
+        // Try to get it from the current page URL if navigation happened
+        const currentUrl = page.url();
+        if (currentUrl.includes('instamojo.com')) {
+          checkoutUrl = currentUrl;
+        }
       }
 
-      console.log('Current URL:', page.url());
+      // Verify we captured a checkout URL
+      if (!checkoutUrl) {
+        throw new Error('Failed to capture Instamojo checkout URL');
+      }
 
-      // Step 4: Capture screenshot of Instamojo checkout
-      console.log('Step 4: Capturing Instamojo checkout screenshot...');
+      console.log('Current page URL:', page.url());
+      console.log('Captured checkout URL:', checkoutUrl);
+
+      // Step 4: Capture screenshot and verify URL (without navigating to external site)
+      console.log('Step 4: Verifying Instamojo checkout URL...');
       
-      const instamojoScreenshot = path.join(SCREENSHOT_DIR, 'instamojo_checkout.png');
-      await page.screenshot({ path: instamojoScreenshot, fullPage: true });
-      console.log(`✓ Instamojo checkout screenshot saved: ${instamojoScreenshot}`);
-
-      // Verify checkout URL contains expected parameters
-      const currentUrl = page.url();
-      expect(currentUrl).toContain('instamojo.com');
+      // Parse and verify checkout URL contains expected parameters
+      expect(checkoutUrl).toContain('instamojo.com');
       console.log('✓ Checkout URL verified');
 
       // Log the checkout URL details
-      const urlObj = new URL(currentUrl);
+      const urlObj = new URL(checkoutUrl);
       console.log('Checkout URL parameters:');
       console.log('- Amount:', urlObj.searchParams.get('amount'));
       console.log('- Purpose:', urlObj.searchParams.get('purpose'));
@@ -216,6 +216,16 @@ describe('Instamojo E2E Test', () => {
       expect(urlObj.searchParams.get('amount')).toBeTruthy();
       expect(urlObj.searchParams.get('purpose')).toBeTruthy();
       console.log('✓ Checkout URL parameters verified');
+
+      // Save checkout URL to a file for CI/CD verification
+      const checkoutUrlFile = path.join(SCREENSHOT_DIR, 'checkout_url.txt');
+      fs.writeFileSync(checkoutUrlFile, checkoutUrl);
+      console.log(`✓ Checkout URL saved to: ${checkoutUrlFile}`);
+
+      // Take a screenshot of the current page (before external navigation)
+      const beforeCheckoutScreenshot = path.join(SCREENSHOT_DIR, 'instamojo_checkout_initiated.png');
+      await page.screenshot({ path: beforeCheckoutScreenshot, fullPage: true });
+      console.log(`✓ Pre-checkout screenshot saved: ${beforeCheckoutScreenshot}`);
 
       // Step 5: Simulate payment success by navigating to payment-success.html
       console.log('Step 5: Simulating payment success...');
@@ -271,10 +281,16 @@ describe('Instamojo E2E Test', () => {
       console.log('- shop_with_unlocked_product.png');
 
     } catch (error) {
-      // Take error screenshot
-      const errorScreenshot = path.join(SCREENSHOT_DIR, 'error.png');
-      await page.screenshot({ path: errorScreenshot, fullPage: true });
-      console.error('Error screenshot saved:', errorScreenshot);
+      // Take error screenshot only if page is still valid
+      try {
+        const errorScreenshot = path.join(SCREENSHOT_DIR, 'error.png');
+        await page.screenshot({ path: errorScreenshot, fullPage: true }).catch(() => {
+          console.log('Could not capture error screenshot (page may be closed or invalid)');
+        });
+        console.error('Error screenshot saved:', errorScreenshot);
+      } catch (screenshotError) {
+        console.error('Failed to capture error screenshot:', screenshotError.message);
+      }
       console.error('Current URL:', page.url());
       throw error;
     } finally {
