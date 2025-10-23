@@ -135,9 +135,15 @@ describe('Instamojo E2E Test', () => {
       // Listen for navigation requests to capture the Instamojo URL
       page.on('request', (request) => {
         const url = request.url();
-        if (url.includes('instamojo.com')) {
-          checkoutUrl = url;
-          console.log('✓ Captured Instamojo checkout URL:', url);
+        try {
+          const urlObj = new URL(url);
+          // Validate hostname is exactly instamojo.com or subdomain
+          if (urlObj.hostname === 'instamojo.com' || urlObj.hostname.endsWith('.instamojo.com')) {
+            checkoutUrl = url;
+            console.log('✓ Captured Instamojo checkout URL:', url);
+          }
+        } catch (e) {
+          // Invalid URL, ignore
         }
       });
 
@@ -145,10 +151,16 @@ describe('Instamojo E2E Test', () => {
       page.on('framenavigated', (frame) => {
         if (frame === page.mainFrame()) {
           const url = frame.url();
-          if (url.includes('instamojo.com')) {
-            checkoutUrl = url;
-            navigationStarted = true;
-            console.log('✓ Navigated to Instamojo checkout:', url);
+          try {
+            const urlObj = new URL(url);
+            // Validate hostname is exactly instamojo.com or subdomain
+            if (urlObj.hostname === 'instamojo.com' || urlObj.hostname.endsWith('.instamojo.com')) {
+              checkoutUrl = url;
+              navigationStarted = true;
+              console.log('✓ Navigated to Instamojo checkout:', url);
+            }
+          } catch (e) {
+            // Invalid URL, ignore
           }
         }
       });
@@ -181,8 +193,13 @@ describe('Instamojo E2E Test', () => {
       if (!checkoutUrl) {
         // Try to get it from the current page URL if navigation happened
         const currentUrl = page.url();
-        if (currentUrl.includes('instamojo.com')) {
-          checkoutUrl = currentUrl;
+        try {
+          const urlObj = new URL(currentUrl);
+          if (urlObj.hostname === 'instamojo.com' || urlObj.hostname.endsWith('.instamojo.com')) {
+            checkoutUrl = currentUrl;
+          }
+        } catch (e) {
+          // Invalid URL
         }
       }
 
@@ -198,11 +215,20 @@ describe('Instamojo E2E Test', () => {
       console.log('Step 4: Verifying Instamojo checkout URL...');
       
       // Parse and verify checkout URL contains expected parameters
-      expect(checkoutUrl).toContain('instamojo.com');
+      let urlObj;
+      try {
+        urlObj = new URL(checkoutUrl);
+      } catch (e) {
+        throw new Error(`Invalid checkout URL: ${checkoutUrl}`);
+      }
+      
+      // Validate hostname properly
+      if (urlObj.hostname !== 'instamojo.com' && !urlObj.hostname.endsWith('.instamojo.com')) {
+        throw new Error(`Invalid checkout URL hostname: ${urlObj.hostname}`);
+      }
       console.log('✓ Checkout URL verified');
 
       // Log the checkout URL details
-      const urlObj = new URL(checkoutUrl);
       console.log('Checkout URL parameters:');
       console.log('- Amount:', urlObj.searchParams.get('amount'));
       console.log('- Purpose:', urlObj.searchParams.get('purpose'));
