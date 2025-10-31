@@ -460,7 +460,16 @@ export default function Results() {
         onSuccess: () => {
           try {
             const storedPurchases = localStorage.getItem("purchasedProducts");
-            const purchases: StoredPurchase[] = storedPurchases ? JSON.parse(storedPurchases) : [];
+            let purchases: StoredPurchase[] = [];
+            if (storedPurchases) {
+              try {
+                purchases = JSON.parse(storedPurchases);
+                if (!Array.isArray(purchases)) purchases = [];
+              } catch (e) {
+                console.warn("Failed to parse purchasedProducts, resetting", e);
+                purchases = [];
+              }
+            }
             const already = purchases.some((p) => p.id === "complete-growth-kit");
             if (!already) {
               const purchase: StoredPurchase = {
@@ -474,7 +483,12 @@ export default function Results() {
             localStorage.removeItem("pendingProductPurchase");
             setPaymentSuccess(true);
             setShowPaymentForm(false);
-          } catch (e) {}
+          } catch (e) {
+            console.error("Failed to process successful payment", e);
+            // Still show success even if localStorage fails
+            setPaymentSuccess(true);
+            setShowPaymentForm(false);
+          }
         },
       });
     } finally {

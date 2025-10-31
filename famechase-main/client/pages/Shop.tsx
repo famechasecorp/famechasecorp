@@ -241,18 +241,33 @@ export default function Shop() {
     // Open embedded checkout popup
     await openInstamojoCheckout(checkoutUrl, {
       onSuccess: () => {
-        const purchase: PurchasedProduct = {
-          id: productId,
-          purchaseDate: new Date().toISOString(),
-          customerInfo: quizData ?? {},
-        };
-        const existingPurchases = localStorage.getItem("purchasedProducts");
-        const purchases = existingPurchases ? JSON.parse(existingPurchases) : [];
-        const updated = [...purchases, purchase];
-        localStorage.setItem("purchasedProducts", JSON.stringify(updated));
-        localStorage.removeItem('pendingProductPurchase');
-        setShowSuccessPage(productId);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        try {
+          const purchase: PurchasedProduct = {
+            id: productId,
+            purchaseDate: new Date().toISOString(),
+            customerInfo: quizData ?? {},
+          };
+          const existingPurchases = localStorage.getItem("purchasedProducts");
+          let purchases: PurchasedProduct[] = [];
+          if (existingPurchases) {
+            try {
+              purchases = JSON.parse(existingPurchases);
+              if (!Array.isArray(purchases)) purchases = [];
+            } catch (e) {
+              console.warn("Failed to parse purchasedProducts, resetting", e);
+              purchases = [];
+            }
+          }
+          const updated = [...purchases, purchase];
+          localStorage.setItem("purchasedProducts", JSON.stringify(updated));
+          localStorage.removeItem('pendingProductPurchase');
+          setShowSuccessPage(productId);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } catch (error) {
+          console.error("Failed to process successful payment", error);
+          // Still show success page even if localStorage fails
+          setShowSuccessPage(productId);
+        }
       },
     });
   };
