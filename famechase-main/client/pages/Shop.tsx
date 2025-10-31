@@ -12,7 +12,7 @@ import {
 } from "../lib/products";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
-import { buildInstamojoCheckoutUrl } from "../lib/instamojo";
+import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "../lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -233,13 +233,28 @@ export default function Shop() {
       },
       lockAmount: true,
       allowRepeatedPayments: false,
-      mode: 'popup',
+      mode: 'embed',
     });
 
     localStorage.setItem('pendingProductPurchase', productId);
 
-    // Navigate to checkout URL in same tab
-    window.location.href = checkoutUrl;
+    // Open embedded checkout popup
+    await openInstamojoCheckout(checkoutUrl, {
+      onSuccess: () => {
+        const purchase: PurchasedProduct = {
+          id: productId,
+          purchaseDate: new Date().toISOString(),
+          customerInfo: quizData ?? {},
+        };
+        const existingPurchases = localStorage.getItem("purchasedProducts");
+        const purchases = existingPurchases ? JSON.parse(existingPurchases) : [];
+        const updated = [...purchases, purchase];
+        localStorage.setItem("purchasedProducts", JSON.stringify(updated));
+        localStorage.removeItem('pendingProductPurchase');
+        setShowSuccessPage(productId);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      },
+    });
   };
 
   const validatePromoCode = (code: string) => {

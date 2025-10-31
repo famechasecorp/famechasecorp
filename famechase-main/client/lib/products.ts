@@ -9055,9 +9055,476 @@ function generateBrandContractContent(
   language: "english" | "hindi",
   userData?: any,
 ): string {
-  return language === "hindi"
-    ? "ब्रांड कॉन्ट्रैक्ट्स..."
-    : "Brand Contracts...";
+  const userName = userData?.name || "Creator Name";
+  const userEmail = userData?.email || "creator@email.com";
+
+  if (language === "hindi") {
+    return `📝 ब्रांड पार्टनरशिप कॉन्ट्रैक्ट टेम्प्लेट्स
+
+═══════════════════════════════════════════════════════
+INFLUENCER/CREATOR पार्टनरशिप एग्रीमेंट
+═══════════════════════════════════════════════════════
+
+यह एग्रीमेंट निम्नलिखित के बीच है:
+
+CREATOR/INFLUENCER:
+नाम: ${userName}
+ईमेल: ${userEmail}
+पता: [आपका पूरा पता]
+PAN: [आपका PAN नंबर]
+
+और
+
+BRAND/COMPANY:
+नाम: [ब्रांड नाम]
+पता: [ब्रांड पता]
+GST: [GST नंबर]
+Contact: [संपर्क व्यक्ति]
+
+═══════════════════════════════════════════════════════
+1. SCOPE OF WORK (कार्य का दायरा)
+═══════════════════════════════════════════════════════
+
+Creator निम्नलिखित deliverables प्रदान करेगा:
+
+□ Instagram Feed Posts: [संख्या] posts
+□ Instagram Reels: [संख्या] reels  
+□ Instagram Stories: [संख्या] story slides
+□ YouTube Video: [अवधि] minutes
+□ Blog Post: [शब्द संख्या] words
+□ Other: [specify]
+
+Content Specifications:
+• प्लेटफॉर्म: [Instagram/YouTube/etc]
+• पोस्टिंग तारीख: [तारीख]
+• Content Theme: [विषय]
+• Hashtags: [ब्रांड द्वारा प्रदान]
+• Product Features to Highlight: [features]
+
+═══════════════════════════════════════════════════════
+2. COMPENSATION (भुगतान)
+═══════════════════════════════════════════════════════
+
+Total Fee: ₹[राशि]
+• Advance Payment (50%): ₹[राशि] - Due upon signing
+• Balance Payment (50%): ₹[राशि] - Due upon delivery
+
+GST: Additional [18%] as applicable
+Payment Method: [Bank Transfer/UPI/Cheque]
+
+Payment Timeline:
+• 50% advance within 3 business days of signing
+• 50% balance within 7 business days of content delivery
+
+═══════════════════════════════════════════════════════
+3. TIMELINE (समय-सीमा)
+═══════════════════════════════════════════════════════
+
+• Contract Start Date: [तारीख]
+• Content Submission Date: [तारीख]
+• Brand Review Period: 48 hours
+• Final Posting Date: [तारीख]
+• Campaign End Date: [तारीख]
+
+═══════════════════════════════════════════════════════
+4. CONTENT APPROVAL PROCESS
+═══════════════════════════════════════════════════════
+
+• Creator will submit draft content for approval [X] days before posting date
+• Brand has 48 hours to review and provide feedback
+• Creator will make [1-2] rounds of revisions included
+• Additional revisions: ₹[amount] per revision
+• Final approval must be given 24 hours before posting
+
+═══════════════════════════════════════════════════════
+5. USAGE RIGHTS (उपयोग अधिकार)
+═══════════════════════════════════════════════════════
+
+Content Ownership: Creator retains full ownership
+
+License Grant to Brand:
+□ Social Media Usage: [X] months
+□ Website Usage: Yes/No
+□ Advertising Usage: Yes/No (Additional fee: ₹[amount])
+□ Print Media: Yes/No (Additional fee: ₹[amount])
+□ TV/OTT: Yes/No (Additional fee: ₹[amount])
+
+Geographic Restriction: [India/Worldwide]
+Exclusivity Period: [X] months for [category]
+
+═══════════════════════════════════════════════════════
+6. EXCLUSIVITY CLAUSE (विशेषाधिकार खंड)
+═══════════════════════════════════════════════════════
+
+Creator agrees to:
+• Not promote competitor brands in [category] for [X] months
+• Competitor brands defined as: [list]
+• Geographic scope: [India/specific regions]
+
+OR
+
+□ No exclusivity required
+
+═══════════════════════════════════════════════════════
+7. CONTENT GUIDELINES (कंटेंट दिशानिर्देश)
+═══════════════════════════════════════════════════════
+
+Must Include:
+• Brand hashtags: [hashtags]
+• Brand mentions: @[handle]
+• Disclosure: #ad #sponsored #collaboration (as per FTC/ASCI)
+• Product features: [specific features]
+
+Must Not Include:
+• Competitor mentions
+• Controversial topics
+• Inappropriate language
+• [Other restrictions]
+
+═══════════════════════════════════════════════════════
+8. PERFORMANCE METRICS (प्रदर्शन मीट्रिक)
+═══════════════════════════════════════════════════════
+
+Creator will provide analytics within 7 days post-campaign:
+• Total Reach
+• Impressions
+• Engagement Rate
+• Click-through Rate (if applicable)
+• Story Completion Rate
+• Comments sentiment analysis
+
+═══════════════════════════════════════════════════════
+9. TERMINATION (समाप्ति)
+═══════════════════════════════════════════════════════
+
+Either party may terminate with [X] days written notice if:
+• Payment terms are not met
+• Content guidelines are violated
+• Force majeure events
+
+Termination Fee:
+• Before content creation: Full refund
+• After draft submission: 50% of total fee
+• After final approval: 100% of total fee
+
+═══════════════════════════════════════════════════════
+10. CONFIDENTIALITY (गोपनीयता)
+═══════════════════════════════════════════════════════
+
+Both parties agree to:
+• Keep campaign details confidential until launch
+• Not disclose financial terms
+• Protect proprietary information
+
+═══════════════════════════════════════════════════════
+11. LIABILITY AND INDEMNIFICATION
+═══════════════════════════════════════════════════════
+
+Creator represents that:
+• Content is original and doesn't infringe copyrights
+• Necessary disclosures will be made per ASCI guidelines
+• No false claims about the product
+
+Brand represents that:
+• Product information provided is accurate
+• Product is safe and legal to promote
+
+═══════════════════════════════════════════════════════
+12. DISPUTE RESOLUTION (विवाद समाधान)
+═══════════════════════════════════════════════════════
+
+Jurisdiction: [City, State]
+Governing Law: Laws of India
+Dispute Resolution: Mediation first, then arbitration
+
+═══════════════════════════════════════════════════════
+SIGNATURES (हस्ताक्षर)
+═══════════════════════════════════════════════════════
+
+CREATOR:
+Signature: ___________________
+Name: ${userName}
+Date: ___________________
+
+BRAND REPRESENTATIVE:
+Signature: ___________________
+Name: ___________________
+Designation: ___________________
+Date: ___________________
+
+═══════════════════════════════════════════════════════
+
+📋 ADDITIONAL CONTRACT TEMPLATES:
+
+1. SHORT-TERM COLLABORATION (1 post):
+   - Simplified 1-page agreement
+   - Quick turnaround
+   - Ideal for: Single sponsored posts
+
+2. LONG-TERM BRAND AMBASSADOR:
+   - 6-12 month partnership
+   - Monthly retainer structure
+   - Multiple deliverables per month
+
+3. PRODUCT GIFTING AGREEMENT:
+   - No monetary compensation
+   - Product value estimation
+   - Honest review clause
+
+4. EVENT COVERAGE CONTRACT:
+   - Specific event dates
+   - Live coverage terms
+   - Travel and accommodation
+
+5. AFFILIATE PARTNERSHIP:
+   - Commission-based
+   - Tracking links
+   - Performance metrics
+
+💡 IMPORTANT NOTES:
+
+⚠️ Always include #ad or #sponsored disclosure
+⚠️ Get everything in writing before starting work
+⚠️ Take 50% advance payment minimum
+⚠️ Set clear revision limits
+⚠️ Specify usage rights clearly
+⚠️ Keep signed copies for your records
+
+📞 Legal Review: Consider having a lawyer review contracts over ₹50,000`;
+  }
+
+  return `📝 BRAND PARTNERSHIP CONTRACT TEMPLATES
+
+═══════════════════════════════════════════════════════
+INFLUENCER/CREATOR PARTNERSHIP AGREEMENT
+═══════════════════════════════════════════════════════
+
+This Agreement is made between:
+
+CREATOR/INFLUENCER:
+Name: ${userName}
+Email: ${userEmail}
+Address: [Your full address]
+PAN: [Your PAN number]
+
+and
+
+BRAND/COMPANY:
+Name: [Brand Name]
+Address: [Brand Address]
+GST: [GST Number]
+Contact: [Contact Person]
+
+═══════════════════════════════════════════════════════
+1. SCOPE OF WORK
+═══════════════════════════════════════════════════════
+
+Creator shall provide the following deliverables:
+
+□ Instagram Feed Posts: [number] posts
+□ Instagram Reels: [number] reels
+□ Instagram Stories: [number] story slides
+□ YouTube Video: [duration] minutes
+□ Blog Post: [word count] words
+□ Other: [specify]
+
+Content Specifications:
+• Platform: [Instagram/YouTube/etc]
+• Posting Date: [date]
+• Content Theme: [topic]
+• Hashtags: [provided by brand]
+• Product Features to Highlight: [features]
+
+═══════════════════════════════════════════════════════
+2. COMPENSATION
+═══════════════════════════════════════════════════════
+
+Total Fee: ₹[amount]
+• Advance Payment (50%): ₹[amount] - Due upon signing
+• Balance Payment (50%): ₹[amount] - Due upon delivery
+
+GST: Additional [18%] as applicable
+Payment Method: [Bank Transfer/UPI/Cheque]
+
+Payment Timeline:
+• 50% advance within 3 business days of signing
+• 50% balance within 7 business days of content delivery
+
+═══════════════════════════════════════════════════════
+3. TIMELINE
+═══════════════════════════════════════════════════════
+
+• Contract Start Date: [date]
+• Content Submission Date: [date]
+• Brand Review Period: 48 hours
+• Final Posting Date: [date]
+• Campaign End Date: [date]
+
+═══════════════════════════════════════════════════════
+4. CONTENT APPROVAL PROCESS
+═══════════════════════════════════════════════════════
+
+• Creator will submit draft content for approval [X] days before posting date
+• Brand has 48 hours to review and provide feedback
+• Creator will make [1-2] rounds of revisions included
+• Additional revisions: ₹[amount] per revision
+• Final approval must be given 24 hours before posting
+
+═══════════════════════════════════════════════════════
+5. USAGE RIGHTS
+═══════════════════════════════════════════════════════
+
+Content Ownership: Creator retains full ownership
+
+License Grant to Brand:
+□ Social Media Usage: [X] months
+□ Website Usage: Yes/No
+□ Advertising Usage: Yes/No (Additional fee: ₹[amount])
+□ Print Media: Yes/No (Additional fee: ₹[amount])
+□ TV/OTT: Yes/No (Additional fee: ₹[amount])
+
+Geographic Restriction: [India/Worldwide]
+Exclusivity Period: [X] months for [category]
+
+═══════════════════════════════════════════════════════
+6. EXCLUSIVITY CLAUSE
+═══════════════════════════════════════════════════════
+
+Creator agrees to:
+• Not promote competitor brands in [category] for [X] months
+• Competitor brands defined as: [list]
+• Geographic scope: [India/specific regions]
+
+OR
+
+□ No exclusivity required
+
+═══════════════════════════════════════════════════════
+7. CONTENT GUIDELINES
+═══════════════════════════════════════════════════════
+
+Must Include:
+• Brand hashtags: [hashtags]
+• Brand mentions: @[handle]
+• Disclosure: #ad #sponsored #collaboration (as per FTC/ASCI)
+• Product features: [specific features]
+
+Must Not Include:
+• Competitor mentions
+• Controversial topics
+• Inappropriate language
+• [Other restrictions]
+
+═══════════════════════════════════════════════════════
+8. PERFORMANCE METRICS
+═══════════════════════════════════════════════════════
+
+Creator will provide analytics within 7 days post-campaign:
+• Total Reach
+• Impressions
+• Engagement Rate
+• Click-through Rate (if applicable)
+• Story Completion Rate
+• Comments sentiment analysis
+
+═══════════════════════════════════════════════════════
+9. TERMINATION
+═══════════════════════════════════════════════════════
+
+Either party may terminate with [X] days written notice if:
+• Payment terms are not met
+• Content guidelines are violated
+• Force majeure events
+
+Termination Fee:
+• Before content creation: Full refund
+• After draft submission: 50% of total fee
+• After final approval: 100% of total fee
+
+═══════════════════════════════════════════════════════
+10. CONFIDENTIALITY
+═══════════════════════════════════════════════════════
+
+Both parties agree to:
+• Keep campaign details confidential until launch
+• Not disclose financial terms
+• Protect proprietary information
+
+═══════════════════════════════════════════════════════
+11. LIABILITY AND INDEMNIFICATION
+═══════════════════════════════════════════════════════
+
+Creator represents that:
+• Content is original and doesn't infringe copyrights
+• Necessary disclosures will be made per ASCI guidelines
+• No false claims about the product
+
+Brand represents that:
+• Product information provided is accurate
+• Product is safe and legal to promote
+
+═══════════════════════════════════════════════════════
+12. DISPUTE RESOLUTION
+═══════════════════════════════════════════════════════
+
+Jurisdiction: [City, State]
+Governing Law: Laws of India
+Dispute Resolution: Mediation first, then arbitration
+
+═══════════════════════════════════════════════════════
+SIGNATURES
+═══════════════════════════════════════════════════════
+
+CREATOR:
+Signature: ___________________
+Name: ${userName}
+Date: ___________________
+
+BRAND REPRESENTATIVE:
+Signature: ___________________
+Name: ___________________
+Designation: ___________________
+Date: ___________________
+
+═══════════════════════════════════════════════════════
+
+📋 ADDITIONAL CONTRACT TEMPLATES:
+
+1. SHORT-TERM COLLABORATION (1 post):
+   - Simplified 1-page agreement
+   - Quick turnaround
+   - Ideal for: Single sponsored posts
+
+2. LONG-TERM BRAND AMBASSADOR:
+   - 6-12 month partnership
+   - Monthly retainer structure
+   - Multiple deliverables per month
+
+3. PRODUCT GIFTING AGREEMENT:
+   - No monetary compensation
+   - Product value estimation
+   - Honest review clause
+
+4. EVENT COVERAGE CONTRACT:
+   - Specific event dates
+   - Live coverage terms
+   - Travel and accommodation
+
+5. AFFILIATE PARTNERSHIP:
+   - Commission-based
+   - Tracking links
+   - Performance metrics
+
+💡 IMPORTANT NOTES:
+
+⚠️ Always include #ad or #sponsored disclosure
+⚠️ Get everything in writing before starting work
+⚠️ Take 50% advance payment minimum
+⚠️ Set clear revision limits
+⚠️ Specify usage rights clearly
+⚠️ Keep signed copies for your records
+
+📞 Legal Review: Consider having a lawyer review contracts over ₹50,000`;
 }
 
 function generateBrandDatabaseContent(

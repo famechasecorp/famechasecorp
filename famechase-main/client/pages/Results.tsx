@@ -242,7 +242,7 @@ export default function Results() {
 
   // Save language preference when it changes
   useEffect(() => {
-    localStorage.setItem("famechase-language", "english");
+    localStorage.setItem("famechase-language", language);
   }, [language]);
 
   // Scroll to top when results page loads - immediately and smoothly
