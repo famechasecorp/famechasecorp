@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { ArrowRight, ArrowLeft, Instagram, Youtube, Linkedin, Globe, ChevronDown, Twitter, Star, Target, TrendingUp, CircleCheck as CheckCircle, Sparkles, User, Mail, MapPin, Calendar, Download, Chrome as Home, FileText, LayoutGrid as Layout } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
@@ -499,7 +499,7 @@ export default function Quiz() {
     Record<string, string>
   >({});
 
-  const challengeGroups = (() => {
+  const challengeGroups = useMemo(() => {
     const groupKeys = language === "hindi"
       ? {
           "ग्रोथ और एंगेजमेंट": [],
@@ -525,7 +525,7 @@ export default function Quiz() {
       }
     });
     return groups;
-  })();
+  }, [language]);
 
   useEffect(() => {
     // Initialize selections from existing data if present
