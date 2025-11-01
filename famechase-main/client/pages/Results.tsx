@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Star, TrendingUp, Target, DollarSign, Download, CircleCheck as CheckCircle, Globe, CreditCard, Shield, Zap, Sparkles, FileText, Mail, LayoutGrid as Layout, ChartBar as BarChart, Calendar, User, MapPin, TriangleAlert as AlertTriangle, Award, Lightbulb, Clock, Lock, Unlock, Chrome as Home, Share2, Twitter, MessageCircle, Trophy, Gift, Rocket, Heart } from "lucide-react";
 import { analyzeQuizData } from "../lib/ai-analysis";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
-import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "@/lib/instamojo";
 import { downloadFile, getProductConfig } from "@/lib/products";
 import { sanitizeDeep } from "@/lib/sanitize";
 
@@ -158,7 +157,7 @@ const languages = {
     strengths: "मजबूती",
     weaknesses: "कमजोरी",
     opportunities: "अवसर",
-    threats: "खतरे",
+    threats: "खतर���",
     keySuggestions: "मुख्य सुझाव",
     creatorVitalStats: "आपके क्रिएटर के महत्वपूर्ण आँकड़े",
     fameScore: "��ेम ��्कोर",
@@ -334,6 +333,21 @@ export default function Results() {
       // Generate analysis
       const generatedAnalysis = analyzeQuizData(data);
       setAnalysis(generatedAnalysis);
+
+      // Auto-unlock complete toolkit for free after quiz completion
+      try {
+        const stored = localStorage.getItem("purchasedProducts");
+        const purchases = stored ? JSON.parse(stored) : [];
+        if (!purchases.some((p: any) => p.id === "complete-growth-kit")) {
+          const purchase = {
+            id: "complete-growth-kit",
+            purchaseDate: new Date().toISOString(),
+            customerInfo: data ?? {},
+          };
+          localStorage.setItem("purchasedProducts", JSON.stringify([...purchases, purchase]));
+        }
+      } catch {}
+      setPaymentSuccess(true);
     }
   }, []);
 
@@ -410,11 +424,21 @@ export default function Results() {
   }, []);
 
   const handleUnlockClick = () => {
-    setShowPaymentForm(true);
-    requestAnimationFrame(() => {
-      const formElement = document.getElementById("instamojo-checkout-form");
-      formElement?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    // Grant free access by marking toolkit as purchased
+    try {
+      const stored = localStorage.getItem("purchasedProducts");
+      const purchases = stored ? JSON.parse(stored) : [];
+      if (!purchases.some((p: any) => p.id === "complete-growth-kit")) {
+        const purchase = {
+          id: "complete-growth-kit",
+          purchaseDate: new Date().toISOString(),
+          customerInfo: quizData ?? {},
+        };
+        localStorage.setItem("purchasedProducts", JSON.stringify([...purchases, purchase]));
+      }
+    } catch {}
+    setPaymentSuccess(true);
+    setShowPaymentForm(false);
   };
 
   const handlePayment = async () => {
@@ -424,59 +448,21 @@ export default function Results() {
 
     setIsSubmitting(true);
 
-    if (quizData) {
-      const updatedData = {
-        ...quizData,
-        ...personalInfo,
-      };
-      localStorage.setItem("fameChaseQuizData", JSON.stringify(updatedData));
-    }
-
-    localStorage.setItem("pendingProductPurchase", "complete-growth-kit");
-
-    const checkoutUrl = buildInstamojoCheckoutUrl(
-      "https://www.instamojo.com/@famechase",
-      {
-        amount: toolkitPrice,
-        purpose: toolkitProduct?.name ?? "Complete Creator Toolkit",
-        name: personalInfo.name || quizData?.name || "",
-        email: personalInfo.email || quizData?.email || "",
-        phone: personalInfo.phone || quizData?.phone || "",
-        redirectUrl: `${window.location.origin}/payment-success.html?product_id=complete-growth-kit`,
-        notes: {
-          product_id: "complete-growth-kit",
-          product_name: toolkitProduct?.name ?? "Complete Creator Toolkit",
-          source: "results_page",
-          preferred_language: language,
-        },
-        lockAmount: true,
-        allowRepeatedPayments: false,
-        mode: "embed",
-      },
-    );
-
     try {
-      await openInstamojoCheckout(checkoutUrl, {
-        onSuccess: () => {
-          try {
-            const storedPurchases = localStorage.getItem("purchasedProducts");
-            const purchases: StoredPurchase[] = storedPurchases ? JSON.parse(storedPurchases) : [];
-            const already = purchases.some((p) => p.id === "complete-growth-kit");
-            if (!already) {
-              const purchase: StoredPurchase = {
-                id: "complete-growth-kit",
-                purchaseDate: new Date().toISOString(),
-                customerInfo: quizData ?? {},
-              };
-              const updated = [...purchases, purchase];
-              localStorage.setItem("purchasedProducts", JSON.stringify(updated));
-            }
-            localStorage.removeItem("pendingProductPurchase");
-            setPaymentSuccess(true);
-            setShowPaymentForm(false);
-          } catch (e) {}
-        },
-      });
+      const storedPurchases = localStorage.getItem("purchasedProducts");
+      const purchases: StoredPurchase[] = storedPurchases ? JSON.parse(storedPurchases) : [];
+      const already = purchases.some((p) => p.id === "complete-growth-kit");
+      if (!already) {
+        const purchase: StoredPurchase = {
+          id: "complete-growth-kit",
+          purchaseDate: new Date().toISOString(),
+          customerInfo: quizData ?? {},
+        };
+        const updated = [...purchases, purchase];
+        localStorage.setItem("purchasedProducts", JSON.stringify(updated));
+      }
+      setPaymentSuccess(true);
+      setShowPaymentForm(false);
     } finally {
       setIsSubmitting(false);
     }
@@ -593,7 +579,7 @@ ${language === "hindi" ? "💵 मासिक आय:" : "💵 Monthly Income:"
 
 
 💪 ${language === "hindi" ? "मजबूतिया:" : "STRENGTHS:"}
-──────────────���───────────────────────────────
+──────────────���───��───────────────────────────
 
 ${analysis.swotAnalysis.strengths.map((s: string, i: number) => `${i + 1}. ${s}\n`).join("\n")}
 
@@ -620,7 +606,7 @@ ${analysis.suggestions
 
 
 📋 ${language === "hindi" ? "अगले कदम:" : "NEXT STEPS:"}
-─────────────────────────────────────────────
+────���────────────────────────────────────────
 
 ${language === "hindi" ? "1. अपनी कंटेंट रणनीति को अनु���ूलित करें" : "1. Optimize your content strategy"}
 
@@ -641,7 +627,7 @@ ${language === "hindi" ? "3. अपने एंगेजमेंट मेट�
 ═══��══════════════════════════════════════════════════════
 
 
-👤 ${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFORMATION:"}
+👤 ${language === "hindi" ? "व्यक्तिगत ���ानकारी:" : "PERSONAL INFORMATION:"}
 ───���──────────────────────────────��─────────────
 
 ${language === "hindi" ? "📝 ाम:" : "📝 Name:"} ${userName}
@@ -665,7 +651,7 @@ ${language === "hindi" ? "🎨 कंटेंट निच:" : "🎨 Content Ni
 ${language === "hindi" ? "📹 कंटेंट प्रकार:" : "📹 Content Type:"} ${quizData.contentType}
 
 
-📈 ${language === "hindi" ? "प्रदर्शन मेट्रिक्स:" : "PERFORMANCE METRICS:"}
+���� ${language === "hindi" ? "प्रदर्शन मेट्रिक्स:" : "PERFORMANCE METRICS:"}
 ─────────────────���─────────────────────────────
 
 ${language === "hindi" ? "⭐ फेम स्कोर:" : "⭐ Fame Score:"} ${analysis.fameScore}/100
@@ -740,7 +726,7 @@ ${language === "hindi" ? "अनुशंसित उपकरण:" : "RECOMMEN
 ${language === "hindi" ? "- कंटेंट श��ड्यूलिंग: Later य Buffer" : "- Content Scheduling: Later or Buffer"}
 ${language === "hindi" ? "- डिजाइन: Canva Pro" : "- Design: Canva Pro"}
 ${language === "hindi" ? "- एनालििक्स: Creator Studio" : "- Analytics: Creator Studio"}
-${language === "hindi" ? "- ईमेल मार्केटिंग: Mailchimp" : "- Email Marketing: Mailchimp"}`;
+${language === "hindi" ? "- ईमेल म���र्केटिंग: Mailchimp" : "- Email Marketing: Mailchimp"}`;
     } else if (type === "monetizationCalculator") {
       // Advanced calculation with real market data
       const getFollowerNumber = (range: string): number => {
@@ -1308,7 +1294,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               </h2>
               <p className="text-gray-600 mb-6">
                 {language === "hindi"
-                  ? "आपके quiz responses ���े आधर पर, हमारे AI ने ये specific tools recommend किए हैं जो आपकी exact needs जो पूरा करेंगे।"
+                  ? "आपके quiz responses ���े आधर पर, हमार�� AI ने ये specific tools recommend किए हैं जो आपकी exact needs जो पूरा करेंगे।"
                   : "Based on your quiz responses, our AI has identified these specific tools that will address your exact needs and accelerate your growth."}
               </p>
 
@@ -1725,7 +1711,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                     <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                     <p className="text-gray-700">
                       {language === "hindi"
-                        ? `आप ${quizData.niche} में कंटेंट बनाते हैं - यह क बहुत डिमांडिं नि है जहाँ ब्रांड्स ${quizData.followerCount.includes("1K") ? "3-5" : quizData.followerCount.includes("10K") ? "10-15" : "20+"} ल���ख रुपए सालाा खर्च रते हैं।`
+                        ? `आप ${quizData.niche} में कंटेंट बनाते हैं - यह क ���हुत डिमांडिं नि है जहाँ ब्रांड्स ${quizData.followerCount.includes("1K") ? "3-5" : quizData.followerCount.includes("10K") ? "10-15" : "20+"} ल���ख रुपए सालाा खर्च रते हैं।`
                         : `You create ${quizData.contentType.toLowerCase()} in ${quizData.niche} - a high-demand niche where brands spend ₹${quizData.followerCount.includes("1K") ? "3-5" : quizData.followerCount.includes("10K") ? "10-15" : "20+"} lakhs annually.`}
                     </p>
                   </div>
@@ -1887,7 +1873,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                                   </p>
                                   <p>
                                     {language === "hindi"
-                                      ? "• Weekly 10-15 brands को personalized emails भेजें"
+                                      ? "• Weekly 10-15 brands क��� personalized emails भेजें"
                                       : "• Send personalized emails to 10-15 brands weekly"}
                                   </p>
                                 </>
