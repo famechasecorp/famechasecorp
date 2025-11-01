@@ -23,7 +23,7 @@ import {
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
-import { buildInstamojoCheckoutUrl } from "../lib/instamojo";
+import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "../lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -198,35 +198,61 @@ function ShopNew() {
       return;
     }
 
-    // Get customer info from quizData
-    const name = quizData?.name || '';
-    const email = quizData?.email || '';
-    const phone = quizData?.phone || '';
+    const name = quizData?.name || "";
+    const email = quizData?.email || "";
+    const phone = quizData?.phone || "";
 
-    // Build Instamojo checkout URL with all parameters
-    const baseUrl = 'https://www.instamojo.com/@famechase';
+    const baseUrl = "https://www.instamojo.com/@famechase";
     const redirectUrl = `${window.location.origin}/payment-success.html?product_id=${productId}`;
-    
+
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi/i.test(
+      navigator.userAgent,
+    );
+
     const checkoutUrl = buildInstamojoCheckoutUrl(baseUrl, {
       amount: product.price,
       purpose: product.name,
-      name: name,
-      email: email,
-      phone: phone,
-      redirectUrl: redirectUrl,
+      name,
+      email,
+      phone,
+      redirectUrl,
       notes: {
         product_id: productId,
         product_name: product.name,
       },
       lockAmount: true,
       allowRepeatedPayments: false,
-      mode: 'popup',
+      mode: isMobile ? "popup" : "embed",
     });
 
     localStorage.setItem("pendingProductPurchase", productId);
 
-    // Navigate to checkout URL in same tab
-    window.location.href = checkoutUrl;
+    if (isMobile) {
+      window.location.href = checkoutUrl;
+      return;
+    }
+
+    let redirected = false;
+    const fallbackTimer = window.setTimeout(() => {
+      if (!redirected) {
+        redirected = true;
+        window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+      }
+    }, 4000);
+
+    try {
+      await openInstamojoCheckout(checkoutUrl, {
+        onOpen: () => {
+          window.clearTimeout(fallbackTimer);
+        },
+      });
+    } catch {
+      window.clearTimeout(fallbackTimer);
+      if (!redirected) {
+        redirected = true;
+        window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+      }
+    }
   };
 
 
@@ -275,7 +301,7 @@ function ShopNew() {
         "After paying, come back and click ‘Download’ to get your files.",
     },
     hindi: {
-      title: "क्रिएटर टूल्स और संसाधन",
+      title: "क्रिएटर ��ूल्स और संसाधन",
       subtitle: "आपकी क्रिएट��� यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
       adminPanel: "एडमिन पैनल",
@@ -312,9 +338,9 @@ function ShopNew() {
       adminToggleShow: "एडमिन पैनल खोलें",
       adminToggleHide: "एडमिन पैन�� बंद करें",
       instamojoNote:
-        "Instamojo से भुगतान करने के बाद यहाँ लौटें और ‘Download’ पर क्लिक करें।",
+        "Instamojo से भुगतान करने के बाद यह���ँ लौटें और ‘Download’ पर क्लिक करें।",
       instamojoNoteShort:
-        "भुगतान के बाद वापस आकर ‘Download’ पर क्लिक करें।",
+        "भुगतान के बाद वापस आकर ‘Download’ पर क���लिक करें।",
     },
   } as const;
 
@@ -544,7 +570,7 @@ function ShopNew() {
             </div>
             <p className="text-sm opacity-90">
               {language === "hindi"
-                ? "5000+ क्रिएटर्स का भरोसा • सफलता गारंटी • तुरंत डाउनलोड"
+                ? "5000+ क्रिएटर्स का भरोसा • सफलता गारंटी • तुरंत डाउनल���ड"
                 : "Trusted by 5000+ creators • Success guaranteed • Instant download"}
             </p>
           </div>
