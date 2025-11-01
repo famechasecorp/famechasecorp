@@ -23,7 +23,7 @@ import {
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
-import { buildInstamojoCheckoutUrl } from "../lib/instamojo";
+import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "../lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -538,7 +538,7 @@ function ShopNew() {
               <Award className="w-5 h-5" />
               <span className="font-semibold">
                 {language === "hindi"
-                  ? "प्रीमियम क्रिएटर टूल्स"
+                  ? "प्रीमियम क्रि���टर टूल्स"
                   : "Premium Creator Tools"}
               </span>
             </div>
