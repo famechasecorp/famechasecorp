@@ -197,61 +197,20 @@ function ShopNew() {
       return;
     }
 
-    const name = quizData?.name || "";
-    const email = quizData?.email || "";
-    const phone = quizData?.phone || "";
-
-    const baseUrl = "https://www.instamojo.com/@famechase";
-    const redirectUrl = `${window.location.origin}/payment-success.html?product_id=${productId}`;
-
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi/i.test(
-      navigator.userAgent,
-    );
-
-    const checkoutUrl = buildInstamojoCheckoutUrl(baseUrl, {
-      amount: product.price,
-      purpose: product.name,
-      name,
-      email,
-      phone,
-      redirectUrl,
-      notes: {
-        product_id: productId,
-        product_name: product.name,
-      },
-      lockAmount: true,
-      allowRepeatedPayments: false,
-      mode: isMobile ? "popup" : "embed",
-    });
-
-    localStorage.setItem("pendingProductPurchase", productId);
-
-    if (isMobile) {
-      window.location.href = checkoutUrl;
-      return;
+    const alreadyPurchased = purchasedProducts.some((p) => p.id === productId);
+    if (!alreadyPurchased) {
+      const purchase: PurchasedProduct = {
+        id: productId,
+        purchaseDate: new Date().toISOString(),
+        customerInfo: quizData ?? {},
+      };
+      const updated = [...purchasedProducts, purchase];
+      setPurchasedProducts(updated);
+      localStorage.setItem("purchasedProducts", JSON.stringify(updated));
     }
 
-    let redirected = false;
-    const fallbackTimer = window.setTimeout(() => {
-      if (!redirected) {
-        redirected = true;
-        window.open(checkoutUrl, "_blank", "noopener,noreferrer");
-      }
-    }, 4000);
-
-    try {
-      await openInstamojoCheckout(checkoutUrl, {
-        onOpen: () => {
-          window.clearTimeout(fallbackTimer);
-        },
-      });
-    } catch {
-      window.clearTimeout(fallbackTimer);
-      if (!redirected) {
-        redirected = true;
-        window.open(checkoutUrl, "_blank", "noopener,noreferrer");
-      }
-    }
+    setShowSuccessPage(productId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
 
@@ -271,7 +230,7 @@ function ShopNew() {
       offerEnds: "Offer ends in",
       downloads: "downloads",
       rating: "Rating",
-      securePayment: "Secure payment",
+      securePayment: "No payment required",
       instantDownload: "Instant download",
       buyNow: "Buy Now",
       downloadFree: "Download Free",
@@ -313,8 +272,8 @@ function ShopNew() {
       offerEnds: "ऑफर समाप्त होता है",
       downloads: "डाउनलोड",
       rating: "रेटिंग",
-      securePayment: "सुरक्षित भुगतान",
-      instantDownload: "तुरंत डाउनलोड",
+      securePayment: "भुगतान की आवश्यकता नहीं",
+      instantDownload: "तुरंत ��ाउनलोड",
       buyNow: "अभ��� खरीदें",
       downloadFree: "फ्री ��ाउनलोड करें",
       bundleOffer: "सीम��त समय बंडल ऑफर 🔥",
@@ -335,7 +294,7 @@ function ShopNew() {
       backToShop: "शॉप पर वापस जाएं",
       recentHeadline: "अ��ी-अभी ज��न्होंने अपना किट लिया",
       adminToggleShow: "एडमिन पैनल खोलें",
-      adminToggleHide: "एडमिन पैन�� बंद करें",
+      adminToggleHide: "एड��िन पैन�� बंद करें",
       instamojoNote:
         "Instamojo ���े भुगतान करने के बाद यह���ँ लौटें और ‘Download’ पर क्लिक करें।",
       instamojoNoteShort:
@@ -709,7 +668,7 @@ function ShopNew() {
                       <div className="bg-white rounded-xl p-6 border-2 border-gray-200">
                         <div className="text-center">
                           <div className="text-3xl font-bold text-gray-900 mb-2">
-                            ₹{product.price}
+                            {language === "hindi" ? "फ्री" : "Free"}
                           </div>
                           {product.originalPrice > product.price && (
                             <div className="text-lg text-gray-500 line-through">
@@ -730,15 +689,9 @@ function ShopNew() {
                                 onClick={() => handleBuyClick(product.id)}
                                 className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-4"
                               >
-                                <CreditCard className="w-4 h-4 inline mr-2" />
-                                {language === "hindi" ? "Instamojo से भुगतान करें" : "Pay securely with Instamojo"}
-                                <span className="ml-2">₹{product.price}</span>
+                                <Download className="w-4 h-4 inline mr-2" />
+                                {currentLang.downloadFree}
                               </button>
-                              <p className="text-xs text-gray-600 mb-4 text-center">
-                                {language === "hindi"
-                                  ? "भुगतान पूरा होन�� के बाद डाउनलोड अपने आप खुल जाएगा।"
-                                  : "Payment completes in a secure popup. Downloads unlock instantly."}
-                              </p>
                             </>
                           )}
 
