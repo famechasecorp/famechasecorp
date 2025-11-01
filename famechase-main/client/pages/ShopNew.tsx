@@ -23,7 +23,6 @@ import {
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
-import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "../lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -338,9 +337,9 @@ function ShopNew() {
       adminToggleShow: "एडमिन पैनल खोलें",
       adminToggleHide: "एडमिन पैन�� बंद करें",
       instamojoNote:
-        "Instamojo से भुगतान करने के बाद यह���ँ लौटें और ‘Download’ पर क्लिक करें।",
+        "Instamojo ���े भुगतान करने के बाद यह���ँ लौटें और ‘Download’ पर क्लिक करें।",
       instamojoNoteShort:
-        "भुगतान के बाद वापस आकर ‘Download’ पर क���लिक करें।",
+        "भुगतान के बाद वाप��� आकर ‘Download’ पर क���लिक करें।",
     },
   } as const;
 
@@ -570,7 +569,7 @@ function ShopNew() {
             </div>
             <p className="text-sm opacity-90">
               {language === "hindi"
-                ? "5000+ क्रिएटर्स का भरोसा • सफलता गारंटी • तुरंत डाउनल���ड"
+                ? "5000+ क्रिएटर्स का भरोसा • सफलता गार���टी • तुरंत डाउनल���ड"
                 : "Trusted by 5000+ creators • Success guaranteed • Instant download"}
             </p>
           </div>
@@ -675,7 +674,7 @@ function ShopNew() {
                         </span>
                         {isPurchased && (
                           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                            ✅ {language === "hindi" ? "खरीदा गया" : "Purchased"}
+                            ✅ {language === "hindi" ? "खरीदा ग��ा" : "Purchased"}
                           </span>
                         )}
                       </div>
@@ -700,7 +699,7 @@ function ShopNew() {
                         </div>
                         <p className="text-green-600 text-xs mt-1">
                           {language === "hindi"
-                            ? "तुरंत डाउन���ोड • सफलता की गारंटी"
+                            ? "तुरंत डाउन���ोड • सफ��ता की गारंटी"
                             : "Instant download • Success guarantee"}
                         </p>
                       </div>
@@ -723,7 +722,7 @@ function ShopNew() {
                               className="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-600 transition-all mb-4"
                             >
                               <Download className="w-4 h-4 inline mr-2" />
-                              {language === "hindi" ? "���्रोडक्ट्स डाउनलोड करें" : "Download Products"}
+                              {language === "hindi" ? "���्रोडक्���्स डाउनलोड करें" : "Download Products"}
                             </button>
                           ) : (
                             <>
