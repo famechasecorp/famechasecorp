@@ -12,7 +12,6 @@ import {
 } from "../lib/products";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
-import { buildInstamojoCheckoutUrl } from "../lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -205,41 +204,22 @@ export default function Shop() {
       return;
     }
 
-    const product = getProductConfig(productId);
-    if (!product) return;
+    // Grant free access by marking as purchased locally
+    const purchase: PurchasedProduct = {
+      id: productId,
+      purchaseDate: new Date().toISOString(),
+      customerInfo: quizData || {},
+    };
 
-    // Calculate amount with discount if applied
-    const amount = calculateDiscountedPrice(product.price);
+    const updated = [
+      ...purchasedProducts.filter((p) => p.id !== productId),
+      purchase,
+    ];
+    setPurchasedProducts(updated);
+    localStorage.setItem("purchasedProducts", JSON.stringify(updated));
 
-    // Get customer info from quizData
-    const name = quizData?.name || '';
-    const email = quizData?.email || '';
-    const phone = quizData?.phone || '';
-
-    // Build Instamojo checkout URL with all parameters
-    const baseUrl = 'https://www.instamojo.com/@famechase';
-    const redirectUrl = `${window.location.origin}/payment-success.html?product_id=${productId}`;
-    
-    const checkoutUrl = buildInstamojoCheckoutUrl(baseUrl, {
-      amount: amount,
-      purpose: product.name,
-      name: name,
-      email: email,
-      phone: phone,
-      redirectUrl: redirectUrl,
-      notes: {
-        product_id: productId,
-        product_name: product.name,
-      },
-      lockAmount: true,
-      allowRepeatedPayments: false,
-      mode: 'popup',
-    });
-
-    localStorage.setItem('pendingProductPurchase', productId);
-
-    // Navigate to checkout URL in same tab
-    window.location.href = checkoutUrl;
+    // Show download success view
+    setShowSuccessPage(productId);
   };
 
   const validatePromoCode = (code: string) => {
@@ -314,7 +294,7 @@ export default function Shop() {
       backToShop: "Back to Shop",
     },
     hindi: {
-      title: "क्रिएटर टू���्स और संसाधन",
+      title: "क्रिएटर टू���्स और ��ंसाधन",
       subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफे��नल टूल्स",
       freeResources: "फ्री क्रिएटर संसाधन",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
@@ -436,6 +416,8 @@ export default function Shop() {
   };
 
   const isProductPurchased = (productId: string) => {
+    // After quiz completion, all products are free to access
+    if (checkQuizCompletion()) return true;
     return (
       purchasedProducts.some((p) => p.id === productId) ||
       (productId !== "complete-bundle" &&
@@ -758,16 +740,12 @@ export default function Shop() {
                               onClick={() => void handleBuyClick(product.id)}
                               className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-4"
                             >
-                              <CreditCard className="w-4 h-4 inline mr-2" />
-                              {language === "hindi" ? "भुगतान करें" : "Pay with Instamojo"} - ₹{product.price}
+                              <Download className="w-4 h-4 inline mr-2" />
+                              {currentLang.downloadFree}
                             </button>
                           )}
 
                           <div className="space-y-2 text-sm text-gray-600">
-                            <div className="flex items-center justify-center gap-2">
-                              <Shield className="w-4 h-4" />
-                              {currentLang.securePayment}
-                            </div>
                             <div className="flex items-center justify-center gap-2">
                               <Download className="w-4 h-4" />
                               {currentLang.instantDownload}
