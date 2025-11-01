@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   Award,
   CheckCircle,
-  CreditCard,
   Download,
   Home,
   Shield,
@@ -23,7 +22,6 @@ import {
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
-import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "../lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -198,61 +196,20 @@ function ShopNew() {
       return;
     }
 
-    const name = quizData?.name || "";
-    const email = quizData?.email || "";
-    const phone = quizData?.phone || "";
-
-    const baseUrl = "https://www.instamojo.com/@famechase";
-    const redirectUrl = `${window.location.origin}/payment-success.html?product_id=${productId}`;
-
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi/i.test(
-      navigator.userAgent,
-    );
-
-    const checkoutUrl = buildInstamojoCheckoutUrl(baseUrl, {
-      amount: product.price,
-      purpose: product.name,
-      name,
-      email,
-      phone,
-      redirectUrl,
-      notes: {
-        product_id: productId,
-        product_name: product.name,
-      },
-      lockAmount: true,
-      allowRepeatedPayments: false,
-      mode: isMobile ? "popup" : "embed",
-    });
-
-    localStorage.setItem("pendingProductPurchase", productId);
-
-    if (isMobile) {
-      window.location.href = checkoutUrl;
-      return;
+    const alreadyPurchased = purchasedProducts.some((p) => p.id === productId);
+    if (!alreadyPurchased) {
+      const purchase: PurchasedProduct = {
+        id: productId,
+        purchaseDate: new Date().toISOString(),
+        customerInfo: quizData ?? {},
+      };
+      const updated = [...purchasedProducts, purchase];
+      setPurchasedProducts(updated);
+      localStorage.setItem("purchasedProducts", JSON.stringify(updated));
     }
 
-    let redirected = false;
-    const fallbackTimer = window.setTimeout(() => {
-      if (!redirected) {
-        redirected = true;
-        window.open(checkoutUrl, "_blank", "noopener,noreferrer");
-      }
-    }, 4000);
-
-    try {
-      await openInstamojoCheckout(checkoutUrl, {
-        onOpen: () => {
-          window.clearTimeout(fallbackTimer);
-        },
-      });
-    } catch {
-      window.clearTimeout(fallbackTimer);
-      if (!redirected) {
-        redirected = true;
-        window.open(checkoutUrl, "_blank", "noopener,noreferrer");
-      }
-    }
+    setShowSuccessPage(productId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
 
@@ -272,7 +229,7 @@ function ShopNew() {
       offerEnds: "Offer ends in",
       downloads: "downloads",
       rating: "Rating",
-      securePayment: "Secure payment",
+      securePayment: "No payment required",
       instantDownload: "Instant download",
       buyNow: "Buy Now",
       downloadFree: "Download Free",
@@ -314,7 +271,7 @@ function ShopNew() {
       offerEnds: "ऑफर समाप्त होता है",
       downloads: "डाउनलोड",
       rating: "रेटिंग",
-      securePayment: "सुरक्षित भुगतान",
+      securePayment: "भुगतान की आवश्यकता नहीं",
       instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभ��� खरीदें",
       downloadFree: "फ्री ��ाउनलोड करें",
@@ -334,13 +291,13 @@ function ShopNew() {
       thanksForPurchase:
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
-      recentHeadline: "अ��ी-अभी ज��न्होंने अपना किट लिया",
+      recentHeadline: "अ��ी-अभी ज��न��होंने अपना किट लिया",
       adminToggleShow: "एडमिन पैनल खोलें",
       adminToggleHide: "एडमिन पैन�� बंद करें",
       instamojoNote:
-        "Instamojo से भुगतान करने के बाद यह���ँ लौटें और ‘Download’ पर क्लिक करें।",
+        "Instamojo ���े भुगतान करने के बाद यह���ँ लौटें और ‘Download’ पर क्लिक करें।",
       instamojoNoteShort:
-        "भुगतान के बाद वापस आकर ‘Download’ पर क���लिक करें।",
+        "भुगतान के बाद वाप��� आकर ‘Download’ पर क���लिक करें।",
     },
   } as const;
 
@@ -564,13 +521,13 @@ function ShopNew() {
               <Award className="w-5 h-5" />
               <span className="font-semibold">
                 {language === "hindi"
-                  ? "प्रीमियम क्रिएटर टूल्स"
+                  ? "प्रीमियम क्रिएटर टू���्स"
                   : "Premium Creator Tools"}
               </span>
             </div>
             <p className="text-sm opacity-90">
               {language === "hindi"
-                ? "5000+ क्रिएटर्स का भरोसा • सफलता गारंटी • तुरंत डाउनल���ड"
+                ? "5000+ क्रिएटर्स का भरोसा • सफलता गार���टी • तुरंत डाउनल���ड"
                 : "Trusted by 5000+ creators • Success guaranteed • Instant download"}
             </p>
           </div>
@@ -675,7 +632,7 @@ function ShopNew() {
                         </span>
                         {isPurchased && (
                           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                            ✅ {language === "hindi" ? "खरीदा गया" : "Purchased"}
+                            ✅ {language === "hindi" ? "खरीदा ग��ा" : "Purchased"}
                           </span>
                         )}
                       </div>
@@ -700,7 +657,7 @@ function ShopNew() {
                         </div>
                         <p className="text-green-600 text-xs mt-1">
                           {language === "hindi"
-                            ? "तुरंत डाउन���ोड • सफलता की गारंटी"
+                            ? "तुरंत डाउन���ोड • सफ��ता की गारंटी"
                             : "Instant download • Success guarantee"}
                         </p>
                       </div>
@@ -710,7 +667,7 @@ function ShopNew() {
                       <div className="bg-white rounded-xl p-6 border-2 border-gray-200">
                         <div className="text-center">
                           <div className="text-3xl font-bold text-gray-900 mb-2">
-                            ₹{product.price}
+                            {language === "hindi" ? "फ्री" : "Free"}
                           </div>
                           {product.originalPrice > product.price && (
                             <div className="text-lg text-gray-500 line-through">
@@ -723,7 +680,7 @@ function ShopNew() {
                               className="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-600 transition-all mb-4"
                             >
                               <Download className="w-4 h-4 inline mr-2" />
-                              {language === "hindi" ? "���्रोडक्ट्स डाउनलोड करें" : "Download Products"}
+                              {language === "hindi" ? "���्रोडक्���्स डाउनलोड करें" : "Download Products"}
                             </button>
                           ) : (
                             <>
@@ -731,15 +688,9 @@ function ShopNew() {
                                 onClick={() => handleBuyClick(product.id)}
                                 className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-4"
                               >
-                                <CreditCard className="w-4 h-4 inline mr-2" />
-                                {language === "hindi" ? "Instamojo से भुगतान करें" : "Pay securely with Instamojo"}
-                                <span className="ml-2">₹{product.price}</span>
+                                <Download className="w-4 h-4 inline mr-2" />
+                                {currentLang.downloadFree}
                               </button>
-                              <p className="text-xs text-gray-600 mb-4 text-center">
-                                {language === "hindi"
-                                  ? "भुगतान पूरा होन�� के बाद डाउनलोड अपने आप खुल जाएगा।"
-                                  : "Payment completes in a secure popup. Downloads unlock instantly."}
-                              </p>
                             </>
                           )}
 
