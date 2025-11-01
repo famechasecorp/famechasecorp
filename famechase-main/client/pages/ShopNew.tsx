@@ -116,27 +116,6 @@ function ShopNew() {
     localStorage.setItem("famechase-language", language);
   }, [language]);
 
-  useEffect(() => {
-    const storedQuizData = localStorage.getItem("fameChaseQuizData");
-    let complete = false;
-    if (storedQuizData) {
-      try {
-        const data = JSON.parse(storedQuizData);
-        complete = Boolean(
-          data.name &&
-          data.niche &&
-          data.primaryPlatform &&
-          data.followerCount &&
-          data.goals
-        );
-      } catch (e) {
-        complete = false;
-      }
-    }
-    if (!complete) {
-      window.location.replace("/quiz");
-    }
-  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -301,7 +280,7 @@ function ShopNew() {
       city: "शहर",
       processing: "प्रसंस्करण...",
       paySecure: "सुरक्षित भुगतान करें",
-      downloadYourProducts: "अपने प्रोडक्ट्स डाउनलोड करें",
+      downloadYourProducts: "अपने प्र��डक्ट्स डाउनलोड करें",
       purchaseSuccess: "खरीदारी सफल! 🎉",
       thanksForPurchase:
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
