@@ -151,11 +151,35 @@ export default function PaymentSuccess() {
   };
 
   const handleDownload = async (productId: string) => {
-    // This would trigger download of all product files
-    // For now, we'll just show a success message
-    alert(
-      "Download functionality will be implemented with the actual product files.",
-    );
+    try {
+      const effectiveId = productId || searchParams.get("udf3") || product?.id || "complete-growth-kit";
+
+      const productsToDownload: ProductConfig[] =
+        effectiveId === "complete-bundle"
+          ? productConfigs
+          : (() => {
+              const cfg = getProductConfig(effectiveId);
+              return cfg ? [cfg] : [];
+            })();
+
+      for (const cfg of productsToDownload) {
+        for (const d of cfg.downloads) {
+          const langs: Array<"english" | "hindi"> =
+            d.language === "both" ? ["english", "hindi"] : [d.language];
+
+          for (const lang of langs) {
+            const content = generateProductDownload(cfg.id, d.id, lang, null);
+            const safeProduct = cfg.name.replace(/\s+/g, "_");
+            const base = `${safeProduct}_${d.fileName}`;
+            const fileName = `${base}_${lang}.pdf`;
+            await downloadFile(content, fileName);
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Download failed", e);
+      alert("Unable to generate downloads. Please try again.");
+    }
   };
 
   if (isVerifying) {
