@@ -186,11 +186,7 @@ function ShopNew() {
   };
 
   const handleBuyClick = async (productId: string) => {
-    if (!checkQuizCompletion()) {
-      setShowQuizRequiredPopup(true);
-      return;
-    }
-
+    // Allow instant access without quiz gating
     const product = getProductConfig(productId);
     if (!product) {
       return;
