@@ -426,7 +426,7 @@ function generateMediaKitContent(
   if (language === "hindi") {
     return `📱 प्रोफेशनल मीडिया किट टेम्��्���ेट
 
-👤 क्रिएटर की नकारी:
+👤 क्रिएट�� की नकारी:
 नाम: ${userName}
 ईमे��: ${userEmail}
 निच: ${userNiche}
@@ -449,7 +449,7 @@ function generateMediaKitContent(
 📧 न्यूज़लेटर मेंशन: ₹200 - ₹1,000
 
 🏆 पिछले कोलैबोरेशन:
-• [ब्रांड न��म 1] - [कोलैबोरेशन का प्रकार]
+• [ब्रांड न��म 1] - [को��ैबोरेशन का प्रकार]
 • [ब्रांड ��ाम 2] - [कोलैबोरेशन का प्रकार]
 • [ब्रांड नाम 3] - [कोलैबो��ेश का प्रकार]
 
@@ -469,7 +469,7 @@ function generateMediaKitContent(
 ईमेल: ${userEmail}
 फोन: [आपका फोन नंबर]
 वेबसाइट: [आपकी वेबसाइट]
-सोशल मीडिया: [आपके सभी सोशल प्लेटफॉर्म]
+स��शल मीडिया: [आपके सभी सोशल प्लेटफॉर्म]
 
 🤝 कोलैबोरेशन टर्म्स:
 • उपयोग अधिकार: [स्पेसिफाई करें]
@@ -593,7 +593,7 @@ function generateEmailTemplatesContent(
 
 प्रिय [ब्रांड नाम] टीम,
 
-मैं ${userName} हूं, ${userNiche} में एक पैशनेट कंटेंट क्रिएटर ूं जिसके ${userPlatform} पर ${userFollowers} engaged followers हैं।
+मैं ${userName} हूं, ${userNiche} में एक पैशनेट कंटेंट क्रिएटर ूं जिस���े ${userPlatform} पर ${userFollowers} engaged followers हैं।
 
 मुझे आपके ब्रांड के ��ाथ कोलैबोरेट करने में बहुत रुच��� है क्योंकि:
 • आपके प्रोडक्ट्स मेर��� ऑडियंस के साथ perfectly align करते हैं
@@ -619,7 +619,7 @@ ${userName}
 
 Hi [Contact Name],
 
-मैंने पिछले सपताह आो collaboration के बारे में email भेजा था। मुझे लता है कि हम एक amazing partnership create कर सकते हैं!
+मैंने पिछले सपता�� आो collaboration के बारे में email भेजा था। मुझे लता है कि हम एक amazing partnership create कर सकते हैं!
 
 Recently मैंने [competitor brand] के साथ work किया और उस post को [specific results] मि��े।
 
@@ -697,7 +697,7 @@ ${userName}
 
 Dear [Brand Team],
 
-हम���रे recent collaboration के results share करना चाहता हूं:
+हम���रे recent collaboration के results share करना चाहता ह��ं:
 
 📊 PERFORMANCE METRICS:
 • Post Reach: [number] impressions
@@ -743,7 +743,7 @@ Dear [Decision Maker],
 • Additional deliverables pricing
 
 📈 BENEFITS FOR YOUR BRAND:
-• Consistent brand presence
+�� Consistent brand presence
 • Authentic audience connection
 • Better content planning
 • Cost-effective marketing
@@ -943,7 +943,7 @@ function generatePricingCalculatorContent(
 🧮 PRICING CALCULATION FORMULA:
 
 1️⃣ BASE RATE CALCULATION:
-फॉलोअर्स per 1K = [आपके followers ÷ 1000]
+फॉल���अर्स per 1K = [आपके followers ÷ 1000]
 Base rate per 1K = ₹100-500 (niche के आ��ार पर)
 Minimum post rate = Followers per 1K × Base rate
 
@@ -1274,7 +1274,7 @@ Sunday: Quarter reflection
 3. Entertainment (20%): Fun content, trends, challenges
 4. Promotion (15%): Products, services, collaborations
 
-��� POSTING SCHEDULE:
+���� POSTING SCHEDULE:
 • Best times: 7-9 AM, 12-2 PM, 7-9 PM IST
 • Monday-Friday: 1-2 posts
 • Weekends: 1 post
@@ -1579,7 +1579,7 @@ ${userNiche} क्रिएटर्स के लिए विस्तृत 
 �� दूसरे 30 दिन - विकास और ऑप्टमाइजेशन:
 • A/B टे्ट शुरू करें (posting times, hashtags)
 • इंफ्लुएंसर्स और अन्य क्रिएटर्स के साथ कोलैबोरेशन
-• लाइव वीडियो और Q&A सेशन शुरू करें
+• लाइव वीडिय�� और Q&A सेशन शुरू करें
 • विरल रील्स और ट्रेंड्स पर फोकस करें
 • एनालिटिक्स को ट्रैक करें और ऑप��टिमाइज करें
 • हैशटैग और कीवरड स्ट्रैटेजी रिफाइन करें
@@ -1616,7 +1616,7 @@ ${userNiche} क्रिएटर्स के लिए विस्तृत 
 • ब्रांड पार्टनरशिप: 2-5 नई डील्स
 • मासिक आय में वृद्धि: ₹5K-25K
 
-📝 ध्यान देने योग्य बातें:
+📝 ध्यान देने योग्य बाते��:
 • भारती मार्केट के लिए कंटेंट लोकलाइज करें
 • रीजनल भाषाओं और कल्चर को incorporate करें
 • भारतीय त्योहारों और ीजन का फायदा उठाएं
@@ -1651,7 +1651,7 @@ Comprehensive Growth Guide for ${userNiche} Creators
 • Focus on viral reels and trends
 • Track analytics and optimize
 • Refine hashtag and keyword strategy
-• Plan ahead with video series
+�� Plan ahead with video series
 
 💰 THIRD 30 DAYS - MONETIZATION & MARKETING:
 • Create media kit and portfolio
@@ -1701,7 +1701,7 @@ function generateHashtagGuideContent(
   if (language === "hindi") {
     return `#️⃣ हैशटैग रिसर्च मास्टर गाइड
 
-${userNiche} क्रिएटर्स े लि�� ${userPlatform} हैशटैग रणनीति
+${userNiche} क्रिएटर्��� े लि�� ${userPlatform} हैशटैग रणनीति
 
 🔍 हैशटैग की बुनियादी बातें:
 • हैशटै व्यूज को बढ़ात हैं (30x तक बढ़ कते हैं)
@@ -1726,7 +1726,7 @@ ${userNiche} क्रिएटर्स े लि�� ${userPlatform} है
 • #indianinfluencer #delhifoodie #mumbaifashion
 • टार्गेट ऑडियंस के लिए perfect
 
-4⃣ माइक्रो हैशटैग (10K-100K posts)
+4⃣ मा���क्रो हैशटैग (10K-100K posts)
 • #mumbaifoodblogger #delhifashionista
 • #bangaloretechie #puneinfluencer
 • कम competition, बेहतर engagement
@@ -2173,7 +2173,7 @@ function generateContractContent(
   if (language === "hindi") {
     return `📄 क्रिएटर कॉन्ट्रैक्ट टेम्पलेट पैक
 
-यह पैक आपको ब्रांड डील्स, कंटेंट निर्माण और UGC लाइसेंसिंग के लिए कानूनी रूप से मजबूत, सरल और उपयोगी कॉन्ट्रैक्ट देता है। भुगतान, डिलीवेरेबल्स, उपयोग-अधिकार, टाइमलाइन और कैंसलेशन जैसी सभी ज़रूरी बातें शामिल हैं।
+यह पैक आपको ब्रांड डील्स, कंटेंट निर्माण और UGC लाइसेंसि��ग के लिए कानूनी रूप से मजबूत, सरल और उपयोगी कॉन्ट्रैक्ट देता है। भुगतान, डिलीवेरेबल्स, उपयोग-अधिकार, टाइमलाइन और कैंसलेशन जैसी सभी ज़रूरी बातें शामिल हैं।
 
 शामिल टेम्पलेट्स:
 1) स्पॉन्सर्ड कंटेंट एग्रीमेंट (Paid Promotion)
@@ -2221,7 +2221,7 @@ function generateContractContent(
 
 7. रद्दीकरण नीति
 • प्रोजेक्ट शुरू होने से पहले: पूर्ण रिफंड
-• स्क्रिप्ट/शूट शुरू होने के बाद: 50% रद्दीकरण शुल्क
+• स्क्रिप्ट/शूट शु���ू होने के बाद: 50% रद्दीकरण शुल्क
 • फाइनल डिलीवरी के बाद: कोई रिफंड नहीं
 
 8. गोपनीयता व डेटा
@@ -2272,7 +2272,7 @@ function generateContractContent(
 • एडिट/क्रॉप/रीसाइज़ की अनुमति, गलत प्रस्तुति नहीं
 
 3. भुगतान
-• प्रति क्रिएटिव ₹X,XXX–₹XX,XXX; बल्क पैक पर छूट
+�� प्रति क्रिएटिव ₹X,XXX–₹XX,XXX; बल्क पैक पर छूट
 • इनवॉइस पर 7 दिनों में भुगतान
 
 4. क्रेडिट
@@ -2440,11 +2440,11 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 12. "5 मिनट में [निच] सिखाना"
 13. "[निच] के बारे में कॉमन सवाल"
 14. "[निच] के लिए सबसे जरूरी टूल्स"
-15. "[निच] की हिस्ट्री - 60 सेकंड में"
+15. "[निच] की हिस्ट्री - 60 सेकंड मे��"
 16. "[निच] में पैसा कमाने के तरीके"
 17. "मैं कैसे [स्पे���िफिक रिजल्ट] पाया"
 18. "[निच] में मेरी टॉप 3 टिप्स"
-19. "क्या करें और क्या न करें [निच] में"
+19. "���्या करें और क्या न करें [निच] में"
 20. "[निच] के बारे में तथ्य जो आप नहीं जानते"
 21. "[निच] में सफलता के लिए रोडमैप"
 22. "मै कै���े [चैलेंज] को साल्व करता हूं"
@@ -2461,7 +2461,7 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 31. "मेरे [निच] के दोस्तों के साथ"
 32. "जब मैं [निच] के बारे में सोचता हूं vs रियलिटी"
 33. "[निच] के टाइप्स ���फ पीपल"
-34. "मेरी [निच] जर्नी - कॉमेडी वर्जन"
+34. "मेरी [निच] जर्नी - कॉमेडी वर्���न"
 35. "[निच] के स्ट्रगल्स"
 36. "क्ा होता है जब मैं [निच activity] करता हूं"
 37. "[निच] वाले की जिंदगी"
@@ -2684,7 +2684,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
 • Clean & Professional (LinkedIn)
 • Vintage & Film (Aesthetic)
 
-⚙️ एडिटिंग टूल्स (रैंकिंग):
+⚙️ एडिटिंग ��ूल्स (रैंकिंग):
 
 🏆 बेस्ट फ्री ऐप्स:
 1. CapCut (सबसे popular)
@@ -3168,7 +3168,7 @@ ${userNiche} क्रिएटर्स के लिए वायरल ऑड
 4. Adobe Audition Mobile
 5. GarageBand (iOS)
 
-💻 डेस्कॉप सॉफ्टवेयर:
+💻 डेस्कॉप सॉफ्ट���ेयर:
 1. Adobe Audition (प्रोफेशनल)
 2. Audacity (फ्री)
 3. GarageBand (Mac)
@@ -3365,7 +3365,7 @@ Viral Audio Strategy for ${userNiche} Creators
 • Professional, inspiring music
 • Corporate-friendly tracks
  Motivational instrumentals
-• Success/achievement themes
+��� Success/achievement themes
 • Avoid heavy beats
 
 🎪 MOOD-BASED MUSIC CHOICE:
@@ -3476,7 +3476,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 2️⃣ विजुअ�� एलिमेंट्स को ऑप्टिमाइज करें:
 • 9:16 वर्टिकल रिजोल्यूशन (1080x1920)
 • तेज और हाई कॉन्ट्रास्ट विजुअल्स
-• ब्राइट lighting और साफ बैकग्राउंड
+• ब्राइट lighting और साफ बैकग��राउंड
 • प्रोफेशनल editing विथ smooth transitions
 
 3️⃣ ऑडियो स्ट्रैटेजी:
@@ -3501,7 +3501,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 
 🔥 की मेट्रिक्स पर फोकस रें:
 • वियू रेट (70%+ target करें)
-• एवरेज वियू ड्यूेशन (complete views)
+• एवरेज वियू ड्यूे���न (complete views)
 • रीच और इम्प्रेशन्स ग्रोथ
 • शेयर्स और saves (strong engagement signals)
 • कमंट रेस्पॉन्स रेट
@@ -3528,7 +3528,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 • गोल्न आवर (first 2 hours) में एक्टिव रहें
 • Cross-promotion े initial boost लें
 
-🔄 कंटेंट रिपरपाजिंग और adaptation:
+🔄 ���ंटेंट रिपरपाजिंग और adaptation:
 • टिकट��क viral content को adapt करें
 • YouTube Shorts trends को follow करें
 • इंटर्नेशनल trends को Indian context म��ं adapt करें
@@ -3808,7 +3808,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 5. Audience feedback actively collect र implement करें
 
 🎆 याद रखें:
-“सफलता रातोंरात नहीं आती। ये सभी creators ने वर्षों की मेहनत, लगन और निरंतर सीखने के बाद य�� मुकाम हासिल किया है।”`;
+“सफलता रातोंरात नह��ं आती। ये सभी creators ने वर्षों की मेहनत, लगन और निरंतर सीखने के बाद य�� मुकाम हासिल किया है।”`;
   }
 
   return `🏆 VIRAL CREATOR CASE STUDIES
@@ -4155,7 +4155,7 @@ Recent highlights:
 • [competitor brand] के साथ successful collaboration
 • Audience response rate 8%+ (industry average 2-3%)
 
-क्या हम इस week एक quick 15-minute call schedule कर सकते हैं?
+क्या हम इस week एक quick 15-minute call schedule क��� सकते हैं?
 
 आपके response का intezaar है।
 
@@ -4264,7 +4264,7 @@ Dear [Brand Team],
 🎯 AUDIENCE INSIGHTS:
 • [%] of engaged users are in target age group
 • [%] showed purchase intent through comments
-• [number] people asked for discount codes
+��� [number] people asked for discount codes
 • [number] tagged friends (organic reach amplification)
 
 💬 STANDOUT AUDIENCE FEEDBACK:
@@ -4301,7 +4301,7 @@ Dear [Decision Maker Name],
 🤝 PROPOSED BRAND AMBASSADOR PROGRAM:
 
 📅 6-MONTH AMBASSADOR PACKAGE (₹[amount]):
-• Monthly content creation (4 posts, 8 stories, 2 reels)
+��� Monthly content creation (4 posts, 8 stories, 2 reels)
 • Product launch exclusive coverage
 • Event participation और coverage
 • Seasonal campaign development
@@ -5068,7 +5068,7 @@ Example rates:
 
  MERCH OPPORTUNITIES:
 • T-shirts and hoodies with channel branding
-• Mugs, phone cases, stickers
+��� Mugs, phone cases, stickers
 • Digital products (templates, presets)
 • Books or eBooks
 • Branded accessories
@@ -5612,7 +5612,7 @@ function generateYouTubeAnalyticsContent(
   const userNiche = userData?.niche || "Content Creator";
 
   if (language === "hindi") {
-    return `📊 यूट्यूब एनालिटिक्स मास्टरी गाइड
+    return `��� यूट्यूब एनालिटिक्स मास्टरी गाइड
 
 ${userNiche} क्रिएटर्स के लिए ग्रोथ ट्रैकिंग और ऑप्टिमाइजेशन
 
@@ -5707,7 +5707,7 @@ ${userNiche} क्रिएटर्स के लिए ग्रोथ ट्
 
 🎯 DAILY MONITORING:
 • Views in last 24 hours
-• Real-time subscriber count
+�� Real-time subscriber count
 • Top comments and feedback
 • Traffic source changes
 • Trending video performance
@@ -5863,7 +5863,7 @@ Growth Tracking and Optimization for ${userNiche} Creators
 • Blog post references
 • Paid advertising
 
-📊 AUDIENCE INSIGHTS:
+��� AUDIENCE INSIGHTS:
 
 👥 DEMOGRAPHICS:
 • Age groups analysis
@@ -6064,7 +6064,7 @@ ${userNiche} क्िएटर्स के लिए ऑर्गेनिक 
 • Message exchanges और comments high value
 • Profile visits और content sharing important
 
-2️⃣ कंटेंट टाइप प्राथमिकता:
+2���⃣ कंटेंट टाइप प्राथमिकता:
 • Video content (highest priority)
 • Live videos (2x organic reach)
 • Images और carousels
@@ -6444,7 +6444,7 @@ Organic Reach and Engagement Mastery for ${userNiche} Creators
 • Audience insights
 • A/B testing tools
 
-🎯 ADVANCED STRATEGIES:
+��� ADVANCED STRATEGIES:
 
 🤝 COLLABORATIONS:
 • Partnerships with other creators
@@ -6618,7 +6618,7 @@ Solution: अपना solution provide करें
 💥 Shocking Statement Hooks:
 • "मैंने [time period] में [achievement] किया"
 • "[Number]% लोग [common mistake] करते हैं"
-• "सबसे बड़ी गलती जो [target audience] क��ती है..."
+• "सबसे बड़ी गलती जो [target audience] क���ती है..."
 
 🎯 Story Hooks:
 • "कल रात मुझे एक call आया..."
@@ -7642,7 +7642,7 @@ Time: 3 PM
 Content: Deep insights, industry analysis, thought leadership
 
 Example posts:
-• "[Industry topic] के बारे में मेरे विचार"
+• "[Industry topic] के बारे में मेरे ��िचार"
 • "Future of [niche] - 2024 predictions"
 • "क्या आपको लगा है [controversial but respectful topic]?"
 
@@ -8062,7 +8062,7 @@ Example posts:
 • Year-end wrap up
 • Next year planning
 • Holiday content
-• Gift guides (if relevant)
+��� Gift guides (if relevant)
 • Celebration content
 
 🕐 OPTIMAL POSTING TIMES:
@@ -8709,7 +8709,7 @@ Email: [Email]
 Phone: [Phone]
 Manager: [If applicable]
 
-═════════════════════════════════��════
+═════════════��═══════════════════��════
 
 🎨 DESIGN TEMPLATE #4: CREATIVE ARTISTIC
 ═══════════════════��══════════���════════
@@ -8973,7 +8973,7 @@ Premium Package (���12K):
 ✅ Response: "Absolutely! Market में different price points होते हैं। मेरी rates म���री [specific strengths] को reflect करती हैं। आइए results के basis पर compare करते हैं - ROI, engagement quality, और brand alignment।"
 
 ❌ "Free product के बदले में post कर दो"
-✅ Response: "Product collaboration मैं definitely consider करता हूं, लेकिन product value के अनुपात ��ें। ₹[product value] के product के लिए story mention appropriate होगा। Full post के िए हमें monetary compensation भी चाहिए।"
+✅ Response: "Product collaboration मैं definitely consider करता हूं, लेकिन product value के अनुपात ��ें। ₹[product value] के product के लिए story mention appropriate होगा। Full post के िए हमें monetary compensation भी चाहिए��"
 
 ❌ "Usage rights भी chahiye"
 ✅ Response: "Usage rights अलग से cost होती है। Standard post में social media usage included है। अगर आप website, print, या advertising में use करना चाहते हैं, तो वो additional 50% of base rate होगा।"
@@ -9002,7 +9002,7 @@ Premium Package (���12K):
 ══════════════════════════════════════
 ${userNiche} CREATOR RATE CARD
 Follower Count: ${userFollowers}
-══════════════���═══════════���═══════════
+══════════════���═════��═════���═══════════
 
 📸 CONTENT CREATION RATES:
 
@@ -9396,16 +9396,167 @@ function generateBrandDatabaseContent(
   language: "english" | "hindi",
   userData?: any,
 ): string {
-  return language === "hindi" ? "ब्रंड डेटाबेस..." : "Brand Database...";
+  const niche = userData?.niche || "Creator";
+  if (language === "hindi") {
+    return `🏢 ब्रांड डेटाबेस किट — ${niche} क्रिएटर्स के लिए
+
+यह किट आपको अपना खुद का ब्रांड/एजेंसी डेटाबेस बनाने, ट्रैक करने और मोनेटाइज़ करने का स्ट्रक्चर देता है।
+
+स्प्रेडशीट कॉलम्स:
+• Brand Name | Category | Website | Contact Email | Instagram | LinkedIn | Decision Maker | Budget Range | Last Outreach | Status | Notes
+
+कैटेगरी सुझाव:
+• D2C (Beauty, Fashion, Tech), FinTech, EdTech, Fitness, Food & Beverages, Travel, SaaS
+
+उदाहरण एंट्रीज़:
+• Mamaearth | Beauty | mamaearth.in | partnerships@mamaearth.in | @mamaearth.in | LinkedIn CMO | PR/Influencer Manager | ₹25K–₹2L | 2025-02-01 | Warm | Met at event
+• CRED | FinTech | cred.club | marketing@cred.club | @cred_club | LinkedIn Growth Lead | Influencer Lead | ₹50K–₹5L | 2025-01-20 | Cold | Seeking UGC
+
+आउटरीच कैडेंस (Monetization):
+• Day 1: Email + LinkedIn connect
+• Day 3: Case study/UGC sample भेजें
+• Day 7: Reminder + नए आइडिया (2 फ़ॉर्मैट + 1 Hook)
+• Day 14: Rate card + bundle discount
+
+ट्रैकिंग स्टेटस:
+• Cold | Warm | In Discussion | Negotiation | Won | Follow-up | Not Interested
+
+टेम्पलेट नोट्स:
+• “Campaign goals: app installs/awareness/sales”
+• “UGC needed for paid ads in Hindi/English”
+• “Exclusivity 30 days — adjust pricing”
+
+टिप्स:
+• हर हफ्ते 25 नए ब्रांड जोड़ें
+• LinkedIn → People → Marketing/Influencer/Creator relations ढूँढें
+• Apollo/ZoomInfo/SignalHire से ईमेल वेरिफ़ाई करें
+• Retainer मॉडल ऑफ़र करें (4 वीडियोज़/महीना)
+
+Revenue Boost:
+• Bundles: 3 Reels + 5 Stories + Whitelisting preview
+• Add-ons: Fast delivery 48h, extra language, cutdowns`;
+  }
+
+  return `🏢 Brand Database Kit — for ${niche} creators
+
+A practical structure to build, track, and monetize a list of brands and agencies that buy creator content.
+
+Spreadsheet columns:
+• Brand Name | Category | Website | Contact Email | Instagram | LinkedIn | Decision Maker | Budget Range | Last Outreach | Status | Notes
+
+Category ideas:
+• D2C (Beauty, Fashion, Tech), FinTech, EdTech, Fitness, F&B, Travel, SaaS
+
+Sample rows:
+• Mamaearth | Beauty | mamaearth.in | partnerships@mamaearth.in | @mamaearth.in | LinkedIn CMO | PR/Influencer Manager | ₹25K–₹2L | 2025-02-01 | Warm | Met at event
+• CRED | FinTech | cred.club | marketing@cred.club | @cred_club | Growth Lead | Influencer Lead | ₹50K–₹5L | 2025-01-20 | Cold | Needs UGC
+
+Outreach cadence (monetizable):
+• Day 1: Email + LinkedIn connect
+• Day 3: Share case study/UGC sample
+• Day 7: Reminder with 2 concepts + 1 hook
+• Day 14: Rate card + bundle discount
+
+Status pipeline:
+• Cold | Warm | In Discussion | Negotiation | Won | Follow-up | Not Interested
+
+Template notes:
+• “Campaign goal: installs/awareness/sales”
+• “UGC needed for paid ads (Hindi/English)”
+• “30-day category exclusivity — price accordingly”
+
+Tips:
+• Add 25 new brands weekly
+• Use LinkedIn ‘People’ → Marketing/Influencer/Creator Relations
+• Verify emails via Apollo/ZoomInfo/SignalHire
+• Offer a retainer (4 assets/month)
+
+Revenue boosters:
+• Bundles: 3 Reels + 5 Stories + Whitelisting preview
+• Add-ons: 48h rush, extra language, cutdowns`;
 }
 
 function generatePitchDeckContent(
   language: "english" | "hindi",
   userData?: any,
 ): string {
-  return language === "hindi"
-    ? "पिच डेक टेम्प्लेट्स..."
-    : "Pitch Deck Templates...";
+  const userName = userData?.name || "Creator";
+  const niche = userData?.niche || "Creator";
+  if (language === "hindi") {
+    return `📊 ब्रांड पिच डेक टेम्पलेट — ${userName}
+
+Slide 1: Title
+• ${userName} — ${niche} क्रिएटर | Platforms | Audience size
+
+Slide 2: Audience & Insights
+• डेमोग्राफ़िक्स, लोकेशन, इंटरेस्ट
+• Avg views, watch-time, CTR
+
+Slide 3: Proof of Performance
+• Top posts/screens | Growth curve | Testimonials
+
+Slide 4: Why Me (Brand Fit)
+• Brand values match | Unique content style | Past category wins
+
+Slide 5: Campaign Concepts
+• Concept A (Hook + Format + CTA)
+• Concept B (Hook + Format + CTA)
+• Deliverables & timeline
+
+Slide 6: Packages & Rates
+• Starter: 1 Reel + 1 Story — ₹X
+• Growth: 2 Reels + 3 Stories — ₹Y
+• Scale: 3 Reels + 5 Stories + Whitelisting preview — ₹Z
+
+Slide 7: Add-ons (Monetization)
+• Whitelisting (30 days) | Extra language | 48h Rush | Cutdowns
+
+Slide 8: Case Studies
+• Brief → Deliverables → Results (reach, CTR, saves)
+
+Slide 9: Process & Timeline
+• Brief → Draft → Revisions → Final → Reporting
+
+Slide 10: Next Steps
+• Availability window | Contact details | CTA to book`;
+  }
+
+  return `📊 Brand Pitch Deck Template — ${userName}
+
+Slide 1: Title
+• ${userName} — ${niche} creator | Platforms | Audience size
+
+Slide 2: Audience & Insights
+• Demographics, location, interests
+• Avg views, watch-time, CTR
+
+Slide 3: Proof of Performance
+• Top posts/screens | Growth curve | Testimonials
+
+Slide 4: Strategic Fit
+• Brand values match | Content style | Category proof
+
+Slide 5: Campaign Concepts
+• Concept A (Hook + Format + CTA)
+• Concept B (Hook + Format + CTA)
+• Deliverables & timeline
+
+Slide 6: Packages & Pricing
+• Starter: 1 Reel + 1 Story — ₹X
+• Growth: 2 Reels + 3 Stories — ₹Y
+• Scale: 3 Reels + 5 Stories + Whitelisting preview — ₹Z
+
+Slide 7: Monetizable Add‑ons
+• Whitelisting (30 days) | Extra language | 48h Rush | Cutdowns
+
+Slide 8: Case Studies
+• Brief → Deliverables → Results (reach, CTR, saves)
+
+Slide 9: Process & Timeline
+• Brief → Draft → Revisions → Final → Reporting
+
+Slide 10: Next Steps
+• Availability | Contact | CTA`;
 }
 
 function generatePremiumToolsContent(
@@ -9432,7 +9583,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 • Figma (FREE/Pro $12/month) - UI/UX डिजाइन
 • Unsplash (FREE) - हाई-क्वालिटी स्टॉक फो���ोस
 
-🗺️ कंटेंट प्लानिंग टूल्स:
+🗺️ कंट���ंट प्लानिंग टूल्स:
 • Notion (FREE/Pro $8/month) - कंटेंट प्लानिंग
 • Trello (FREE/Pro $5/month) - प्रोजक्ट मैनेजमेंट
 • Airtable (FREE/Pro $20/month) - कंटेंट कैलेंडर
@@ -9452,7 +9603,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 
 📧 ईम��ल मार्केटिं:
 • Mailchimp (FREE/Pro $10/month) - ईमेल ऑटोमेशन
-• ConvertKit ($29/month) - क्रिएटर-फोकस्ड प्लेटफॉर्म
+• ConvertKit ($29/month) - क्रिएटर-फोकस्ड प्��ेटफॉर्म
 • Flodesk ($38/month) - ब्यूटीफुल ऐमल न्यूजलेटर
 
 💵 मुद्रीकरण टूल्स:
@@ -9496,7 +9647,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 💰 बजट प्लानिंग:
 • नए क्रिएटर: ₹0-2000/month
 • ग्रोइंग क्रिएटर: ₹2000-8000/month
-• प्रोफेशनल क्रिएटर: ₹8000-25000/month`;
+• प��रोफेशनल क्रिएटर: ₹8000-25000/month`;
   }
 
   return `🛠️ PREMIUM CREATOR TOOLS GUIDE
@@ -9659,7 +9810,7 @@ function buildFallbackDownloadContent(
           downloadLabel: "डाउनलोड",
           descriptionIntro:
             "मूल सामग्री उपलब्ध नहीं थी, इसलिए यह सारांश तैयार किया गया है। इसमें उत्पाद का संक्षिप्त विवरण शामिल है।",
-          featuresHeading: "✨ मुख्य विशेषताएँ",
+          featuresHeading: "✨ मुख्य विशे��ताएँ",
           instructions:
             "आपको विस्तृत और व्यक्तिगत सामग्री जल्द ही प्रदान की जाएगी। फिलहाल इस मार्गदर्शिका का उपयोग करके शुरुआत करें।",
           noFeatures:
