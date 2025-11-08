@@ -62,3 +62,21 @@
   for = "/*.css"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# -------------------------------------------------------
+# Neon plugin disabled (commented)
+#
+# The Neon extension is causing a build-failing error in onPreBuild when it queries an anonymous Neon DB.
+# To unblock builds immediately, the neon-buildhooks plugin configuration has been commented out here.
+# If you need Neon during builds, re-provision a persistent Neon DB (not anonymous), ensure NETLIFY_DATABASE_URL
+# and NETLIFY_DATABASE_URL_UNPOOLED environment variables are set in Netlify, and re-enable the plugin (or
+# reinstall the Neon extension) from the Netlify UI. Also consider removing the Neon extension from the Netlify
+# site (Site settings → Extensions) if you no longer need it.
+#
+# [[plugins]]
+#   package = "neon-buildhooks"
+#   [plugins.inputs]
+#     # any inputs originally here (leave commented)
+#     # example_input = "value"
+#
+# -------------------------------------------------------
