@@ -45,7 +45,7 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://test.payu.in https://secure.payu.in https://js.instamojo.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co https://test.payu.in https://secure.payu.in https://api.instamojo.com https://js.instamojo.com https://www.instamojo.com; frame-src https://test.payu.in https://secure.payu.in https://www.instamojo.com;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://test.payu.in https://secure.payu.in https://js.instamojo.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co https://test.payu.in https://secure.payu.in https://api.instamojo.com https://js.instamojo.com https://www.instamojo.com; frame-src https://test.payu.in https://secure.payu.in https://www.instamojo.com; media-src blob: data:;"
 
 # Cache static assets
 [[headers]]
